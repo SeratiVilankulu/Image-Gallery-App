@@ -22,14 +22,14 @@ namespace api.Mappers
       };
     }
 
-    public static Images ToImagesFromCreate(this CreateImagesDto imagesDto, int userID)
+    public static Images ToImagesFromCreate(this CreateImagesDto imagesDto, int categoryID)
     {
       return new Images
       {
         Title = imagesDto.Title,
         Description = imagesDto.Description,
         ImageURL = imagesDto.ImageURL,
-        UserId = userID
+        CategoryId = categoryID
       };
     }
 

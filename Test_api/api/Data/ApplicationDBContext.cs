@@ -14,8 +14,6 @@ namespace api.Data
         {
             
         }
-
-        public DbSet<Users> Users { get; set; }
         public DbSet<Images> Images { get; set; }
         public DbSet<Categories> Categories { get; set; }
 
@@ -27,14 +25,7 @@ namespace api.Data
         .WithMany(c => c.Images)
         .HasForeignKey(i => i.CategoryId)  // Foreign key property name
         .OnDelete(DeleteBehavior.Cascade); // Or another appropriate delete behavior
-
-    // Configure one-to-many relationship between Users and Images
-    modelBuilder.Entity<Images>()
-        .HasOne(i => i.User)
-        .WithMany(u => u.Images)
-        .HasForeignKey(i => i.UserId)  // Foreign key property name
-        .OnDelete(DeleteBehavior.SetNull); // Or another appropriate delete behavior
-
+        
     // Other configurations...
 }
 

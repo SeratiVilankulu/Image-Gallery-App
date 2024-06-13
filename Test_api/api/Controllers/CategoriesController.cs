@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
-using api.Dtos.Users;
+using api.Dtos.Categories;
 using api.Interfaces;
 using api.Mappers;
 using api.Queries;
@@ -12,15 +12,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
-  [Route("api/user")]
+  [Route("api/category")]
   [ApiController]
-  public class UserController : ControllerBase
+  public class CategoriesController : ControllerBase
   {
+    
     private readonly ApplicationDBContext _context;
-    private readonly IUsersRepository _usersRepo;
-    public UserController(ApplicationDBContext context, IUsersRepository usersRepo)
+     private readonly ICategoriesRepository _categoriesRepo;
+    public CategoriesController(ApplicationDBContext context, ICategoriesRepository categoriesRepo)
     {
-      _usersRepo = usersRepo;
+      _categoriesRepo = categoriesRepo;
       _context = context;
     }  
 
@@ -30,11 +31,11 @@ namespace api.Controllers
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var users = await _usersRepo.GetAllAsync(query);
+      var categories = await _categoriesRepo.GetAllAsync(query);
       
-      var usersDto = users.Select(s => s.ToUserDto());
+      var categoriesDto = categories.Select(s => s.ToCategoryDto());
 
-      return Ok(users);
+      return Ok(categories);
     }
 
     [HttpGet("{id:int}")]
@@ -43,42 +44,42 @@ namespace api.Controllers
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
         
-      var user = await _usersRepo.GetByIdAsync(id);
-      if(user == null)
+      var category = await _categoriesRepo.GetByIdAsync(id);
+      if(category == null)
       {
         return NotFound();
       }
       
-      return Ok(user.ToUserDto());
+      return Ok(category.ToCategoryDto());
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateUsersRequestDto usersDto)
+    public async Task<IActionResult> Create([FromBody] CreateCategoriesRequestDto categoriesDto)
     {
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var  usersModel = usersDto.ToUsersFromCreateDTO();
-      await _usersRepo.CreateAsync(usersModel);
-      return CreatedAtAction(nameof(GetById), new {id = usersModel.UserID}, usersModel.ToUserDto());
+      var  categoriesModel = categoriesDto.ToCategoriesFromCreateDTO();
+      await _categoriesRepo.CreateAsync(categoriesModel);
+      return CreatedAtAction(nameof(GetById), new {id = categoriesModel.CategoryID}, categoriesModel.ToCategoryDto());
     }
 
     [HttpPut]
     [Route("{id:int}")]
 
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateUsersRequestDto updateDto)
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCategoriesRequestDto updateDto)
     {
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var usersModel = await _usersRepo.UpdateAsync(id, updateDto);
+      var categoriesModel = await _categoriesRepo.UpdateAsync(id, updateDto);
       
-      if(usersModel == null)
+      if(categoriesModel == null)
       {
         return NotFound();
       }
 
-      return Ok(usersModel.ToUserDto());
+      return Ok(categoriesModel.ToCategoryDto());
     }
 
     [HttpDelete]
@@ -89,9 +90,9 @@ namespace api.Controllers
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var usersModel = await _usersRepo.DeleteAsync(id);
+      var categoriesModel = await _categoriesRepo.DeleteAsync(id);
 
-      if(usersModel == null)
+      if(categoriesModel == null)
       {
         return NotFound();
       }

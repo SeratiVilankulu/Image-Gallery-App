@@ -18,12 +18,6 @@ namespace api.Models
     public string SecretEditLink { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; }
 
-    // Foreign key property for Users
-    public int? UserId { get; set; }  // Nullable, if an image may not be linked to a user
-
-    // Navigation property to Users
-    public Users? User { get; set; }  // Navigation to the Users entity
-
     // Foreign key property for Categories
     public int? CategoryId { get; set; }  // Nullable, if an image may not be linked to a category
 

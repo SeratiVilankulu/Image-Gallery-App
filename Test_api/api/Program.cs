@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
 
 var app = builder.Build();

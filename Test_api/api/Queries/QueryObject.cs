@@ -7,8 +7,8 @@ namespace api.Queries
 {
   public class QueryObject
   {
-    public string? UserName { get; set; } = null;
-    public string? FirstName { get; set; } = null;
+    public string? CategoryType { get; set; } = null;
+    public int? Total { get; set; } = null;
     public string? SortBy { get; set; } = null;
     public bool IsDecsending { get; set; } = false;
     public int PageNumber { get; set; } = 1;

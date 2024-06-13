@@ -14,12 +14,12 @@ namespace api.Controllers
   public class ImagesController : ControllerBase
   {
     private readonly IImagesRepository _imagesRepo;
-    private readonly IUsersRepository _usersRepo;
+    private readonly ICategoriesRepository _categoriesRepo;
 
-    public ImagesController( IImagesRepository imagesRepo, IUsersRepository usersRepo)
+    public ImagesController( IImagesRepository imagesRepo, ICategoriesRepository categoriesRepo)
     {
       _imagesRepo = imagesRepo;
-      _usersRepo = usersRepo;
+      _categoriesRepo = categoriesRepo;
     }
 
     [HttpGet]
@@ -52,18 +52,18 @@ namespace api.Controllers
       return Ok(images.ToImagesDto());
     }
 
-    [HttpPost("{userID:int}")]
-    public async Task<IActionResult> Create([FromRoute] int userID, CreateImagesDto imagesDto)
+    [HttpPost("{categoryID:int}")]
+    public async Task<IActionResult> Create([FromRoute] int categoryID, CreateImagesDto imagesDto)
     {
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      if(!await _usersRepo.UserExists(userID))
+      if(!await _categoriesRepo.CategoryExists(categoryID))
       {
-        return BadRequest("User does not exist");
+        return BadRequest("Category does not exist");
       }
 
-      var imagesModel = imagesDto.ToImagesFromCreate(userID);
+      var imagesModel = imagesDto.ToImagesFromCreate(categoryID);
       await _imagesRepo.CreateAsync(imagesModel);
       return CreatedAtAction(nameof(GetById), new {id = imagesModel.ImageID}, imagesModel.ToImagesDto());
     }
