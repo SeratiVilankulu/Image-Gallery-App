@@ -18,7 +18,8 @@ namespace api.Controllers
     private readonly UserManager<AppUser> _userManager;
     private readonly IImagesRepository _imagesRepo;
     private readonly IUserImagesRepository _userImagesRepo;
-    public UserImagesController(UserManager<AppUser> userManager, IImagesRepository imagesRepo, IUserImagesRepository userImagesRepo)
+    public UserImagesController(UserManager<AppUser> userManager, 
+    IImagesRepository imagesRepo, IUserImagesRepository userImagesRepo)
     {
       _userManager = userManager;
       _imagesRepo = imagesRepo;

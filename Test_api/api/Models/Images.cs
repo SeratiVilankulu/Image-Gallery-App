@@ -18,7 +18,7 @@ namespace api.Models
     public string Description { get; set; } = string.Empty;
     public string ImageURL { get; set; } = string.Empty;
     public string SecretEditLink { get; set; } = string.Empty;
-    public DateTime UploadDate { get; set; }
+    public DateTime UploadDate { get; set; } = DateTime.Now;
 
     // Foreign key property for Categories
     public int? CategoryId { get; set; }  // Nullable, if an image may not be linked to a category
@@ -26,6 +26,7 @@ namespace api.Models
     // Navigation property to Categories
     public Categories? Category { get; set; }  // Navigation to the Categories entity
     public List<UserImages> UserImages { get; set; } = new List<UserImages>();
+    public List<Comments> Comments { get; set; } = new List<Comments>();
   }
 
 }

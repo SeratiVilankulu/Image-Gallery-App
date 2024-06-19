@@ -18,6 +18,7 @@ namespace api.Data
     }
     public DbSet<Images> Images { get; set; }
     public DbSet<Categories> Categories { get; set; }
+    public DbSet<Comments> Comments { get; set; }
     public DbSet<UserImages> UserImages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
