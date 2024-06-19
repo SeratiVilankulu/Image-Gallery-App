@@ -28,7 +28,7 @@ namespace api.Repository
     {
       var imagesModel = await _context.Images.FirstOrDefaultAsync(x => x.ImageID == id);
 
-      if(imagesModel == null)
+      if (imagesModel == null)
       {
         return null;
       }
@@ -38,7 +38,7 @@ namespace api.Repository
       return imagesModel;
     }
 
-        public async Task<List<Images>> GetAllAsync()
+    public async Task<List<Images>> GetAllAsync()
     {
       return await _context.Images.Include(c => c.Comments).ToListAsync();
     }
@@ -48,11 +48,16 @@ namespace api.Repository
       return await _context.Images.Include(i => i.Comments).FirstOrDefaultAsync(i => i.ImageID == id);
     }
 
+    public Task<bool> ImageExists(int id)
+    {
+      return _context.Images.AnyAsync(s => s.ImageID == id);
+    }
+
     public async Task<Images?> UpdateAsync(int id, Images imagesModel)
     {
       var existingImages = await _context.Images.FindAsync(id);
 
-      if(existingImages == null)
+      if (existingImages == null)
       {
         return null;
       }
@@ -60,7 +65,7 @@ namespace api.Repository
       existingImages.Title = imagesModel.Title;
       existingImages.Description = imagesModel.Description;
       existingImages.ImageURL = imagesModel.ImageURL;
-      
+
       await _context.SaveChangesAsync();
 
       return existingImages;

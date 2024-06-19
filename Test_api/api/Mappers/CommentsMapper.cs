@@ -18,5 +18,13 @@ namespace api.Mappers
         CreatedOn = commentsModel.CreatedOn
       };
     }
+    public static Comments ToCommentsFromCreate(this CreateCommentsDto commentsDto, int imagesID)
+    {
+      return new Comments
+      {
+        Comment = commentsDto.Comment,
+        ImageID = imagesID
+      };
+    }
   }
 }

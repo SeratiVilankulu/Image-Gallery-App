@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Comments;
 using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Authorization;
@@ -14,12 +15,14 @@ namespace api.Controllers
   public class CommentsController : ControllerBase
   {
     private readonly ICommentsRepository _commentsRepo;
-    public CommentsController(ICommentsRepository commentsRepo)
+    private readonly IImagesRepository _imagesRepo;
+    public CommentsController(ICommentsRepository commentsRepo, IImagesRepository imagesRepo)
     {
       _commentsRepo = commentsRepo;
+      _imagesRepo = imagesRepo;
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     [Authorize]
     public async Task<IActionResult> GetAll()
     {
@@ -40,6 +43,20 @@ namespace api.Controllers
       }
 
       return Ok(comment.ToCommentsDto());
+    }
+
+    [HttpPost("{imagesID}")]
+
+    public async Task<IActionResult> Create([FromRoute] int imagesID, CreateCommentsDto commentsDto)
+    {
+      if (!await _imagesRepo.ImageExists(imagesID))
+      {
+        return BadRequest("Image doesn not exist");
+      }
+
+      var commentsModel = commentsDto.ToCommentsFromCreate(imagesID);
+      await _commentsRepo.CreateAsync(commentsModel);
+      return CreatedAtAction(nameof(GetById), new { id = commentsModel }, commentsModel.ToCommentsDto());
     }
   }
 }
