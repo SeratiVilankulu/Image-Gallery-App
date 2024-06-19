@@ -26,5 +26,13 @@ namespace api.Mappers
         ImageID = imagesID
       };
     }
+
+    public static Comments ToCommentsFromUpdate(this UpdateCommentsRequestDto commentsDto)
+    {
+      return new Comments
+      {
+        Comment = commentsDto.Comment,
+      };
+    }
   }
 }
