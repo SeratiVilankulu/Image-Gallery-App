@@ -12,5 +12,6 @@ namespace api.Models
         public string LastName { get; set; } = string.Empty;
         public DateOnly PasswordChangeDate { get; set; }
         public DateOnly ProfileCreatedDate { get; set; }
+        public List<UserImages> UserImages { get; set; } = new List<UserImages>();
     }
 }

@@ -18,10 +18,26 @@ namespace api.Data
     }
     public DbSet<Images> Images { get; set; }
     public DbSet<Categories> Categories { get; set; }
+    public DbSet<UserImages> UserImages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
+
+      modelBuilder.Entity<UserImages>(x => x.HasKey(p => new { p.AppUserId, p.ImageID }));
+
+      // Configure many-to-many relationship between AppUser and Images
+      modelBuilder.Entity<UserImages>()
+       .HasOne(u => u.AppUser)
+       .WithMany(u => u.UserImages)
+       .HasForeignKey(p => p.AppUserId);
+
+      modelBuilder.Entity<UserImages>()
+       .HasOne(u => u.Images)
+       .WithMany(u => u.UserImages)
+       .HasForeignKey(p => p.ImageID);
+
+
       // Configure one-to-many relationship between Categories and Images
       modelBuilder.Entity<Images>()
           .HasOne(i => i.Category)

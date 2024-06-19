@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace api.Models
 {
+  [Table("Images")]
   public class Images
-{
+  {
     [Key]
     public int ImageID { get; set; }  // Primary key for Images
 
@@ -23,6 +25,7 @@ namespace api.Models
 
     // Navigation property to Categories
     public Categories? Category { get; set; }  // Navigation to the Categories entity
-}
+    public List<UserImages> UserImages { get; set; } = new List<UserImages>();
+  }
 
 }

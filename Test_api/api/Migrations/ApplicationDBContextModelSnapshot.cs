@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "83fb6ddf-faf6-4cda-9690-8067c0f1fd4c",
+                            Id = "3b64ec2c-152a-476a-a1e4-f8efc5904162",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "19c67c11-397f-4f0a-b2f5-7c6c380fe87d",
+                            Id = "88ff2d7c-252b-4f8c-9c25-f1007e7a7c9d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -305,6 +305,24 @@ namespace api.Migrations
                     b.ToTable("Images");
                 });
 
+            modelBuilder.Entity("api.Models.UserImages", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ImageID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserImagesID")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "ImageID");
+
+                    b.HasIndex("ImageID");
+
+                    b.ToTable("UserImages");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -366,9 +384,38 @@ namespace api.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("api.Models.UserImages", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("UserImages")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Images", "Images")
+                        .WithMany("UserImages")
+                        .HasForeignKey("ImageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("UserImages");
+                });
+
             modelBuilder.Entity("api.Models.Categories", b =>
                 {
                     b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("api.Models.Images", b =>
+                {
+                    b.Navigation("UserImages");
                 });
 #pragma warning restore 612, 618
         }
