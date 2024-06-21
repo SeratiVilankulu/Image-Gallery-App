@@ -91,6 +91,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
+builder.Services.AddScoped<ITagsRepository, TagsRepository>();
 builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 

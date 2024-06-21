@@ -25,7 +25,7 @@ namespace api.Models
 
     // Navigation property to Categories
     public Categories? Category { get; set; }  // Navigation to the Categories entity
-    public List<UserImages> UserImages { get; set; } = new List<UserImages>();
+    public List<ImageTags> ImageTags { get; set; } = new List<ImageTags>();
     public List<Comments> Comments { get; set; } = new List<Comments>();
   }
 

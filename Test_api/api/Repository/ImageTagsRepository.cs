@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-  public class UserImageRepository : IUserImagesRepository
+  public class ImageTagsRepository : IImagesRepository
   {
     private readonly ApplicationDBContext _context;
-    public UserImageRepository(ApplicationDBContext context)
+    public ImageTagsRepository(ApplicationDBContext context)
     {
       _context = context;
     }
-    public async Task<List<Images>> GetUserUserImages(AppUser user)
+    public async Task<List<Images>> GetUserImageTags(Tags tag)
     {
-      return await _context.UserImages.Where(u => u.AppUserId == user.Id)
+      return await _context.UserImages.Where(u => u.TagID == tag.Id)
       .Select(images => new Images
       {
         ImageID = images.Images.ImageID,

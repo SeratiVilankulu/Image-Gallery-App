@@ -9,9 +9,9 @@ namespace api.Models
   [Table("ImageTags")]
   public class ImageTags
   {
-    public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
+    public int TagID { get; set; }
     public int ImageID { get; set; }
+    public Tags Tags { get; set; }
     public Images Images { get; set; }
 
   }
