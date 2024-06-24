@@ -22,6 +22,21 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ImageTags", b =>
+                {
+                    b.Property<int>("ImageID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageID", "TagID");
+
+                    b.HasIndex("TagID");
+
+                    b.ToTable("ImageTags");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -51,13 +66,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3b64ec2c-152a-476a-a1e4-f8efc5904162",
+                            Id = "a8569701-d6ad-492d-b1b5-e80669a18e54",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "88ff2d7c-252b-4f8c-9c25-f1007e7a7c9d",
+                            Id = "85dfae68-02f8-4448-be6d-6c7f62623a2e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -268,6 +283,36 @@ namespace api.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("api.Models.Comments", b =>
+                {
+                    b.Property<int>("CommentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentID"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ImageID")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommentID");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ImageID");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("api.Models.Images", b =>
                 {
                     b.Property<int>("ImageID")
@@ -275,6 +320,9 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageID"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
@@ -300,27 +348,45 @@ namespace api.Migrations
 
                     b.HasKey("ImageID");
 
+                    b.HasIndex("AppUserId");
+
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("api.Models.UserImages", b =>
+            modelBuilder.Entity("api.Models.Tags", b =>
                 {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ImageID")
+                    b.Property<int>("TagID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("UserImagesID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagID"));
 
-                    b.HasKey("AppUserId", "ImageID");
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ImageID");
+                    b.HasKey("TagID");
 
-                    b.ToTable("UserImages");
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("ImageTags", b =>
+                {
+                    b.HasOne("api.Models.Images", null)
+                        .WithMany()
+                        .HasForeignKey("ImageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ImageTags_Images");
+
+                    b.HasOne("api.Models.Tags", null)
+                        .WithMany()
+                        .HasForeignKey("TagID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_ImageTags_Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -374,38 +440,44 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("api.Models.Comments", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUsers")
+                        .WithMany("Comments")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("api.Models.Images", "Image")
+                        .WithMany("Comments")
+                        .HasForeignKey("ImageID");
+
+                    b.Navigation("AppUsers");
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("api.Models.Images", b =>
                 {
+                    b.HasOne("api.Models.AppUser", "AppUsers")
+                        .WithMany("Images")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("api.Models.Categories", "Category")
                         .WithMany("Images")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.Navigation("AppUsers");
+
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("api.Models.UserImages", b =>
-                {
-                    b.HasOne("api.Models.AppUser", "AppUser")
-                        .WithMany("UserImages")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Models.Images", "Images")
-                        .WithMany("UserImages")
-                        .HasForeignKey("ImageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
-                    b.Navigation("UserImages");
+                    b.Navigation("Comments");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("api.Models.Categories", b =>
@@ -415,7 +487,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Images", b =>
                 {
-                    b.Navigation("UserImages");
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

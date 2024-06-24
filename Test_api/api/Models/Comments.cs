@@ -18,8 +18,8 @@ namespace api.Models
     // Foreign key for Images
     public int? ImageID { get; set; }
     public Images? Image { get; set; }  // Navigation to the Images entity
-    public string AppUserId { get; set; }
-    public AppUser AppUser { get; set; }
+    public string? AppUserId { get; set; }
+    public AppUser? AppUsers { get; set; }
 
 
   }

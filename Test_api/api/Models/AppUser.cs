@@ -12,6 +12,7 @@ namespace api.Models
         public string LastName { get; set; } = string.Empty;
         public DateOnly PasswordChangeDate { get; set; }
         public DateOnly ProfileCreatedDate { get; set; }
-        public List<Tags> Tags { get; set; } = new List<Tags>();
+        public List<Images> Images { get; set; } = new List<Images>();
+        public List<Comments> Comments { get; set; } = new List<Comments>();
     }
 }
