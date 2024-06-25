@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240624103349_ImageTagsManyToMany")]
-    partial class ImageTagsManyToMany
+    [Migration("20240625140654_ManytoManyRelationships")]
+    partial class ManytoManyRelationships
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,13 +69,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a8569701-d6ad-492d-b1b5-e80669a18e54",
+                            Id = "f66a12db-a798-4b3f-b1e7-d785430e6e3f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "85dfae68-02f8-4448-be6d-6c7f62623a2e",
+                            Id = "bdc1b94c-9df8-4b10-96fc-e17e4310a388",
                             Name = "User",
                             NormalizedName = "USER"
                         });

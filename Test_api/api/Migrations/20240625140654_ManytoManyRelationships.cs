@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class ImageTagsManyToMany : Migration
+    public partial class ManytoManyRelationships : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -276,8 +276,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "85dfae68-02f8-4448-be6d-6c7f62623a2e", null, "User", "USER" },
-                    { "a8569701-d6ad-492d-b1b5-e80669a18e54", null, "Admin", "ADMIN" }
+                    { "bdc1b94c-9df8-4b10-96fc-e17e4310a388", null, "User", "USER" },
+                    { "f66a12db-a798-4b3f-b1e7-d785430e6e3f", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
