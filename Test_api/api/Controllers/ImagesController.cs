@@ -30,7 +30,7 @@ namespace api.Controllers
 
       var images = await _imagesRepo.GetAllAsync();
 
-      var imageDto = images.Select(s => s.ToImagesDto());
+      var imageDto = images.Select(s => s.ToImagesDto()).ToList();
 
       return Ok(imageDto);
       

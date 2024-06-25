@@ -15,7 +15,9 @@ namespace api.Mappers
       {
         CommentID = commentsModel.CommentID,
         Comment = commentsModel.Comment,
-        CreatedOn = commentsModel.CreatedOn
+        CreatedOn = commentsModel.CreatedOn,
+        CreatedBy = commentsModel.AppUsers.UserName,
+        ImageID = commentsModel.ImageID
       };
     }
     public static Comments ToCommentsFromCreate(this CreateCommentsDto commentsDto, int imagesID)

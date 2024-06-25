@@ -40,7 +40,7 @@ namespace api.Repository
 
     public async Task<List<Images>> GetAllAsync()
     {
-      return await _context.Images.Include(c => c.Comments).ToListAsync();
+      return await _context.Images.Include(c => c.Comments).ThenInclude(a => a.AppUsers).ToListAsync();
     }
 
     public async Task<Images?> GetByIdAsync(int id)

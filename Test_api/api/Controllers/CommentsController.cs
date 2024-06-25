@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Comments;
+using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -16,13 +19,16 @@ namespace api.Controllers
   {
     private readonly ICommentsRepository _commentsRepo;
     private readonly IImagesRepository _imagesRepo;
-    public CommentsController(ICommentsRepository commentsRepo, IImagesRepository imagesRepo)
+    private readonly UserManager<AppUser> _userManager;
+    public CommentsController(ICommentsRepository commentsRepo,
+    IImagesRepository imagesRepo, UserManager<AppUser> userManager)
     {
       _commentsRepo = commentsRepo;
       _imagesRepo = imagesRepo;
+      _userManager = userManager;
     }
 
-    [HttpGet("{id}")]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetAll()
     {
@@ -33,6 +39,7 @@ namespace api.Controllers
       return Ok(commentsDto);
     }
 
+    [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
       var comment = await _commentsRepo.GetByIdAsync(id);
@@ -45,22 +52,29 @@ namespace api.Controllers
       return Ok(comment.ToCommentsDto());
     }
 
-    [HttpPost("{imagesID}")]
-
+    [HttpPost]
+    [Route("{imagesID:int}")]
     public async Task<IActionResult> Create([FromRoute] int imagesID, CreateCommentsDto commentsDto)
     {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
       if (!await _imagesRepo.ImageExists(imagesID))
       {
-        return BadRequest("Image doesn not exist");
+        return BadRequest("Image does not exist");
       }
 
+      var username = User.GetUsername();
+      var appUser = await _userManager.FindByNameAsync(username);
+
       var commentsModel = commentsDto.ToCommentsFromCreate(imagesID);
+      commentsModel.AppUserId = appUser.Id;
       await _commentsRepo.CreateAsync(commentsModel);
       return CreatedAtAction(nameof(GetById), new { id = commentsModel.CommentID }, commentsModel.ToCommentsDto());
     }
 
     [HttpPut]
-    [Route("{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentsRequestDto updateDto)
     {
       var comments = await _commentsRepo.UpdateAsync(id, updateDto.ToCommentsFromUpdate());

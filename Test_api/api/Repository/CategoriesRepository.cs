@@ -31,7 +31,7 @@ namespace api.Repository
     {
       var categoriesModel = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
 
-      if(categoriesModel == null)
+      if (categoriesModel == null)
       {
         return null;
       }
@@ -43,27 +43,27 @@ namespace api.Repository
 
     public async Task<List<Categories>> GetAllAsync(QueryObject query)
     {
-      var categories =  _context.Categories.Include(c => c.Images).AsQueryable();
+      var categories = _context.Categories.Include(c => c.Images).ThenInclude(a => a.AppUsers).AsQueryable();
 
-      if(!string.IsNullOrWhiteSpace(query.CategoryType))
+      if (!string.IsNullOrWhiteSpace(query.CategoryType))
       {
         categories = categories.Where(s => s.CategoryType.Contains(query.CategoryType));
       }
 
-      if(!string.IsNullOrWhiteSpace(query.CategoryType))
+      if (!string.IsNullOrWhiteSpace(query.CategoryType))
       {
         categories = categories.Where(s => s.CategoryType.Contains(query.CategoryType));
       }
 
-      if(!string.IsNullOrWhiteSpace(query.SortBy))
+      if (!string.IsNullOrWhiteSpace(query.SortBy))
       {
-        if(query.SortBy.Equals("CategoryType", StringComparison.OrdinalIgnoreCase))
+        if (query.SortBy.Equals("CategoryType", StringComparison.OrdinalIgnoreCase))
         {
-          categories = query.IsDecsending ? categories.OrderByDescending(s => s.CategoryType): categories.OrderBy(s => s.CategoryType);
+          categories = query.IsDecsending ? categories.OrderByDescending(s => s.CategoryType) : categories.OrderBy(s => s.CategoryType);
         }
       }
 
-      var skipNumber = (query.PageNumber -1) * query.PageSize;
+      var skipNumber = (query.PageNumber - 1) * query.PageSize;
 
       return await categories.Skip(skipNumber).Take(query.PageSize).ToListAsync();
     }
@@ -82,14 +82,14 @@ namespace api.Repository
     {
       var existingCategory = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryID == id);
 
-      if(existingCategory == null)
+      if (existingCategory == null)
       {
         return null;
       }
 
       existingCategory.CategoryType = categoriesDto.CategoryType;
       existingCategory.Total = categoriesDto.Total;
-      
+
       await _context.SaveChangesAsync();
 
       return existingCategory;

@@ -27,7 +27,6 @@ namespace api.Controllers
     }
 
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
     {
       if (!ModelState.IsValid)
@@ -35,9 +34,9 @@ namespace api.Controllers
 
       var categories = await _categoriesRepo.GetAllAsync(query);
 
-      var categoriesDto = categories.Select(s => s.ToCategoryDto());
+      var categoriesDto = categories.Select(s => s.ToCategoryDto()).ToList();
 
-      return Ok(categories);
+      return Ok(categoriesDto);
     }
 
     [HttpGet("{id:int}")]
