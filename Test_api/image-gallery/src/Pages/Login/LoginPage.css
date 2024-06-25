@@ -1,0 +1,135 @@
+body {
+  background: url("/image-gallery/images/Image.jpg");
+  background-position: 200cm;
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+}
+
+.wrapper {
+  width: 722px;
+  height: 548px;
+  top: 239px;
+  left: 359px;
+  background: white;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 50px 50px;
+  margin: 90px;
+  margin-left: 500px;
+  color: rgb(15, 60, 76);
+}
+
+.wrapper h1 {
+  width: Hug (115px) px;
+  height: Hug (68px) px;
+  top: 105px;
+  left: 303px;
+  padding: 10px 0px 0px 0px;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.wrapper p {
+  font-size: 12px;
+  margin: 5px 5px;
+  margin-left: 80px;
+  font-weight: 600;
+}
+
+.wrapper .input-box {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  margin: 30px 30px;
+}
+
+.input-box input {
+  width: 400px;
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #aaa8a8;
+  border-radius: 5px;
+  font-size: 14px;
+  color: rgb(15, 60, 76);
+  margin-left: 80px;
+}
+
+.input-box input::placeholder {
+  color: grey;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  font-style: none;
+  font-style: normal;
+  padding: 30px;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.input-box .icon {
+  color: grey;
+  position: absolute;
+  right: 20px;
+  top: 70%;
+  transform: translate(-2810%);
+  font-size: 16px;
+  width: 400px;
+  height: 58px;
+  top: 201px;
+  left: 160px;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin: 0 0 15px;
+}
+
+.remember-forgot label input {
+  accent-color: rgb(15, 60, 76);
+  margin-left: 110px;
+}
+
+.remember-forgot a {
+  color: rgb(15, 60, 76);
+  text-decoration: none;
+  margin-right: 110px;
+}
+
+.remember-forgot a:hover {
+  cursor: pointer;
+}
+
+.login {
+  width: 400px;
+  height: 44px;
+  top: 409px;
+  left: 161px;
+  margin-top: 30px;
+  margin-left: 110px;
+  background: rgb(33, 135, 171);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  gap: 10px;
+}
+
+.wrapper .register-link p {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 35px;
+  font-weight: 400;
+  margin-left: 0px ;
+}
+
+.register-page {
+  cursor: pointer;
+  color: rgb(15, 60, 76);
+  font-weight: 700;
+  text-decoration: none;
+}

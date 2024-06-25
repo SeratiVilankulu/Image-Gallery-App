@@ -1,0 +1,139 @@
+.register-container {
+  font-family: "Inter", sans-serif;
+  color: rgb(15, 60, 76);
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 0px;
+  background-color: white;
+  width: 1715px;
+  height: 925px;
+  top: 6967px;
+  left: 3584px;
+}
+
+.form-container {
+  width: 40%;
+  height: 100%;
+  padding-top: 120px;
+  padding-bottom: 50px;
+  padding-left: 120px;
+  padding-right: 10px;
+}
+
+.register-image {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  padding: 30px;
+}
+
+img {
+  width: 966px;
+  height: 800px;
+  top: 54px;
+  border-radius: 4px;
+}
+
+.register h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: rgb(15, 60, 76);
+}
+
+.register .welcome {
+  font-size: 12px;
+  margin-bottom: 20px;
+  color: rgb(15, 60, 76);
+}
+
+.register-form p {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(15, 60, 76);
+  padding-left: 3px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.register-form input::placeholder {
+  color: grey;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  font-style: none;
+  font-style: normal;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.register-form {
+  margin-bottom: 10px;
+  width: 400px;
+  height: 52px;
+  top: 274px;
+  left: 73px;
+}
+
+.register-form input {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.register-btn {
+  background-color: rgb(27, 139, 181);
+  color: white;
+  border: none;
+  width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 0;
+}
+
+.separator {
+  font-family: "Inter", sans-serif;
+  padding: 0 200px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.option {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  border: none;
+  width: 400px;
+  height: 44px;
+  margin-left: 0;
+  align-items: center;
+  border-radius: 4px;
+  margin-top: 20px;
+  background: white;
+  color: rgb(15, 60, 76);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  top: 708px;
+  left: 73px;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+}
+
+svg {
+  font-size: 15px;
+}
+
+.signin-btn {
+  padding-left: 10px;
+  text-decoration: none;
+  color: rgb(15, 60, 76);
+}

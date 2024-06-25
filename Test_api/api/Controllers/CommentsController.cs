@@ -73,7 +73,7 @@ namespace api.Controllers
       return CreatedAtAction(nameof(GetById), new { id = commentsModel.CommentID }, commentsModel.ToCommentsDto());
     }
 
-    [HttpPut]
+    [HttpPatch]
     [Route("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentsRequestDto updateDto)
     {
