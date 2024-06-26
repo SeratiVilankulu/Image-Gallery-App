@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240625140654_ManytoManyRelationships")]
-    partial class ManytoManyRelationships
+    [Migration("20240626064336_ManyToManyRelationships")]
+    partial class ManyToManyRelationships
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,13 +69,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f66a12db-a798-4b3f-b1e7-d785430e6e3f",
+                            Id = "eb4c993a-b28a-4600-87fe-f942fe925e2f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bdc1b94c-9df8-4b10-96fc-e17e4310a388",
+                            Id = "f2e34fe5-310a-44a3-ad55-dfc9d71c84de",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -228,8 +228,8 @@ namespace api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<DateOnly>("PasswordChangeDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("PasswordChangeDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -240,8 +240,8 @@ namespace api.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("ProfileCreatedDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("ProfileCreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

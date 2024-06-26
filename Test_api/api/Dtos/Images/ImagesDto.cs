@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Categories;
 using api.Dtos.Comments;
+using api.Dtos.Tags;
 
 namespace api.Dtos.Images
 {
@@ -15,5 +17,7 @@ namespace api.Dtos.Images
     public string SecretEditLink { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; }
     public List<CommentsDto> Comments { get; set; }
+    public List<CategoriesDto> Categories { get; set; }
+    public List<TagsDto> Tags { get; set; }
   }
 }

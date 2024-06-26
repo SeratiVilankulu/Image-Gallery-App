@@ -40,13 +40,21 @@ namespace api.Repository
 
     public async Task<List<Images>> GetAllAsync()
     {
-      return await _context.Images.Include(c => c.Comments).ThenInclude(a => a.AppUsers).ToListAsync();
+      return await _context.Images.Include(c => c.Category)
+      .Include(t => t.Tags)
+      .Include(c => c.Comments)
+      .ThenInclude(a => a.AppUsers).ToListAsync();
+
     }
 
     public async Task<Images?> GetByIdAsync(int id)
     {
-      return await _context.Images.Include(i => i.Comments).FirstOrDefaultAsync(i => i.ImageID == id);
+      return await _context.Images
+        .Include(i => i.Comments)
+        .ThenInclude(c => c.AppUsers)  // Include the AppUsers relation
+        .FirstOrDefaultAsync(i => i.ImageID == id);
     }
+
 
     public Task<bool> ImageExists(int id)
     {

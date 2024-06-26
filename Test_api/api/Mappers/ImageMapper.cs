@@ -19,7 +19,7 @@ namespace api.Mappers
         ImageURL = imagesModel.ImageURL,
         SecretEditLink = imagesModel.SecretEditLink,
         UploadDate = imagesModel.UploadDate,
-        Comments = imagesModel.Comments.Select(c => c.ToCommentsDto()).ToList()
+        Comments = imagesModel.Comments.Select(c => c.ToCommentsDto()).ToList(),
       };
     }
 

@@ -14,6 +14,6 @@ namespace api.Models
     public int TagID { get; set; }
     public string TagName { get; set; } = string.Empty;
 
-    public ICollection<Images> Images { get; set; } = new List<Images>();
+    public List<Images> Images { get; set; } = new List<Images>();
   }
 }

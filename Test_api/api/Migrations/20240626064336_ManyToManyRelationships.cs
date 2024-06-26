@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class ManytoManyRelationships : Migration
+    public partial class ManyToManyRelationships : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,8 +34,8 @@ namespace api.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordChangeDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    ProfileCreatedDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    PasswordChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProfileCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -276,8 +276,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "bdc1b94c-9df8-4b10-96fc-e17e4310a388", null, "User", "USER" },
-                    { "f66a12db-a798-4b3f-b1e7-d785430e6e3f", null, "Admin", "ADMIN" }
+                    { "eb4c993a-b28a-4600-87fe-f942fe925e2f", null, "Admin", "ADMIN" },
+                    { "f2e34fe5-310a-44a3-ad55-dfc9d71c84de", null, "User", "USER" }
                 });
 
             migrationBuilder.CreateIndex(

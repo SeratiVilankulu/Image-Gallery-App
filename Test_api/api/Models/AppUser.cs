@@ -10,8 +10,8 @@ namespace api.Models
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        public DateOnly PasswordChangeDate { get; set; }
-        public DateOnly ProfileCreatedDate { get; set; }
+        public DateTime PasswordChangeDate { get; set; } = DateTime.Now;
+        public DateTime ProfileCreatedDate { get; set; } = DateTime.Now;
         public List<Images> Images { get; set; } = new List<Images>();
         public List<Comments> Comments { get; set; } = new List<Comments>();
     }

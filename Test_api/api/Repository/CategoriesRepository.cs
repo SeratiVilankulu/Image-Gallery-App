@@ -43,7 +43,7 @@ namespace api.Repository
 
     public async Task<List<Categories>> GetAllAsync(QueryObject query)
     {
-      var categories = _context.Categories.Include(c => c.Images).ThenInclude(a => a.AppUsers).AsQueryable();
+      var categories = _context.Categories.Include(c => c.Images).AsQueryable();
 
       if (!string.IsNullOrWhiteSpace(query.CategoryType))
       {
