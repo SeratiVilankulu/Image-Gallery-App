@@ -41,7 +41,8 @@ namespace api.Repository
     public async Task<List<Images>> GetAllAsync()
     {
       return await _context.Images.Include(c => c.Category)
-      .Include(t => t.Tags)
+      .Include(t => t.ImageTags)
+      .ThenInclude(t => t.Tags)
       .Include(c => c.Comments)
       .ThenInclude(a => a.AppUsers).ToListAsync();
 

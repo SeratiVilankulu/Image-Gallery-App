@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class ManyToManyRelationships : Migration
+    public partial class ManyToManyRelationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -251,20 +251,22 @@ namespace api.Migrations
                 name: "ImageTags",
                 columns: table => new
                 {
+                    ImageTagID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ImageID = table.Column<int>(type: "int", nullable: false),
                     TagID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImageTags", x => new { x.ImageID, x.TagID });
+                    table.PrimaryKey("PK_ImageTags", x => x.ImageTagID);
                     table.ForeignKey(
-                        name: "FK_ImageTags_Images",
+                        name: "FK_ImageTags_Images_ImageID",
                         column: x => x.ImageID,
                         principalTable: "Images",
                         principalColumn: "ImageID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ImageTags_Tags",
+                        name: "FK_ImageTags_Tags_TagID",
                         column: x => x.TagID,
                         principalTable: "Tags",
                         principalColumn: "TagID",
@@ -276,8 +278,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "eb4c993a-b28a-4600-87fe-f942fe925e2f", null, "Admin", "ADMIN" },
-                    { "f2e34fe5-310a-44a3-ad55-dfc9d71c84de", null, "User", "USER" }
+                    { "7075e222-e7bc-4bf6-9608-25a629080f13", null, "User", "USER" },
+                    { "8f5f8158-14dd-4e46-ac46-c94715e66e8e", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -338,6 +340,11 @@ namespace api.Migrations
                 name: "IX_Images_CategoryId",
                 table: "Images",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImageTags_ImageID",
+                table: "ImageTags",
+                column: "ImageID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ImageTags_TagID",

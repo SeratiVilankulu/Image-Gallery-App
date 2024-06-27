@@ -25,14 +25,13 @@ namespace api.Controllers
     }
 
     [HttpGet]
-    [Authorize]
     public async Task<IActionResult> GetAll()
     {
       var tags = await _tagsRepo.GetAllAsync();
 
       var tagsDto = tags.Select(s => s.ToTagsDto());
 
-      return Ok(tags);
+      return Ok(tags); 
     }
 
     [HttpGet("{id}")]

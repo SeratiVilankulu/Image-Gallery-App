@@ -20,6 +20,7 @@ namespace api.Data
     public DbSet<Categories> Categories { get; set; }
     public DbSet<Comments> Comments { get; set; }
     public DbSet<Tags> Tags { get; set; }
+    public DbSet<ImageTags> ImageTags { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,20 +47,22 @@ namespace api.Data
           .HasForeignKey(i => i.AppUserId)  // Foreign key property name
           .OnDelete(DeleteBehavior.Cascade);
 
-      modelBuilder.Entity<Tags>()
-          .HasMany(t => t.Images)
-          .WithMany(i => i.Tags)
-          .UsingEntity<Dictionary<string, object>>(
-                "ImageTags", // Name of the join table
-                j => j.HasOne<Images>()
-                      .WithMany()
-                      .HasForeignKey("ImageID") // Custom foreign key name for Images
-                      .HasConstraintName("FK_ImageTags_Images"), // Optional custom constraint name
-                j => j.HasOne<Tags>()
-                      .WithMany()
-                      .HasForeignKey("TagID") // Custom foreign key name for Tags
-                      .HasConstraintName("FK_ImageTags_Tags") // Optional custom constraint name
-            );
+      // Configure many-to-many relationship between Tags and Images
+      modelBuilder.Entity<ImageTags>(entity =>
+    {
+      entity.HasKey(e => e.ImageTagID); // Primary key
+
+      entity.Property(e => e.ImageTagID)
+          .ValueGeneratedOnAdd(); // Auto-generate ImageTagID
+
+      entity.HasOne(e => e.Images)
+          .WithMany(i => i.ImageTags)
+          .HasForeignKey(e => e.ImageID);
+
+      entity.HasOne(e => e.Tags)
+          .WithMany(t => t.ImageTags)
+          .HasForeignKey(e => e.TagID);
+    });
       // Other configurations...
 
       List<IdentityRole> roles = new List<IdentityRole>

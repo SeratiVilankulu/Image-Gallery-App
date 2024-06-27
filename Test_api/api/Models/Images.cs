@@ -29,8 +29,8 @@ namespace api.Models
     public AppUser? AppUsers { get; set; }
     public List<Comments> Comments { get; set; } = new List<Comments>();
 
-    // Navigation property for many-to-many relationship with Tags
-    public List<Tags> Tags { get; set; } = new List<Tags>();
+    // Navigation property for many-to-many relationship with ImageTags
+    public List<ImageTags> ImageTags { get; set; } = new List<ImageTags>();
   }
 
 }

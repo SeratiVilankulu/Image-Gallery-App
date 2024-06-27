@@ -22,21 +22,6 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ImageTags", b =>
-                {
-                    b.Property<int>("ImageID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ImageID", "TagID");
-
-                    b.HasIndex("TagID");
-
-                    b.ToTable("ImageTags");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -66,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb4c993a-b28a-4600-87fe-f942fe925e2f",
+                            Id = "8f5f8158-14dd-4e46-ac46-c94715e66e8e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "f2e34fe5-310a-44a3-ad55-dfc9d71c84de",
+                            Id = "7075e222-e7bc-4bf6-9608-25a629080f13",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -313,6 +298,29 @@ namespace api.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("api.Models.ImageTags", b =>
+                {
+                    b.Property<int>("ImageTagID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageTagID"));
+
+                    b.Property<int>("ImageID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ImageTagID");
+
+                    b.HasIndex("ImageID");
+
+                    b.HasIndex("TagID");
+
+                    b.ToTable("ImageTags");
+                });
+
             modelBuilder.Entity("api.Models.Images", b =>
                 {
                     b.Property<int>("ImageID")
@@ -370,23 +378,6 @@ namespace api.Migrations
                     b.HasKey("TagID");
 
                     b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("ImageTags", b =>
-                {
-                    b.HasOne("api.Models.Images", null)
-                        .WithMany()
-                        .HasForeignKey("ImageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_ImageTags_Images");
-
-                    b.HasOne("api.Models.Tags", null)
-                        .WithMany()
-                        .HasForeignKey("TagID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_ImageTags_Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -456,6 +447,25 @@ namespace api.Migrations
                     b.Navigation("Image");
                 });
 
+            modelBuilder.Entity("api.Models.ImageTags", b =>
+                {
+                    b.HasOne("api.Models.Images", "Images")
+                        .WithMany("ImageTags")
+                        .HasForeignKey("ImageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Tags", "Tags")
+                        .WithMany("ImageTags")
+                        .HasForeignKey("TagID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Images");
+
+                    b.Navigation("Tags");
+                });
+
             modelBuilder.Entity("api.Models.Images", b =>
                 {
                     b.HasOne("api.Models.AppUser", "AppUsers")
@@ -488,6 +498,13 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Images", b =>
                 {
                     b.Navigation("Comments");
+
+                    b.Navigation("ImageTags");
+                });
+
+            modelBuilder.Entity("api.Models.Tags", b =>
+                {
+                    b.Navigation("ImageTags");
                 });
 #pragma warning restore 612, 618
         }

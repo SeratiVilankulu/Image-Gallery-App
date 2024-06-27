@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Images;
+using api.Dtos.Tags;
 using api.Models;
 
 namespace api.Mappers
@@ -20,6 +21,7 @@ namespace api.Mappers
         SecretEditLink = imagesModel.SecretEditLink,
         UploadDate = imagesModel.UploadDate,
         Comments = imagesModel.Comments.Select(c => c.ToCommentsDto()).ToList(),
+        Tags = imagesModel.ImageTags.Select(it => new TagsDto { TagName = it.Tags.TagName }).ToList()
       };
     }
 
