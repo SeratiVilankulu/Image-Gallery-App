@@ -21,7 +21,7 @@ namespace api.Mappers
         SecretEditLink = imagesModel.SecretEditLink,
         UploadDate = imagesModel.UploadDate,
         Comments = imagesModel.Comments.Select(c => c.ToCommentsDto()).ToList(),
-        Tags = imagesModel.ImageTags.Select(it => new TagsDto { TagName = it.Tags.TagName }).ToList()
+        Tags = imagesModel.ImageTags.Select(it => new TagsDto { TagName = it.Tags.TagName }).ToList(),
       };
     }
 

@@ -13,7 +13,6 @@ namespace api.Mappers
     {
       return new TagsDto
       {
-        TagID = tagsModel.TagID,
         TagName = tagsModel.TagName
       };
     }

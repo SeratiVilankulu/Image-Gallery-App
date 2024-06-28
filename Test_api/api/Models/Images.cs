@@ -24,7 +24,7 @@ namespace api.Models
     public int? CategoryId { get; set; }  // Nullable, if an image may not be linked to a category
 
     // Navigation property to Categories
-    public Categories? Category { get; set; }  // Navigation to the Categories entity
+    public Categories? Categories { get; set; }  // Navigation to the Categories entity
     public string? AppUserId { get; set; }
     public AppUser? AppUsers { get; set; }
     public List<Comments> Comments { get; set; } = new List<Comments>();

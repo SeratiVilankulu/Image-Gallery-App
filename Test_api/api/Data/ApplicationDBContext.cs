@@ -28,7 +28,7 @@ namespace api.Data
 
       // Configure one-to-many relationship between Categories and Images
       modelBuilder.Entity<Images>()
-          .HasOne(i => i.Category)
+          .HasOne(i => i.Categories)
           .WithMany(c => c.Images)
           .HasForeignKey(i => i.CategoryId)  // Foreign key property name
           .OnDelete(DeleteBehavior.Cascade); // Or another appropriate delete behavior

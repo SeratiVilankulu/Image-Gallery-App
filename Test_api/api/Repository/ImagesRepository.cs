@@ -40,7 +40,7 @@ namespace api.Repository
 
     public async Task<List<Images>> GetAllAsync()
     {
-      return await _context.Images.Include(c => c.Category)
+      return await _context.Images.Include(c => c.Categories)
       .Include(t => t.ImageTags)
       .ThenInclude(t => t.Tags)
       .Include(c => c.Comments)

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AFGEBS1Ldbg=",
+  "dgSpecHash": "BixYiV6dzLs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo\\Test_api\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\Test_api\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SVilankulu\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\SVilankulu\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
