@@ -20,9 +20,7 @@ const FacebookSignin = () => {
           </div>
         </form>
 
-        <button type="submit" className="login-btn">
-          Login
-        </button>
+        <input type="submit" className="login-btn" value="Login"></input>
       </div>
 
       <div className="register-image">
