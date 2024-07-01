@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.Dtos.Images;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +63,7 @@ namespace api.Repository
       return _context.Images.AnyAsync(s => s.ImageID == id);
     }
 
-    public async Task<Images?> UpdateAsync(int id, Images imagesModel)
+    public async Task<Images?> UpdateAsync(int id, UpdateImagesRequestDto imagesDto)
     {
       var existingImages = await _context.Images.FindAsync(id);
 
@@ -71,9 +72,9 @@ namespace api.Repository
         return null;
       }
 
-      existingImages.Title = imagesModel.Title;
-      existingImages.Description = imagesModel.Description;
-      existingImages.ImageURL = imagesModel.ImageURL;
+      existingImages.Title = imagesDto.Title;
+      existingImages.Description = imagesDto.Description;
+      existingImages.ImageURL = imagesDto.ImageURL;
 
       await _context.SaveChangesAsync();
 

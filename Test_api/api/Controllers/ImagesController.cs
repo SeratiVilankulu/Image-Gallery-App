@@ -75,7 +75,7 @@ namespace api.Controllers
       if(!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var images = await _imagesRepo.UpdateAsync(id, updateDto.ToImagesFromUpdate());
+      var images = await _imagesRepo.UpdateAsync(id, updateDto);
 
       if(images == null)
       {
