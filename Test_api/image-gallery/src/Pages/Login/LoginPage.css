@@ -1,5 +1,5 @@
 body {
-  background: url("/image-gallery/images/Image.jpg");
+  background: url("/images/Image.jpg");
   background-position: 200cm;
   background-repeat: no-repeat, repeat;
   background-size: cover;
@@ -20,7 +20,7 @@ body {
 }
 
 .wrapper h1 {
-  width: Hug (115px) px;
+  width: Hug (324px) px;
   height: Hug (68px) px;
   top: 105px;
   left: 303px;
@@ -28,6 +28,7 @@ body {
   font-size: 32px;
   text-align: center;
   margin-bottom: 20px;
+  margin-top: 0px;
   font-weight: 600;
 }
 
@@ -57,7 +58,7 @@ body {
 
 .input-box input::placeholder {
   color: grey;
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 12px;
   font-style: none;
@@ -124,7 +125,7 @@ body {
   text-align: center;
   margin-top: 35px;
   font-weight: 400;
-  margin-left: 0px ;
+  margin-left: 0px;
 }
 
 .register-page {

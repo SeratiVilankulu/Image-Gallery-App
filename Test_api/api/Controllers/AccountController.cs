@@ -60,8 +60,6 @@ namespace api.Controllers
 
         var appUser = new AppUser
         {
-          FirstName = registerDto.FirstName,
-          LastName = registerDto.LastName,
           UserName = registerDto.UserName,
           Email = registerDto.Email,
         };

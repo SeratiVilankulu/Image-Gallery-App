@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace api.Models
 {
-    public class AppUser : IdentityUser
-    {
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public DateTime PasswordChangeDate { get; set; } = DateTime.Now;
-        public DateTime ProfileCreatedDate { get; set; } = DateTime.Now;
-        public List<Images> Images { get; set; } = new List<Images>();
-        public List<Comments> Comments { get; set; } = new List<Comments>();
-    }
+  public class AppUser : IdentityUser
+  {
+
+    public DateTime PasswordChangeDate { get; set; } = DateTime.Now;
+    public DateTime ProfileCreatedDate { get; set; } = DateTime.Now;
+    public List<Images> Images { get; set; } = new List<Images>();
+    public List<Comments> Comments { get; set; } = new List<Comments>();
+  }
 }

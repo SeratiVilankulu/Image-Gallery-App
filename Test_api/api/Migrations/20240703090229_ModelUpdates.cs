@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class ManyToManyRelationship : Migration
+    public partial class ModelUpdates : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +32,6 @@ namespace api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PasswordChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProfileCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -278,8 +276,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7075e222-e7bc-4bf6-9608-25a629080f13", null, "User", "USER" },
-                    { "8f5f8158-14dd-4e46-ac46-c94715e66e8e", null, "Admin", "ADMIN" }
+                    { "0a80838d-06dc-481a-817e-10a2e807532e", null, "User", "USER" },
+                    { "a9f59775-95c8-4b9d-8462-7b32791c8ae3", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(

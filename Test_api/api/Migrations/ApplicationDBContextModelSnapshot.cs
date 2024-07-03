@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8f5f8158-14dd-4e46-ac46-c94715e66e8e",
+                            Id = "a9f59775-95c8-4b9d-8462-7b32791c8ae3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "7075e222-e7bc-4bf6-9608-25a629080f13",
+                            Id = "0a80838d-06dc-481a-817e-10a2e807532e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -187,14 +187,6 @@ namespace api.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -473,14 +465,14 @@ namespace api.Migrations
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("api.Models.Categories", "Category")
+                    b.HasOne("api.Models.Categories", "Categories")
                         .WithMany("Images")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("AppUsers");
 
-                    b.Navigation("Category");
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("api.Models.AppUser", b =>
