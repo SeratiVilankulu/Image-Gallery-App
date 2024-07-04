@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 
-
 import LoginPage from "./Pages/Login/LoginPage.jsx";
 import RegisterPage from "./Pages/Register/RegisterPage.jsx";
 import GoogleSignin from "./Pages/SocialSignin/GoogleSignin.jsx";
 import FacebookSignin from "./Pages/SocialSignin/FacebookSignin.jsx";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
+import HomePage from "./Pages/Home/HomePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: "/facebook-signin",
     element: <FacebookSignin />,
+  },
+  {
+    path: "/home",
+    element: <HomePage />,
   },
   {
     path: "/reset-password",

@@ -15,8 +15,8 @@ const RegisterPage = () => {
   });
 
   const [formError, setFormError] = useState({}); // State to store error messages for form validation
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
+  const [Submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
   const navigate = useNavigate(); //Used to navigate to another page
 
   // Function to handle changes in form input fields
@@ -94,7 +94,7 @@ const RegisterPage = () => {
     }
 
     //Form is being submmited
-    setIsSubmitting(true);
+    setSubmitting(true);
 
     try {
       // Make an API call to register the user
@@ -104,11 +104,11 @@ const RegisterPage = () => {
         Password: formInput.Password,
       });
       setSuccessMsg("Successfully registered!");
-      setTimeout(() => navigate("/"), 1000); //redirect to login page once successful
+      setTimeout(() => navigate("/"), 1500); //redirect to login page once successful
     } catch (error) {
       setFormError({ api: "Registration failed. Please try again." }); //If registraction fails
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
@@ -130,7 +130,7 @@ const RegisterPage = () => {
               name="UserName"
               type="text"
               placeholder="Enter Name"
-              disabled={isSubmitting}
+              disabled={Submitting}
             />
           </div>
           <p className="error-message">{formError.UserName}</p>
@@ -145,7 +145,7 @@ const RegisterPage = () => {
               name="Email"
               type="email"
               placeholder="Enter Email"
-              disabled={isSubmitting}
+              disabled={Submitting}
             />
           </div>
           <p className="error-message">{formError.Email}</p>
@@ -160,7 +160,7 @@ const RegisterPage = () => {
               name="Password"
               type="password"
               placeholder="Enter Password"
-              disabled={isSubmitting}
+              disabled={Submitting}
             />
           </div>
           <p className="error-message">{formError.Password}</p>
@@ -175,7 +175,7 @@ const RegisterPage = () => {
               name="confirmPassword"
               type="password"
               placeholder="Enter Password"
-              disabled={isSubmitting}
+              disabled={Submitting}
             />
           </div>
           <p className="error-message">{formError.confirmPassword}</p>
@@ -187,22 +187,22 @@ const RegisterPage = () => {
             type="submit"
             className="register-btn"
             value="Register"
-            disabled={isSubmitting}
-          />
+            disabled={Submitting}
+          ></input>
         </form>
 
         <div className="separator">
           <p>or</p>
         </div>
 
-        <button type="button" className="option" disabled={isSubmitting}>
+        <button type="button" className="option" disabled={Submitting}>
           <FcGoogle />
           <Link to="/google-signin" className="signin-btn">
             Sign in with Google
           </Link>
         </button>
 
-        <button type="button" className="option" disabled={isSubmitting}>
+        <button type="button" className="option" disabled={Submitting}>
           <FaFacebook />
           <Link to="/facebook-signin" className="signin-btn">
             Sign in with Facebook

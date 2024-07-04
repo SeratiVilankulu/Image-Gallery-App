@@ -1,6 +1,11 @@
-body {
-  background: url("/images/Image.jpg");
-  background-position: 200cm;
+.wrappr-container {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/images/Image.jpg");
+  background-position: center;
   background-repeat: no-repeat, repeat;
   background-size: cover;
 }
@@ -14,8 +19,6 @@ body {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 50px 50px;
-  margin: 90px;
-  margin-left: 500px;
   color: rgb(15, 60, 76);
 }
 
@@ -68,17 +71,17 @@ body {
   padding-bottom: 5px;
 }
 
-.input-box .icon {
+.icon {
   color: grey;
   position: absolute;
   right: 20px;
   top: 70%;
   transform: translate(-2810%);
   font-size: 16px;
-  width: 400px;
-  height: 58px;
-  top: 201px;
-  left: 160px;
+  width: 17px;
+  height: 17px;
+  top: 34px;
+  left: 92%;
 }
 
 .remember-forgot {
