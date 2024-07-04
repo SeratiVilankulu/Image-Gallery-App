@@ -2,6 +2,7 @@ import React from "react";
 import "./HomePage.css";
 import { GoHome } from "react-icons/go";
 import { VscDeviceCamera } from "react-icons/vsc";
+import { MdLogout } from "react-icons/md";
 
 const HomePage = () => {
   return (
@@ -24,6 +25,21 @@ const HomePage = () => {
               </span>
               Image Upload
             </p>
+          </div>
+          <div className="logout-nav menu-nav">
+            <p>
+              <span>
+                <MdLogout className="nav-icons" />
+              </span>
+              Logout
+            </p>
+          </div>
+        </div>
+        <div className="main-area">
+          <div className="image-upload">
+            <div className="top-nav">
+              <p>Home</p>
+            </div>
           </div>
         </div>
       </div>
