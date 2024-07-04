@@ -12,10 +12,15 @@ const LoginPage = () => {
     Password: "",
   });
 
-  const [errorMsg, setErrorMsg] = useState(""); // State to display error message if credentials are not vaild
+  const [errorMsg, setErrorMsg] = useState({}); // State to display error message if credentials are not vaild
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
   const [Submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
   const navigate = useNavigate(); //Used to navigate to another page
+
+  // const [usernameFocused, setUsernameFocused] = useState(false); // Track if username field is focused
+  // const [passwordFocused, setPasswordFocused] = useState(false); // Track if password field is focused
+  // const [usernameHasInput, setUsernameHasInput] = useState(false); // Track if username has input data
+  // const [passwordHasInput, setPasswordHasInput] = useState(false); // Track if password has input data
 
   // Function to handle changes in form input fields
   const handleUserInput = (name, value) => {
@@ -28,8 +33,24 @@ const LoginPage = () => {
   // Handles form submission and validate input
   const validateFormSubmit = async (event) => {
     event.preventDefault();
-    setErrorMsg("");
+    setErrorMsg({});
     setSuccessMsg("");
+
+    //Check if username is empty
+    let inputError = {};
+    if (!userInput.UserName) {
+      inputError.UserName = "Username can not be empty";
+    }
+    //Check if password is empty
+    if (!userInput.Password) {
+      inputError.Password = "Password can not be empty";
+    }
+
+    // If there are any errors, set the error messages and prevent form submission
+    if (Object.keys(inputError).length > 0) {
+      setErrorMsg(inputError);
+      return;
+    }
 
     //Form is being submmited
     setSubmitting(true);
@@ -40,10 +61,28 @@ const LoginPage = () => {
         UserName: userInput.UserName,
         Password: userInput.Password,
       });
-      setSuccessMsg("Successfully Logged in!");
-      setTimeout(() => navigate("/home"), 1500); //redirect to login page once successful
+
+      // Assuming a successful login
+      setSuccessMsg("Credentials Valid!");
+      setTimeout(() => navigate("/home"), 1500); //redirect to home page once successful
     } catch (error) {
-      seterrorMsg({ api: "Login failed. Please try again." }); //If registraction fails
+      console.log(error);
+
+      // If the server responds with a specific error code
+      if (error.response) {
+        if (error.response.status === 401) {
+          // 401 Unauthorized means invalid credentials
+          setErrorMsg({
+            api: "Invalid username or password. Please try again.",
+          });
+        } else {
+          // Handle other server errors
+          setErrorMsg({ api: "Login failed. Please try again." });
+        }
+      } else {
+        // Handle errors that do not have a response (like network errors)
+        setErrorMsg({ api: "An error occurred. Please try again." });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -56,7 +95,7 @@ const LoginPage = () => {
         <h1>Login</h1>
         <form onSubmit={validateFormSubmit}>
           <div className="input-box">
-            <p>Username</p>
+            <p className="label">Username</p>
             <input
               type="text"
               placeholder="Enter Username"
@@ -66,11 +105,20 @@ const LoginPage = () => {
               }
               name="UserName"
               disabled={Submitting}
+              onBlur={() =>
+                setUserInput((prevState) => ({
+                  ...prevState,
+                  UserName: prevState.UserName.trim(), // trim whitespace on blur
+                }))
+              }
             />
-            <FaUser className="icon" />
+            {!userInput.UserName && <FaUser className="icon" />}{" "}
+            {/* Conditional showing of icon */}
           </div>
+          <p className="error-message-login1">{errorMsg.UserName}</p>
+
           <div className="input-box">
-            <p>Password</p>
+            <p className="label">Password</p>
             <input
               type="password"
               placeholder="Enter Password"
@@ -80,9 +128,17 @@ const LoginPage = () => {
               }
               name="Password"
               disabled={Submitting}
+              onBlur={() =>
+                setUserInput((prevState) => ({
+                  ...prevState,
+                  Password: prevState.Password.trim(), // trim whitespace on blur
+                }))
+              }
             />
-            <IoMdLock className="icon" />
+            {!userInput.Password && <IoMdLock className="icon" />}{" "}
+            {/* Conditional showing of icon */}
           </div>
+          <p className="error-message-login1">{errorMsg.Password}</p>
 
           <div className="remember-forgot">
             <label htmlFor="">
@@ -91,8 +147,8 @@ const LoginPage = () => {
             <Link to="/reset-password">Forgot password?</Link>
           </div>
 
-          <p className="error-message">{errorMsg}</p>
-          <p className="success-message">{successMsg}</p>
+          <p className="error-message-login">{errorMsg.api}</p>
+          <p className="success-message-login">{successMsg}</p>
 
           <input type="submit" className="login" value="Login"></input>
 

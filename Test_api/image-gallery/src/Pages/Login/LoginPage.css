@@ -12,7 +12,7 @@
 
 .wrapper {
   width: 722px;
-  height: 548px;
+  height: 560px;
   top: 239px;
   left: 359px;
   background: white;
@@ -35,7 +35,7 @@
   font-weight: 600;
 }
 
-.wrapper p {
+.label {
   font-size: 12px;
   margin: 5px 5px;
   margin-left: 80px;
@@ -111,7 +111,7 @@
   height: 44px;
   top: 409px;
   left: 161px;
-  margin-top: 30px;
+  margin-top: 25px;
   margin-left: 110px;
   background: rgb(33, 135, 171);
   border: none;
@@ -136,4 +136,31 @@
   color: rgb(15, 60, 76);
   font-weight: 700;
   text-decoration: none;
+}
+
+/*Styling for error and success message*/
+.error-message-login1 {
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  margin-top: 4px;
+  margin-left: 110px;
+  margin-bottom: 0px;
+}
+
+.error-message-login {
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  margin-top: 0px;
+  margin-left: 110px;
+  margin-bottom: 0px;
+}
+
+.success-message-login {
+  font-size: 12px;
+  font-weight: 500;
+  color: green;
+  margin-top: 6px;
+  margin-left: 110px;
 }
