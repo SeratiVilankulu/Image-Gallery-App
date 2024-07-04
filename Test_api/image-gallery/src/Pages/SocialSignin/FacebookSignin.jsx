@@ -6,8 +6,10 @@ const FacebookSignin = () => {
   return (
     <div className="Facebook-container">
       <div className="form-container">
-        <h1>Sign in</h1>
-        <FaFacebook />
+        <div>
+          <h1>Sign in</h1>
+          <FaFacebook className="symbol"/>
+        </div>
         <p>to continue to Image Gallery</p>
         <form action="">
           <div className="signin-input">
