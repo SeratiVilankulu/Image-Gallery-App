@@ -11,6 +11,8 @@ namespace api.Models
 
     public DateTime PasswordChangeDate { get; set; } = DateTime.Now;
     public DateTime ProfileCreatedDate { get; set; } = DateTime.Now;
+    public string? VerificationToken { get; set; } 
+    public DateTime? VerifiedAt { get; set; } = DateTime.Now;
     public List<Images> Images { get; set; } = new List<Images>();
     public List<Comments> Comments { get; set; } = new List<Comments>();
   }

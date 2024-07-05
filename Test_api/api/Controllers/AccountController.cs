@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Data;
 using api.Dtos.Account;
 using api.Interfaces;
 using api.Models;
@@ -16,16 +17,19 @@ namespace api.Controllers
 
   public class AccountController : ControllerBase
   {
+    private readonly ApplicationDBContext _context;
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signinManager;
-    public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+    public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
     {
+      _context = context;
       _userManager = userManager;
       _tokenService = tokenService;
       _signinManager = signInManager;
     }
 
+    //Post: Account/Login
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto loginDto)
     {
@@ -50,6 +54,7 @@ namespace api.Controllers
       );
     }
 
+    //Post: Account/Register
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
     {
@@ -94,6 +99,22 @@ namespace api.Controllers
       {
         return StatusCode(500, e);
       }
+    }
+
+    //Registration Verification
+    [HttpPost("verify")]
+    public async Task<IActionResult> Verify(string token)
+    {
+      var user = await _context.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
+      if (user == null)
+      {
+        return BadRequest("Invalid token");
+      }
+
+      user.VerifiedAt = DateTime.Now;
+      await _context.SaveChangesAsync();
+
+      return Ok("User Verified :)");
     }
   }
 }
