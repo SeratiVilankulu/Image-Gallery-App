@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a9f59775-95c8-4b9d-8462-7b32791c8ae3",
+                            Id = "f3c4c2ca-6b4d-44ec-9297-c9888b680f14",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "0a80838d-06dc-481a-817e-10a2e807532e",
+                            Id = "2877aaf6-77d6-487e-8820-18618bf2c733",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -220,12 +220,21 @@ namespace api.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("TokenExpires")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("VerificationToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("VerifiedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

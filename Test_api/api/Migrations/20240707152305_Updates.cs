@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class ModelUpdates : Migration
+    public partial class Updates : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,6 +34,9 @@ namespace api.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordChangeDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProfileCreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    VerificationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VerifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TokenExpires = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -276,8 +279,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "0a80838d-06dc-481a-817e-10a2e807532e", null, "User", "USER" },
-                    { "a9f59775-95c8-4b9d-8462-7b32791c8ae3", null, "Admin", "ADMIN" }
+                    { "2877aaf6-77d6-487e-8820-18618bf2c733", null, "User", "USER" },
+                    { "f3c4c2ca-6b4d-44ec-9297-c9888b680f14", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
