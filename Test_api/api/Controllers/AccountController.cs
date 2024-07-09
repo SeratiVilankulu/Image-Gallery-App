@@ -9,6 +9,7 @@ using api.Dtos.Account;
 using api.Interfaces;
 using api.Models;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,12 +25,15 @@ namespace api.Controllers
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signinManager;
-    public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager)
+    private readonly EmailController _emailController;
+    public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager,
+    ITokenService tokenService, SignInManager<AppUser> signInManager, EmailController emailController)
     {
       _context = context;
       _userManager = userManager;
       _tokenService = tokenService;
       _signinManager = signInManager;
+      _emailController = emailController;
     }
 
     //Post: Account/Login
@@ -56,18 +60,6 @@ namespace api.Controllers
         }
       );
     }
-
-    //Method for generating a token of longer length
-    // Method to generate a cryptographically secure random token
-    // private string GenerateCryptographicToken(int length)
-    // {
-    //   byte[] randomBytes = new byte[length];
-    //   using (var rng = new RNGCryptoServiceProvider())
-    //   {
-    //     rng.GetBytes(randomBytes);
-    //   }
-    //   return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
-    // }
 
     //Post: Account/Register
     [HttpPost("register")]
@@ -102,6 +94,10 @@ namespace api.Controllers
           var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
           if (roleResult.Succeeded)
           {
+
+            // Send the verification email
+            await _emailController.SendVerificationEmail(appUser.Email, token);
+
             return Ok(
               new NewUserDto
               {
@@ -135,13 +131,34 @@ namespace api.Controllers
       var user = await _userManager.Users.SingleOrDefaultAsync(u => u.VerificationToken == token && u.TokenExpires > DateTime.UtcNow);
       if (user == null)
       {
-        return BadRequest("Invalid token");
+        return BadRequest("Invalid or expired token");
       }
 
+      // If a user exists check if they verified their email
+      if (!await _userManager.IsEmailConfirmedAsync(user))
+        return Unauthorized("Email is not confirmed");
+
       user.VerifiedDate = DateTime.Now;
+      user.EmailConfirmed = true;
       await _context.SaveChangesAsync();
 
       return Ok("User Verified :)");
+    }
+
+    // Logout
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+      try
+      {
+        await _signinManager.SignOutAsync();
+        return Ok("Logged out successfully");
+      }
+      catch (Exception ex)
+      {
+        return BadRequest("Something went wrong, please try again. " + ex.Message);
+      }
     }
   }
 }

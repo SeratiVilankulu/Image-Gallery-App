@@ -1,3 +1,4 @@
+using api.Controllers;
 using api.Data;
 using api.Interfaces;
 using api.Models;
@@ -102,6 +103,7 @@ builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
 builder.Services.AddScoped<ITagsRepository, TagsRepository>();
 builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<EmailController>();
 
 
 var app = builder.Build();
