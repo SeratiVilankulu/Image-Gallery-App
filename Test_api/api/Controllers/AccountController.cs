@@ -6,12 +6,15 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Account;
+using api.Dtos.Password;
 using api.Interfaces;
 using api.Models;
 using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
@@ -26,6 +29,7 @@ namespace api.Controllers
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signinManager;
     private readonly EmailController _emailController;
+
     public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager,
     ITokenService tokenService, SignInManager<AppUser> signInManager, EmailController emailController)
     {
@@ -143,6 +147,60 @@ namespace api.Controllers
       await _context.SaveChangesAsync();
 
       return Ok("User Verified :)");
+    }
+
+    // Forgot password
+    // [HttpPost("forgotpassword")]
+    // public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPassword)
+    // {
+    //   if (!ModelState.IsValid)
+    //     return BadRequest("Invalid email");
+
+    //   // Extract user from the database
+    //   var user = await _userManager.FindByEmailAsync(forgotPassword.Email!);
+    //   if (user == null)
+    //     return BadRequest("Email not found");
+
+    //   var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+    //   var param = new Dictionary<string, string?>
+    //   {
+    //     {"token", token},
+    //     {"email", forgotPassword.Email!}
+    //   };
+
+    //   var callbackUrl = QueryHelpers.AddQueryString(forgotPassword.ClientUri!, param);
+    //   // Email Message
+    //   var message = new Message([user.Email], "Reset Password", callbackUrl, null);
+
+    //   await _emailSender.SendEmailAsync(message);
+
+    //   return Ok();
+    // }
+
+    //Resetting the users password
+    [HttpPost("resetpassword")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest("Invalid email");
+
+      // Extract user from the database
+      var user = await _userManager.FindByEmailAsync(resetPassword.Email!);
+      if (user == null)
+        return BadRequest("Email not found");
+
+      var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token!, resetPassword.NewPassword!);
+
+      if (!result.Succeeded)
+      {
+        var errors = result.Errors.Select(e => e.Description);
+        return BadRequest(new {Errors = errors});
+      }
+
+      user.PasswordChangeDate = DateTime.UtcNow;
+      await _userManager.UpdateAsync(user);
+
+      return Ok("Password has been reset successfully.");
     }
 
     // Logout

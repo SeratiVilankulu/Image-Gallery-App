@@ -29,7 +29,7 @@ namespace api.Controllers
         {
           client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
 
-          await client.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
+          await client.ConnectAsync("smtp.gmail.com", 587, false);
           await client.AuthenticateAsync("seratimotla@gmail.com", "akfu swdw skfy uzfn"); // Use Gmail and App Password
           await client.SendAsync(message);
           await client.DisconnectAsync(true);

@@ -1,11 +1,15 @@
 import React from "react";
-import "./HomePage.css";
+import PageStyle from "./HomePage.module.css";
 import { GoHome } from "react-icons/go";
 import { VscDeviceCamera } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
+import { IoSearch } from "react-icons/io5";
+import { Link, useNavigate } from "react-router-dom";
 
-const HomePage = () => {
+const ReactPage = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -30,39 +34,41 @@ const HomePage = () => {
       console.error("An error occurred while logging out", error);
     }
   };
-
   return (
-    <div className="homePage-container">
-      <div className="navigation-container">
-        <div className="nav">
-          <h1 className="logo">Logo</h1>
+    <div className={PageStyle.container}>
+      <div className={PageStyle.menu}>
+        <div className={PageStyle.logo}>Logo</div>
+        <div className={PageStyle.sideNav}>
           <button>
-            <span>
-              <GoHome className="nav-icons" />
-            </span>
+            <GoHome className={PageStyle.navIcons} />
             Home
           </button>
           <button>
-            <span>
-              <VscDeviceCamera className="nav-icons" />
-            </span>
-            Image Upload
+            <VscDeviceCamera className={PageStyle.navIcons} /> Image Upload
           </button>
-          <button className="logout" onClick={handleLogout}>
-            <span>
-              <MdLogout className="nav-icons" />
-            </span>
+          <button className={PageStyle.logout} onClick={handleLogout}>
+            <MdLogout className={PageStyle.navIcons} />
             Logout
           </button>
         </div>
-        <div className="main-area">
-          <div className="image-upload">
-            <div className="top-nav">home</div>
-          </div>
+      </div>
+      <div className={PageStyle.mainPage}>
+        <div className={PageStyle.topNav}>
+          <button className={PageStyle.btn}>
+            Home
+            <IoIosArrowForward className={PageStyle.topNavIcons} />
+          </button>
+          <button className={PageStyle.btn}>
+            <CgProfile />
+            seratimotla@gmail.com
+            <IoIosArrowDown className={PageStyle.topNavIcons} />
+          </button>
         </div>
+        <IoSearch />
+        <input type="text" placeholder="Search for..." />
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default ReactPage;

@@ -72,7 +72,8 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
   //User settings
   options.User.RequireUniqueEmail = true; // Prevents users from using the same email
 })
-.AddEntityFrameworkStores<ApplicationDBContext>();
+.AddEntityFrameworkStores<ApplicationDBContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {

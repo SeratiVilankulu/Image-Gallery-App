@@ -6,6 +6,7 @@ import HomePage from "./Pages/HomePage";
 import GoogleSignin from "./Pages/SocialSignin/GoogleSignin";
 import GoogleSignin from "./Pages/SocialSignin/FacebookSignin";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import ReactPage from "./Pages/React/ReactPage";
 
 function App() {
   return (
