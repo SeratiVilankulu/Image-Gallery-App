@@ -33,8 +33,6 @@ namespace api.Controllers
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signinManager;
-    //private readonly EmailController _emailController;
-
     public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager,
     ITokenService tokenService, SignInManager<AppUser> signInManager)
     {
@@ -42,33 +40,9 @@ namespace api.Controllers
       _userManager = userManager;
       _tokenService = tokenService;
       _signinManager = signInManager;
-      // _emailController = emailController;
     }
 
-    //Post: Account/Login
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginDto loginDto)
-    {
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
 
-      var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
-
-      if (user == null) return Unauthorized("Invalid credentials!");
-
-      var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-      if (!result.Succeeded) return Unauthorized("Username not found and/or password inccorrect");
-
-      return Ok(
-        new NewUserDto
-        {
-          UserName = user.UserName,
-          Email = user.Email,
-          VerificationToken = _tokenService.CreateToken(user)
-        }
-      );
-    }
 
     //Post: Account/Register
     [HttpPost("register")]
@@ -112,6 +86,31 @@ namespace api.Controllers
 
       }
       return BadRequest("Error Occured. Unable to send email");
+    }
+
+    //Post: Account/Login
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(LoginDto loginDto)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+
+      if (user == null) return Unauthorized("Invalid credentials!");
+
+      var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+      if (!result.Succeeded) return Unauthorized("Username not found and/or password inccorrect");
+
+      return Ok(
+        new NewUserDto
+        {
+          UserName = user.UserName,
+          Email = user.Email,
+          VerificationToken = _tokenService.CreateToken(user)
+        }
+      );
     }
 
     [HttpPost("send-verification-email")]
