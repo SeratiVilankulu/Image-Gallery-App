@@ -1,0 +1,15 @@
+.confirmContainer {
+  text-align: center;
+  min-width: 100vw;
+}
+
+.heading {
+  font-size: 25px;
+  color: rgb(15, 60, 76);
+}
+
+p {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(15, 60, 76);
+}

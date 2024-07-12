@@ -6,7 +6,7 @@ import HomePage from "./Pages/HomePage";
 import GoogleSignin from "./Pages/SocialSignin/GoogleSignin";
 import GoogleSignin from "./Pages/SocialSignin/FacebookSignin";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
-import ReactPage from "./Pages/React/ReactPage";
+import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm";
 
 function App() {
   return (
@@ -17,9 +17,6 @@ function App() {
       <Route path="/register">
         <RegisterPage />
       </Route>
-      <Route path="/home">
-        <HomePage />
-      </Route>
       <Route path="/google-signin">
         <GoogleSignin />
       </Route>
@@ -28,6 +25,12 @@ function App() {
       </Route>
       <Route path="/reset-password">
         <ResetPassword />
+      </Route>
+      <Route path="/home">
+        <HomePage />
+      </Route>
+      <Route path="/email-confirm">
+        <EmailConfirm />
       </Route>
     </div>
   );

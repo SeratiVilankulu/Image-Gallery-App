@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./LoginPage.css";
 import { FaUser } from "react-icons/fa6";
 import { IoMdLock } from "react-icons/io";
@@ -15,12 +15,22 @@ const LoginPage = () => {
   const [errorMsg, setErrorMsg] = useState({}); // State to display error message if credentials are not vaild
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
   const [Submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
-  const navigate = useNavigate(); //Used to navigate to another page
+  const navigate = useNavigate(); // Used to navigate to another page
+  const location = useLocation(); // Used to access the current URL and its query parameters
 
   // const [usernameFocused, setUsernameFocused] = useState(false); // Track if username field is focused
   // const [passwordFocused, setPasswordFocused] = useState(false); // Track if password field is focused
   // const [usernameHasInput, setUsernameHasInput] = useState(false); // Track if username has input data
   // const [passwordHasInput, setPasswordHasInput] = useState(false); // Track if password has input data
+
+  // useEffect hook to check for query parameters in the URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search); // Create a URLSearchParams object to easily access query parameters
+    // If the 'verified' query parameter is present, set a success message
+    if (params.get("verified")) {
+      setSuccessMsg("Your email has been verified. Please login.");
+    }
+  }, [location.search]);
 
   // Function to handle changes in form input fields
   const handleUserInput = (name, value) => {

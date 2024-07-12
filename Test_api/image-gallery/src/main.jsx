@@ -9,6 +9,7 @@ import GoogleSignin from "./Pages/SocialSignin/GoogleSignin.jsx";
 import FacebookSignin from "./Pages/SocialSignin/FacebookSignin.jsx";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
 import HomePage from "./Pages/Home/HomePage.jsx";
+import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,14 +29,17 @@ const router = createBrowserRouter([
     element: <FacebookSignin />,
   },
   {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+  {
     path: "/home",
     element: <HomePage />,
   },
   {
-    path: "/reset-password",
-    element: <ResetPassword />,
+    path: "/email-confirm",
+    element: <EmailConfirm />,
   },
-  
 
   //add more routes
 ]);

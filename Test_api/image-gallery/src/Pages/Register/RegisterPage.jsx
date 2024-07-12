@@ -104,7 +104,7 @@ const RegisterPage = () => {
         Password: formInput.Password,
       });
       setSuccessMsg("Successfully registered!");
-      setTimeout(() => navigate("/"), 1500); //redirect to login page once successful
+      setTimeout(() => navigate("/email-confirm"), 1500); //redirect to login page once successful
     } catch (error) {
       setFormError({ api: "Registration failed. Please try again." }); //If registraction fails
     } finally {
