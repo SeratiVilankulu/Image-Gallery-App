@@ -104,7 +104,7 @@ builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
 builder.Services.AddScoped<ITagsRepository, TagsRepository>();
 builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<EmailController>();
+//builder.Services.AddScoped<EmailController>();
 
 
 var app = builder.Build();
