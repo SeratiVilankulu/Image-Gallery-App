@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240707152305_Updates")]
-    partial class Updates
+    [Migration("20240712100332_DatabaseUpdate")]
+    partial class DatabaseUpdate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f3c4c2ca-6b4d-44ec-9297-c9888b680f14",
+                            Id = "579ccb92-5155-4a74-8e2f-9e1141f2fbe3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2877aaf6-77d6-487e-8820-18618bf2c733",
+                            Id = "ddd5cd44-c58f-4438-ab95-321500aa4aef",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -223,18 +223,12 @@ namespace api.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("TokenExpires")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("VerificationToken")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("VerifiedDate")
                         .HasColumnType("datetime2");

@@ -87,8 +87,6 @@ namespace api.Controllers
         {
           UserName = registerDto.UserName,
           Email = registerDto.Email,
-          VerificationToken = token,// Assign the verification token
-          TokenExpires = tokenExpires
         };
 
         var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
@@ -132,7 +130,7 @@ namespace api.Controllers
     [HttpPost("verify")]
     public async Task<IActionResult> Verify(string token)
     {
-      var user = await _userManager.Users.SingleOrDefaultAsync(u => u.VerificationToken == token && u.TokenExpires > DateTime.UtcNow);
+      var user = await _userManager.Users.SingleOrDefaultAsync();
       if (user == null)
       {
         return BadRequest("Invalid or expired token");
