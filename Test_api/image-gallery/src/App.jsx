@@ -7,6 +7,7 @@ import GoogleSignin from "./Pages/SocialSignin/GoogleSignin";
 import GoogleSignin from "./Pages/SocialSignin/FacebookSignin";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm";
+import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
       </Route>
       <Route path="/email-confirm">
         <EmailConfirm />
+      </Route>
+      <Route path="/email-success">
+        <EmailSuccess />
       </Route>
     </div>
   );

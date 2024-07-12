@@ -3,8 +3,9 @@ import PageStyle from "./HomePage.module.css";
 import { GoHome } from "react-icons/go";
 import { VscDeviceCamera } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoFilter } from "react-icons/io5";
+import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import {} from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { IoSearch } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
@@ -64,8 +65,83 @@ const ReactPage = () => {
             <IoIosArrowDown className={PageStyle.topNavIcons} />
           </button>
         </div>
-        <IoSearch />
-        <input type="text" placeholder="Search for..." />
+        <div className={PageStyle.filterSection}>
+          <IoSearch className={PageStyle.searchIcon} />
+          <input
+            type="text"
+            placeholder="Search for..."
+            className={PageStyle.searchBar}
+          />
+
+          <input type="submit" value="Filters" className={PageStyle.filter} />
+          <IoFilter className={PageStyle.filterIcon} />
+        </div>
+        <div className={PageStyle.images}>
+          <div class="image-card">
+            <img
+              src="/images/butterfly.jpg"
+              alt="Display image"
+              className={PageStyle.image}
+            />
+            <div class="overlay">
+              <h2>Butterfly</h2>
+              <p>
+                Butterflies have taste receptors on their feet to help them find
+                their host plants and locate food. A female butterfly lands on
+                different plants, drumming the leaves with her feet until the
+                plant releases its juices.
+              </p>
+            </div>
+          </div>
+          <div class="image-card">
+            <img
+              src="/images/butterfly.jpg"
+              alt="Display image"
+              className={PageStyle.image}
+            />
+            <div class="overlay">
+              <h2>Butterfly</h2>
+              <p>
+                Butterflies have taste receptors on their feet to help them find
+                their host plants and locate food. A female butterfly lands on
+                different plants, drumming the leaves with her feet until the
+                plant releases its juices.
+              </p>
+            </div>
+          </div>
+          <div class="image-card">
+            <img
+              src="/images/butterfly.jpg"
+              alt="Display image"
+              className={PageStyle.image}
+            />
+            <div class="overlay">
+              <h2>Butterfly</h2>
+              <p>
+                Butterflies have taste receptors on their feet to help them find
+                their host plants and locate food. A female butterfly lands on
+                different plants, drumming the leaves with her feet until the
+                plant releases its juices.
+              </p>
+            </div>
+          </div>
+          <div class="image-card">
+            <img
+              src="/images/butterfly.jpg"
+              alt="Display image"
+              className={PageStyle.image}
+            />
+            <div class="overlay">
+              <h2>Butterfly</h2>
+              <p>
+                Butterflies have taste receptors on their feet to help them find
+                their host plants and locate food. A female butterfly lands on
+                different plants, drumming the leaves with her feet until the
+                plant releases its juices.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

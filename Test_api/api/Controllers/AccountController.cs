@@ -4,18 +4,23 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Web;
 using api.Data;
 using api.Dtos.Account;
 using api.Dtos.Password;
 using api.Interfaces;
 using api.Models;
 using Azure.Core;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
+using MimeKit.Text;
 
 namespace api.Controllers
 {
@@ -28,16 +33,57 @@ namespace api.Controllers
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signinManager;
-    private readonly EmailController _emailController;
-
     public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager,
-    ITokenService tokenService, SignInManager<AppUser> signInManager, EmailController emailController)
+    ITokenService tokenService, SignInManager<AppUser> signInManager)
     {
       _context = context;
       _userManager = userManager;
       _tokenService = tokenService;
       _signinManager = signInManager;
-      _emailController = emailController;
+    }
+
+    //Post: Account/Register
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+    {
+
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      // Create a new AppUser object
+      var appUser = new AppUser
+      {
+        UserName = registerDto.UserName,
+        Email = registerDto.Email,
+      };
+
+      var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
+
+      if (createdUser.Succeeded)
+      {
+        // Generate a token for the user
+        var userToken = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
+        var encodedUserToken = HttpUtility.UrlEncode(userToken);
+        if (userToken != null)
+        {
+          var emailConfirmationLink = $"http://localhost:5085/api/account/emailconfirmation?token={encodedUserToken}&email={appUser.Email}";
+
+          var recipient = registerDto.Email.ToLower();
+          var subject = "Email Verification";
+          var message = $"Please confirm your account by clicking this link: <a href='{emailConfirmationLink}'>Confirm Email</a>";
+
+          // Send the email
+          await SendEmailAsync(recipient, subject, message);
+
+          return Ok("Email was succefully sent, please check emails for confirmation link");
+        }
+        else
+        {
+          throw new Exception("Unable to generate email confirmation token");
+        }
+
+      }
+      return BadRequest("Error Occured. Unable to send email");
     }
 
     //Post: Account/Login
@@ -65,86 +111,48 @@ namespace api.Controllers
       );
     }
 
-    //Post: Account/Register
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+    [HttpPost("send-verification-email")]
+    // This method sends an email using MailKit
+    public async Task SendEmailAsync(string recipient, string subject, string message)
     {
-      try
+      var emailMessage = new MimeMessage();
+      emailMessage.From.Add(new MailboxAddress("Image Gallery App", "imagegalleryapp@email.com"));
+      emailMessage.To.Add(new MailboxAddress("", recipient));
+      emailMessage.Subject = subject;
+      emailMessage.Body = new TextPart(TextFormat.Html)
       {
-        if (!ModelState.IsValid)
-          return BadRequest(ModelState);
+        Text = message
+      };
 
-        // Generate a simple verification token using the token service
-        string token = _tokenService.CreateToken(new AppUser { Email = registerDto.Email, UserName = registerDto.UserName });
-
-        // Extract token expiry date
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
-        var tokenExpires = jwtToken.ValidTo;
-
-        // Create a new AppUser object with the verification token
-        var appUser = new AppUser
-        {
-          UserName = registerDto.UserName,
-          Email = registerDto.Email,
-        };
-
-        var createdUser = await _userManager.CreateAsync(appUser, registerDto.Password);
-
-        if (createdUser.Succeeded)
-        {
-          var roleResult = await _userManager.AddToRoleAsync(appUser, "User");
-          if (roleResult.Succeeded)
-          {
-
-            // Send the verification email
-            await _emailController.SendVerificationEmail(appUser.Email, token);
-
-            return Ok(
-              new NewUserDto
-              {
-                UserName = appUser.UserName,
-                Email = appUser.Email,
-                VerificationToken = token // Return the same token for client use
-              }
-            );
-          }
-          else
-          {
-            return StatusCode(500, roleResult.Errors);
-          }
-        }
-        else
-        {
-          return StatusCode(500, createdUser.Errors);
-        }
-      }
-      catch (Exception e)
+      using (var client = new SmtpClient())
       {
-        return StatusCode(500, e);
+        // Connect to MailHog
+        client.Connect("localhost", 1025, SecureSocketOptions.None);
+        await client.SendAsync(emailMessage);
+        client.Disconnect(true);
       }
-
     }
 
-    //Registration Verification
-    [HttpPost("verify")]
-    public async Task<IActionResult> Verify(string token)
+    //Registration Verification (Once user clicks on link)
+    [HttpGet("emailconfirmation")]
+    public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
     {
-      var user = await _userManager.Users.SingleOrDefaultAsync();
+      // Fetch the user using email
+      var user = await _userManager.FindByEmailAsync(email);
       if (user == null)
-      {
-        return BadRequest("Invalid or expired token");
-      }
+        return BadRequest("Invalid Email confirmation Request");
 
-      // If a user exists check if they verified their email
-      if (!await _userManager.IsEmailConfirmedAsync(user))
-        return Unauthorized("Email is not confirmed");
+      // Validate if the email confirmation logic token matches specified user
+      var confirmResult = await _userManager.ConfirmEmailAsync(user, token);
+      if (!confirmResult.Succeeded)
+        return BadRequest("Invalid Email confirmation Request");
 
+      // Mark the email as verified
       user.VerifiedDate = DateTime.Now;
-      user.EmailConfirmed = true;
       await _context.SaveChangesAsync();
 
-      return Ok("User Verified :)");
+      // Redirect to the login page after successful verification
+      return Redirect("http://localhost:3000/email-success");
     }
 
     // Forgot password
@@ -192,7 +200,7 @@ namespace api.Controllers
       if (!result.Succeeded)
       {
         var errors = result.Errors.Select(e => e.Description);
-        return BadRequest(new {Errors = errors});
+        return BadRequest(new { Errors = errors });
       }
 
       user.PasswordChangeDate = DateTime.UtcNow;

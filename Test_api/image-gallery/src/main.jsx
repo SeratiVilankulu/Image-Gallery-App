@@ -10,6 +10,7 @@ import FacebookSignin from "./Pages/SocialSignin/FacebookSignin.jsx";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
 import HomePage from "./Pages/Home/HomePage.jsx";
 import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm.jsx";
+import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/email-confirm",
     element: <EmailConfirm />,
+  },
+  {
+    path: "/email-success",
+    element: <EmailSuccess />,
   },
 
   //add more routes
