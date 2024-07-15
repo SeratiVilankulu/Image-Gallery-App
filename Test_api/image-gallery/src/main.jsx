@@ -11,6 +11,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword.jsx";
 import HomePage from "./Pages/Home/HomePage.jsx";
 import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm.jsx";
 import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess.jsx";
+import ForgotPassword from "./Pages/ResetPassword/ForgotPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
   },
   {
     path: "/home",

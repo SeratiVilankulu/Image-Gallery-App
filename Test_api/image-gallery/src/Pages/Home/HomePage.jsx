@@ -27,7 +27,7 @@ const ReactPage = () => {
         localStorage.removeItem("token");
 
         // Redirect to login page
-        navigate("/login");
+        navigate("/");
       } else {
         console.error("Failed to logout");
       }

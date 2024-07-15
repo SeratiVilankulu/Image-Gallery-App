@@ -11,8 +11,5 @@ namespace api.Dtos.Password
     [Required]
     // The email address of the user requesting the password reset.
     public string? Email { get; set; }
-    [Required]
-    public string? ClientUri { get; set; }
-
   }
 }

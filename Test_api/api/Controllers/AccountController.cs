@@ -10,6 +10,7 @@ using api.Dtos.Account;
 using api.Dtos.Password;
 using api.Interfaces;
 using api.Models;
+using api.Service;
 using Azure.Core;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -33,13 +34,15 @@ namespace api.Controllers
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly SignInManager<AppUser> _signinManager;
+    private readonly EmailService _emailservice;
     public AccountController(ApplicationDBContext context, UserManager<AppUser> userManager,
-    ITokenService tokenService, SignInManager<AppUser> signInManager)
+    ITokenService tokenService, SignInManager<AppUser> signInManager, EmailService emailservice)
     {
       _context = context;
       _userManager = userManager;
       _tokenService = tokenService;
       _signinManager = signInManager;
+      _emailservice = emailservice;
     }
 
     //Post: Account/Register
@@ -66,14 +69,17 @@ namespace api.Controllers
         var encodedUserToken = HttpUtility.UrlEncode(userToken);
         if (userToken != null)
         {
-          var emailConfirmationLink = $"http://localhost:5085/api/account/emailconfirmation?token={encodedUserToken}&email={appUser.Email}";
+          var emailConfirmationLink = $"http://localhost:5085/api/account/emailconfirmation?token={encodedUserToken}&email={appUser.Id}";
 
           var recipient = registerDto.Email.ToLower();
           var subject = "Email Verification";
+          var header = $"Dear User";
           var message = $"Please confirm your account by clicking this link: <a href='{emailConfirmationLink}'>Confirm Email</a>";
+          var ending = $"Kind Regards";
+          var sign = $"Image Gallery App";
 
           // Send the email
-          await SendEmailAsync(recipient, subject, message);
+          await _emailservice.SendEmailAsync(recipient, subject, header, message, ending, sign);
 
           return Ok("Email was succefully sent, please check emails for confirmation link");
         }
@@ -111,28 +117,6 @@ namespace api.Controllers
       );
     }
 
-    [HttpPost("send-verification-email")]
-    // This method sends an email using MailKit
-    public async Task SendEmailAsync(string recipient, string subject, string message)
-    {
-      var emailMessage = new MimeMessage();
-      emailMessage.From.Add(new MailboxAddress("Image Gallery App", "imagegalleryapp@email.com"));
-      emailMessage.To.Add(new MailboxAddress("", recipient));
-      emailMessage.Subject = subject;
-      emailMessage.Body = new TextPart(TextFormat.Html)
-      {
-        Text = message
-      };
-
-      using (var client = new SmtpClient())
-      {
-        // Connect to MailHog
-        client.Connect("localhost", 1025, SecureSocketOptions.None);
-        await client.SendAsync(emailMessage);
-        client.Disconnect(true);
-      }
-    }
-
     //Registration Verification (Once user clicks on link)
     [HttpGet("emailconfirmation")]
     public async Task<IActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
@@ -156,51 +140,72 @@ namespace api.Controllers
     }
 
     // Forgot password
-    // [HttpPost("forgotpassword")]
-    // public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPassword)
-    // {
-    //   if (!ModelState.IsValid)
-    //     return BadRequest("Invalid email");
+    [HttpPost("forgotpassword")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest("Invalid email");
 
-    //   // Extract user from the database
-    //   var user = await _userManager.FindByEmailAsync(forgotPassword.Email!);
-    //   if (user == null)
-    //     return BadRequest("Email not found");
+      try
+      {
+        // Extract user from the database
+        var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+        if (user == null)
+          return BadRequest("Email not found");
 
-    //   var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-    //   var param = new Dictionary<string, string?>
-    //   {
-    //     {"token", token},
-    //     {"email", forgotPassword.Email!}
-    //   };
+        var userToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        if (userToken != null)
+        {
+          var emailResetLink = Url.Action("ResetPassword", "Account",
+           new
+           { userId = user.Id, token = userToken },
+            Request.Scheme);
 
-    //   var callbackUrl = QueryHelpers.AddQueryString(forgotPassword.ClientUri!, param);
-    //   // Email Message
-    //   var message = new Message([user.Email], "Reset Password", callbackUrl, null);
+          var recipient = forgotPasswordDto.Email.ToLower();
+          var subject = "Password Reset";
+          var header = $"Dear User";
+          var message = $"Please by click this link to reset password: <a href='{emailResetLink}'>Reset Password Link</a>";
+          var ending = $"Kind Regards";
+          var sign = $"Image Gallery App";
+          try
+          {// Send the email
+            await _emailservice.SendEmailAsync(recipient, subject, header, message, ending, sign);
+          }
+          catch (Exception)
+          {
+            return BadRequest("Unfortunately this email cannot be sent");
+          }
 
-    //   await _emailSender.SendEmailAsync(message);
 
-    //   return Ok();
-    // }
+          return Ok("Rest password email was successfully sent!");
+        }
+      }
+      catch (Exception)
+      {
+        return BadRequest("Something ent wrong with generating reset token, please try again.");
+
+      }
+      return BadRequest("Error Occured. Unable to send email");
+    }
 
     //Resetting the users password
     [HttpPost("resetpassword")]
-    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPassword)
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
       if (!ModelState.IsValid)
         return BadRequest("Invalid email");
 
       // Extract user from the database
-      var user = await _userManager.FindByEmailAsync(resetPassword.Email!);
+      var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email!);
       if (user == null)
-        return BadRequest("Email not found");
+        return BadRequest("Invalid Email");
 
-      var result = await _userManager.ResetPasswordAsync(user, resetPassword.Token!, resetPassword.NewPassword!);
+      var resetResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token!, resetPasswordDto.NewPassword!);
 
-      if (!result.Succeeded)
+      if (!resetResult.Succeeded)
       {
-        var errors = result.Errors.Select(e => e.Description);
-        return BadRequest(new { Errors = errors });
+        var errors = resetResult.Errors.Select(e => e.Description);
+        return BadRequest("Password reset process has failed :(");
       }
 
       user.PasswordChangeDate = DateTime.UtcNow;

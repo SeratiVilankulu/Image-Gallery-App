@@ -19,6 +19,8 @@ namespace api.Dtos.Password
     // The new password that the user wants to set.
     public string? NewPassword { get; set; }
     // Confirmation of the new password.
+    [Required]
+    [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
     public string? ConfirmPassword { get; set; }
   }
 }

@@ -154,7 +154,7 @@ const LoginPage = () => {
             <label htmlFor="">
               <input type="checkbox" /> Remember me
             </label>
-            <Link to="/reset-password">Forgot password?</Link>
+            <Link to="/forgot-password">Forgot password?</Link>
           </div>
 
           <p className="error-message-login">{errorMsg.api}</p>

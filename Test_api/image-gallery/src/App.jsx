@@ -8,6 +8,7 @@ import GoogleSignin from "./Pages/SocialSignin/FacebookSignin";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm";
 import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess";
+import ForgotPassword from "./Pages/ResetPassword/ForgotPassword";
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
       </Route>
       <Route path="/reset-password">
         <ResetPassword />
+      </Route>
+      <Route path="/forgot-password">
+        <ForgotPassword />
       </Route>
       <Route path="/home">
         <HomePage />
