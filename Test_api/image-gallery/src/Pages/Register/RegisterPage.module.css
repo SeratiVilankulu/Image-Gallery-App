@@ -1,4 +1,4 @@
-.register-container {
+.registerContainer {
   font-family: "Poppins", sans-serif;
   color: rgb(15, 60, 76);
   display: flex;
@@ -12,7 +12,7 @@
   left: 3584px;
 }
 
-.form-container {
+.formContainer {
   width: 40%;
   height: 93%;
   padding-top: 120px;
@@ -21,7 +21,11 @@
   padding-right: 10px;
 }
 
-.register-image {
+.formContainer p {
+  font-size: 12px;
+}
+
+.registerImage {
   flex: 1;
   display: flex;
   align-items: flex-start;
@@ -51,7 +55,7 @@ img {
   color: rgb(15, 60, 76);
 }
 
-.register-form p {
+.registerForm p {
   font-size: 12px;
   font-weight: 600;
   color: rgb(15, 60, 76);
@@ -60,7 +64,7 @@ img {
   margin-bottom: 5px;
 }
 
-.register-form input::placeholder {
+.registerForm input::placeholder {
   color: grey;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
@@ -71,7 +75,7 @@ img {
   padding-bottom: 5px;
 }
 
-.register-form {
+.registerForm {
   margin-bottom: 10px;
   width: 400px;
   height: 52px;
@@ -79,7 +83,7 @@ img {
   left: 73px;
 }
 
-.register-form input {
+.registerForm input {
   width: 400px;
   padding: 10px;
   border: 1px solid rgb(204, 204, 204);
@@ -87,7 +91,7 @@ img {
   font-size: 12px;
 }
 
-.register-btn {
+.registerBtn {
   background-color: rgb(27, 139, 181);
   color: white;
   border: none;
@@ -133,24 +137,24 @@ img {
 }
 
 svg {
-  font-size: 15px;
+  font-size: 25px;
+  padding-left: 10px;
 }
 
-.signin-btn {
-  padding-left: 10px;
+.signinBtn {
   text-decoration: none;
   color: rgb(15, 60, 76);
 }
 
 /*Styling for error and success message*/
-.error-message {
+.errorMessage {
   font-size: 12px;
   font-weight: 500;
   color: red;
   margin-top: 6px;
 }
 
-.success-message {
+.successMessage {
   font-size: 12px;
   font-weight: 500;
   color: green;

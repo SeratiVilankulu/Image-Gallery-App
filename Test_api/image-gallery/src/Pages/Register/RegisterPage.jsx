@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import "./RegisterPage.css";
+import RegisterStyle from "./RegisterPage.module.css";
 
 const RegisterPage = () => {
   // State to store form input values
@@ -113,14 +113,14 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="register-container">
-      <div className="form-container">
+    <div className={RegisterStyle.registerContainer}>
+      <div className={RegisterStyle.formContainer}>
         <h1>Register Profile</h1>
-        <p className="welcome">
+        <p className={RegisterStyle.welcome}>
           Welcome to the registration page. Please enter your details below.
         </p>
         <form onSubmit={validateFormInput}>
-          <div className="register-form">
+          <div className={RegisterStyle.registerForm}>
             <p>Full Name</p>
             <input
               value={formInput.UserName}
@@ -133,9 +133,9 @@ const RegisterPage = () => {
               disabled={Submitting}
             />
           </div>
-          <p className="error-message">{formError.UserName}</p>
+          <p className={RegisterStyle.errorMessage}>{formError.UserName}</p>
 
-          <div className="register-form">
+          <div className={RegisterStyle.registerForm}>
             <p>Email Address</p>
             <input
               value={formInput.Email}
@@ -148,9 +148,9 @@ const RegisterPage = () => {
               disabled={Submitting}
             />
           </div>
-          <p className="error-message">{formError.Email}</p>
+          <p className={RegisterStyle.errorMessage}>{formError.Email}</p>
 
-          <div className="register-form">
+          <div className={RegisterStyle.registerForm}>
             <p>Password</p>
             <input
               value={formInput.Password}
@@ -163,9 +163,9 @@ const RegisterPage = () => {
               disabled={Submitting}
             />
           </div>
-          <p className="error-message">{formError.Password}</p>
+          <p className={RegisterStyle.errorMessage}>{formError.Password}</p>
 
-          <div className="register-form">
+          <div className={RegisterStyle.registerForm}>
             <p>Confirm Password</p>
             <input
               value={formInput.confirmPassword}
@@ -178,38 +178,48 @@ const RegisterPage = () => {
               disabled={Submitting}
             />
           </div>
-          <p className="error-message">{formError.confirmPassword}</p>
+          <p className={RegisterStyle.errorMessage}>
+            {formError.confirmPassword}
+          </p>
 
-          <p className="error-message">{formError.api}</p>
-          <p className="success-message">{successMsg}</p>
+          <p className={RegisterStyle.errorMessage}>{formError.api}</p>
+          <p className={RegisterStyle.successMessage}>{successMsg}</p>
 
           <input
             type="submit"
-            className="register-btn"
+            className={RegisterStyle.registerBtn}
             value="Register"
             disabled={Submitting}
           ></input>
         </form>
 
-        <div className="separator">
+        <div className={RegisterStyle.separator}>
           <p>or</p>
         </div>
 
-        <button type="button" className="option" disabled={Submitting}>
-          <FcGoogle />
-          <Link to="/google-signin" className="signin-btn">
+        <button
+          type="button"
+          className={RegisterStyle.option}
+          disabled={Submitting}
+        >
+          <FcGoogle className={RegisterStyle.btnLogo} />
+          <Link to="/google-signin" className={RegisterStyle.signinBtn}>
             Sign in with Google
           </Link>
         </button>
 
-        <button type="button" className="option" disabled={Submitting}>
-          <FaFacebook />
-          <Link to="/facebook-signin" className="signin-btn">
+        <button
+          type="button"
+          className={RegisterStyle.option}
+          disabled={Submitting}
+        >
+          <FaFacebook className={RegisterStyle.btnLogo} />
+          <Link to="/facebook-signin" className={RegisterStyle.signinBtn}>
             Sign in with Facebook
           </Link>
         </button>
       </div>
-      <div className="register-image">
+      <div className={RegisterStyle.registerImage}>
         <img src="/images/Image.jpg" alt="Work station" />
       </div>
     </div>
