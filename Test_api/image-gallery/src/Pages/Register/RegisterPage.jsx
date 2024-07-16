@@ -102,6 +102,7 @@ const RegisterPage = () => {
         UserName: formInput.UserName,
         Email: formInput.Email,
         Password: formInput.Password,
+        ConfirmPassword: formInput.confirmPassword,
       });
       setSuccessMsg("Successfully registered!");
       setTimeout(() => navigate("/email-confirm"), 1500); //redirect to login page once successful

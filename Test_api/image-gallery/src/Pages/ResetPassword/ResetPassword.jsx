@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
 import PasswordStyle from "./Password.module.css";
 
 const ResetPassword = () => {
-  const [newPassword, setNewPassword] = useState(""); // State to hold the new password
-  const [confirmPassword, setConfirmPassword] = useState(""); // State to hold the confirmed password
+  // State to store form input values
+  const [userInput, setUserInput] = useState({
+    NewPassword: "",
+    ConfirmPassword: "",
+  });
+
   const [error, setError] = useState(""); // State to hold error messages
   const [success, setSuccess] = useState(""); // State to hold success message
+  const [Submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
   const navigate = useNavigate(); // Navigation
-  const location = useLocation(); // Hook from react-router-dom to get current location
+  const location = useLocation(); // Gets the current location
+
+  // Extract query parameters from the URL
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get("token"); // Token received from the reset link
+  const email = queryParams.get("email"); // Email received from the reset link
+
+  // Function to handle changes in form input fields
+  const handleUserPassword = (name, value) => {
+    setUserInput({
+      ...userInput,
+      [name]: value,
+    });
+  };
 
   // Validation for password
   const validatePassword = (password) => {
@@ -45,10 +65,49 @@ const ResetPassword = () => {
     setError({});
     setSuccess("");
 
+    //Check if password is empty or valid
+    let inputError = {};
+    if (!userInput.NewPassword) {
+      inputError.NewPassword = "Field should not be empty";
+    } else {
+      const { isValid, validationMessage } = validatePassword(
+        userInput.NewPassword
+      );
+      if (!isValid) {
+        inputError.NewPassword = validationMessage;
+      }
+    }
+    if (!userInput.ConfirmPassword) {
+      inputError.ConfirmPassword = "Field should not be empty";
+    }
     // Check if passwords match
-    if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+    if (userInput.NewPassword !== userInput.ConfirmPassword) {
+      inputError.ConfirmPassword = "Passwords do not match";
+    }
+
+    // If there are any errors, set the error messages and prevent form submission
+    if (Object.keys(inputError).length > 0) {
+      setError(inputError);
       return;
+    }
+
+    //Form is being submmited
+    setSubmitting(true);
+
+    try {
+      //Make API call to reset the users password
+      await axios.post("http://localhost:5085/api/account/resetpassword", {
+        token,
+        email,
+        NewPassword: userInput.NewPassword,
+        ConfirmPassword: userInput.ConfirmPassword,
+      });
+      setSuccess("Password changed successfully!");
+      setTimeout(() => navigate("/"), 1500); //redirect to login page once successful
+    } catch (error) {
+      setError({ api: "Failed to reset password. Please try again." }); //If registraction fails
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -56,25 +115,48 @@ const ResetPassword = () => {
     <div className={PasswordStyle.passwordContainer}>
       <div className={PasswordStyle.passwordFormContainer}>
         <h1>Reset Password</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={validateInput}>
           <div className={PasswordStyle.resetInput}>
             <p>Password</p>
-            <input type="text" placeholder="Enter password" required />
+            <input
+              type="password"
+              placeholder="Enter password"
+              disabled={Submitting}
+              value={userInput.NewPassword}
+              name="NewPassword"
+              onChange={({ target }) =>
+                handleUserPassword(target.name, target.value)
+              }
+            />
           </div>
+
+          <p className={PasswordStyle.errorMessage}>{error.NewPassword}</p>
+
           <div className={PasswordStyle.resetInput}>
             <p>Confirm Password</p>
-            <input type="text" placeholder="Enter password" required />
+            <input
+              type="password"
+              placeholder="Enter password"
+              disabled={Submitting}
+              value={userInput.ConfirmPassword}
+              name="ConfirmPassword"
+              onChange={({ target }) =>
+                handleUserPassword(target.name, target.value)
+              }
+            />
           </div>
+          <p className={PasswordStyle.errorMessage}>{error.ConfirmPassword}</p>
+
+          <p className={PasswordStyle.errorMessage}>{error.api}</p>
+          <p className={PasswordStyle.successMessage}>{success}</p>
+
+          <input
+            type="submit"
+            className={PasswordStyle.resetBtn}
+            value="Reset Password"
+            disabled={Submitting}
+          ></input>
         </form>
-
-        <p className={PasswordStyle.errorMessage}>{error.UserName}</p>
-        <p className={PasswordStyle.successMessage}>{success}</p>
-
-        <input
-          type="submit"
-          className={PasswordStyle.resetBtn}
-          value="Reset Password"
-        ></input>
       </div>
 
       <div className={PasswordStyle.registerImage}>

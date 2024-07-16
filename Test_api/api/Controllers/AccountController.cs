@@ -69,11 +69,11 @@ namespace api.Controllers
         var encodedUserToken = HttpUtility.UrlEncode(userToken);
         if (userToken != null)
         {
-          var emailConfirmationLink = $"http://localhost:5085/api/account/emailconfirmation?token={encodedUserToken}&email={appUser.Id}";
+          var emailConfirmationLink = $"http://localhost:5085/api/account/emailconfirmation?token={encodedUserToken}&email={appUser.Email}";
 
           var recipient = registerDto.Email.ToLower();
           var subject = "Email Verification";
-          var header = $"Dear User";
+          var header = $"Dear {appUser.UserName}";
           var message = $"Please confirm your account by clicking this link: <a href='{emailConfirmationLink}'>Confirm Email</a>";
           var ending = $"Kind Regards";
           var sign = $"Image Gallery App";
@@ -153,13 +153,12 @@ namespace api.Controllers
         if (user == null)
           return BadRequest("Email not found");
 
-        var userToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-        if (userToken != null)
+        // Generate a token for the user
+        var userResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var encodedUserToken = HttpUtility.UrlEncode(userResetToken);
+        if (userResetToken != null)
         {
-          var emailResetLink = Url.Action("ResetPassword", "Account",
-           new
-           { userId = user.Id, token = userToken },
-            Request.Scheme);
+          var emailResetLink = $"http://localhost:3000/reset-password?token={encodedUserToken}&email={forgotPasswordDto.Email}"; // Link which directs user to Reset password page
 
           var recipient = forgotPasswordDto.Email.ToLower();
           var subject = "Password Reset";
@@ -168,7 +167,8 @@ namespace api.Controllers
           var ending = $"Kind Regards";
           var sign = $"Image Gallery App";
           try
-          {// Send the email
+          {
+            // Send the email
             await _emailservice.SendEmailAsync(recipient, subject, header, message, ending, sign);
           }
           catch (Exception)
@@ -196,11 +196,11 @@ namespace api.Controllers
         return BadRequest("Invalid email");
 
       // Extract user from the database
-      var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email!);
+      var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
       if (user == null)
         return BadRequest("Invalid Email");
 
-      var resetResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token!, resetPasswordDto.NewPassword!);
+      var resetResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
 
       if (!resetResult.Succeeded)
       {

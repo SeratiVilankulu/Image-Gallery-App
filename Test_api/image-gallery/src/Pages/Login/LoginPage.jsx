@@ -18,11 +18,6 @@ const LoginPage = () => {
   const navigate = useNavigate(); // Used to navigate to another page
   const location = useLocation(); // Used to access the current URL and its query parameters
 
-  // const [usernameFocused, setUsernameFocused] = useState(false); // Track if username field is focused
-  // const [passwordFocused, setPasswordFocused] = useState(false); // Track if password field is focused
-  // const [usernameHasInput, setUsernameHasInput] = useState(false); // Track if username has input data
-  // const [passwordHasInput, setPasswordHasInput] = useState(false); // Track if password has input data
-
   // useEffect hook to check for query parameters in the URL
   useEffect(() => {
     const params = new URLSearchParams(location.search); // Create a URLSearchParams object to easily access query parameters

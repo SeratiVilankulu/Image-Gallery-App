@@ -65,6 +65,7 @@ button:hover {
   background: rgb(233, 245, 249);
   color: rgb(22, 90, 114);
   cursor: pointer;
+  font-weight: 600;
 }
 
 .navIcons {
@@ -78,6 +79,7 @@ button:hover {
   color: rgb(22, 90, 114);
   font-size: 16px;
   margin-left: 30px;
+  max-height: 7vh;
 }
 
 .btn:hover {
@@ -100,7 +102,7 @@ button:hover {
   padding: 10px;
   gap: 5px;
   border-radius: 4px;
-  margin: 50px 10px 45px 60px;
+  margin: 40px 10px 30px 60px;
 }
 
 .filterSection input::placeholder {
@@ -118,7 +120,7 @@ button:hover {
 .searchIcon {
   color: #aeb6b7;
   position: absolute;
-  margin-top: 61px;
+  margin-top: 51px;
   margin-left: 75px;
   font-size: 17px;
 }
@@ -149,14 +151,32 @@ button:hover {
 }
 
 /*Images styles*/
-.image {
+.imageContainer {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(350px, 1fr)
+  ); /* Responsive columns */
+  gap: 20px; /* Space between the grid items */
+  padding: 10px; /* Padding around the grid */
+  margin-left: 50px;
+  margin-right: 20px;
+}
+
+/* Container for the image and overlay */
+.imageCard {
+  position: relative;
+  border-radius: 4px; /* Rounded corners for the card */
+  overflow: hidden; /* Ensures content stays within the rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+}
+
+.imageCard img {
   justify-content: center;
-  width: 440px;
-  height: 292px;
+  width: 100%;
+  height: 100%;
   top: 217px;
   left: 438px;
-  margin-left: 60px;
-  margin-bottom: 20px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -164,22 +184,59 @@ button:hover {
 .overlay {
   position: absolute;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  background: rgba(114, 114, 114, 0.6); /* Semi-transparent black background */
   color: white; /* Text color */
   width: 100%;
-  padding: 20px; /* Padding inside the overlay */
+  padding: 5px 30px 20px 30px; /* Padding inside the overlay */
   box-sizing: border-box;
 }
 
 /* Title styling */
 .overlay h2 {
   margin: 0 0 10px 0; /* Margin below the title */
-  font-size: 24px; /* Adjust title size */
+  font-size: 15px; /* Adjust title size */
+  font-weight: 200;
 }
 
 /* Description styling */
 .overlay p {
   margin: 0; /* No margin for the description */
-  font-size: 16px; /* Adjust description size */
+  font-size: 12px; /* Adjust description size */
   line-height: 1.5; /* Line height for better readability */
+  color: white;
+  font-weight: 200;
+}
+
+/* Pagnation styles */
+.pagnation {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  background: yellow;
+}
+
+/* Media queries for responsiveness */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+
+  .menu {
+    width: 390px;
+    flex: none;
+  }
+
+  .mainPage {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .searchBar {
+    width: 200px;
+  }
+
+  .imageContainer {
+    grid-template-columns: 1fr;
+  }
 }

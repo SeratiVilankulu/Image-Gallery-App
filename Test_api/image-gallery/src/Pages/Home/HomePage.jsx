@@ -76,14 +76,14 @@ const ReactPage = () => {
           <input type="submit" value="Filters" className={PageStyle.filter} />
           <IoFilter className={PageStyle.filterIcon} />
         </div>
-        <div className={PageStyle.images}>
-          <div class="image-card">
+        <div className={PageStyle.imageContainer}>
+          <div class={PageStyle.imageCard}>
             <img
               src="/images/butterfly.jpg"
               alt="Display image"
               className={PageStyle.image}
             />
-            <div class="overlay">
+            <div class={PageStyle.overlay}>
               <h2>Butterfly</h2>
               <p>
                 Butterflies have taste receptors on their feet to help them find
@@ -93,13 +93,13 @@ const ReactPage = () => {
               </p>
             </div>
           </div>
-          <div class="image-card">
+          <div class={PageStyle.imageCard}>
             <img
               src="/images/butterfly.jpg"
               alt="Display image"
               className={PageStyle.image}
             />
-            <div class="overlay">
+            <div class={PageStyle.overlay}>
               <h2>Butterfly</h2>
               <p>
                 Butterflies have taste receptors on their feet to help them find
@@ -109,13 +109,13 @@ const ReactPage = () => {
               </p>
             </div>
           </div>
-          <div class="image-card">
+          <div class={PageStyle.imageCard}>
             <img
               src="/images/butterfly.jpg"
               alt="Display image"
               className={PageStyle.image}
             />
-            <div class="overlay">
+            <div class={PageStyle.overlay}>
               <h2>Butterfly</h2>
               <p>
                 Butterflies have taste receptors on their feet to help them find
@@ -125,13 +125,45 @@ const ReactPage = () => {
               </p>
             </div>
           </div>
-          <div class="image-card">
+          <div class={PageStyle.imageCard}>
             <img
               src="/images/butterfly.jpg"
               alt="Display image"
               className={PageStyle.image}
             />
-            <div class="overlay">
+            <div class={PageStyle.overlay}>
+              <h2>Butterfly</h2>
+              <p>
+                Butterflies have taste receptors on their feet to help them find
+                their host plants and locate food. A female butterfly lands on
+                different plants, drumming the leaves with her feet until the
+                plant releases its juices.
+              </p>
+            </div>
+          </div>
+          <div class={PageStyle.imageCard}>
+            <img
+              src="/images/butterfly.jpg"
+              alt="Display image"
+              className={PageStyle.image}
+            />
+            <div class={PageStyle.overlay}>
+              <h2>Butterfly</h2>
+              <p>
+                Butterflies have taste receptors on their feet to help them find
+                their host plants and locate food. A female butterfly lands on
+                different plants, drumming the leaves with her feet until the
+                plant releases its juices.
+              </p>
+            </div>
+          </div>
+          <div class={PageStyle.imageCard}>
+            <img
+              src="/images/butterfly.jpg"
+              alt="Display image"
+              className={PageStyle.image}
+            />
+            <div class={PageStyle.overlay}>
               <h2>Butterfly</h2>
               <p>
                 Butterflies have taste receptors on their feet to help them find
@@ -142,6 +174,7 @@ const ReactPage = () => {
             </div>
           </div>
         </div>
+        <div className={PageStyle.pagnation}>Pagnation</div>
       </div>
     </div>
   );

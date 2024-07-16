@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import PasswordStyle from "./Password.module.css";
 
 const ForgotPassword = () => {
@@ -12,7 +11,6 @@ const ForgotPassword = () => {
   const [formError, setFormError] = useState({}); // State to store error messages for form validation
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
   const [Submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
-  const navigate = useNavigate(); //Used to navigate to another page
 
   // Function to handle changes in form input fields
   const handleUserEmail = (name, value) => {
@@ -45,11 +43,10 @@ const ForgotPassword = () => {
 
     try {
       // Make an API call to send the user an email to reset password
-      await axios.post("http://localhost:5085/api/account/forgot-password", {
+      await axios.post("http://localhost:5085/api/account/forgotpassword", {
         Email: userEmail.Email,
       });
       setSuccessMsg("Please check your emails for a link to reset password!");
-      setTimeout(() => navigate("/reset-password"), 1500); //redirect to login page once successful
     } catch (error) {
       setFormError({ api: "Failed to send email. Please try again." }); //If registraction fails
     } finally {
