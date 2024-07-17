@@ -12,6 +12,7 @@ import HomePage from "./Pages/Home/HomePage.jsx";
 import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm.jsx";
 import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess.jsx";
 import ForgotPassword from "./Pages/ResetPassword/ForgotPassword.jsx";
+import UploadPage from "./Pages/Upload/UploadPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/email-success",
     element: <EmailSuccess />,
+  },
+  {
+    path: "/upload-images",
+    element: <UploadPage />,
   },
 
   //add more routes

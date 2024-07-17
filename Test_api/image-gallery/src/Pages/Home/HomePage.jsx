@@ -40,11 +40,11 @@ const ReactPage = () => {
       <div className={PageStyle.menu}>
         <div className={PageStyle.logo}>Logo</div>
         <div className={PageStyle.sideNav}>
-          <button>
+          <button className={PageStyle.btn}>
             <GoHome className={PageStyle.navIcons} />
             Home
           </button>
-          <button>
+          <button className={PageStyle.btn}>
             <VscDeviceCamera className={PageStyle.navIcons} /> Image Upload
           </button>
           <button className={PageStyle.logout} onClick={handleLogout}>
@@ -55,11 +55,11 @@ const ReactPage = () => {
       </div>
       <div className={PageStyle.mainPage}>
         <div className={PageStyle.topNav}>
-          <button className={PageStyle.btn}>
+          <button className={PageStyle.topBtn}>
             Home
             <IoIosArrowForward className={PageStyle.topNavIcons} />
           </button>
-          <button className={PageStyle.btn}>
+          <button className={PageStyle.topBtn}>
             <CgProfile />
             seratimotla@gmail.com
             <IoIosArrowDown className={PageStyle.topNavIcons} />
