@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import PageStyle from "./HomePage.module.css";
 import { GoHome } from "react-icons/go";
 import { VscDeviceCamera } from "react-icons/vsc";
@@ -8,14 +9,29 @@ import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import {} from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { IoSearch } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const ReactPage = () => {
+const HomePage = () => {
+  const [images, setImages] = useState([]); //images state stores the fetched image details.
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch the uploaded images from the backend
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get("http://localhost:5085/api/images");
+        setImages(response.data);
+      } catch (error) {
+        console.error("An error occurred while fetching images", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/account/logout", {
+      const response = await fetch("http://localhost:5085/api/account/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,102 +93,19 @@ const ReactPage = () => {
           <IoFilter className={PageStyle.filterIcon} />
         </div>
         <div className={PageStyle.imageContainer}>
-          <div class={PageStyle.imageCard}>
-            <img
-              src="/images/butterfly.jpg"
-              alt="Display image"
-              className={PageStyle.image}
-            />
-            <div class={PageStyle.overlay}>
-              <h2>Butterfly</h2>
-              <p>
-                Butterflies have taste receptors on their feet to help them find
-                their host plants and locate food. A female butterfly lands on
-                different plants, drumming the leaves with her feet until the
-                plant releases its juices.
-              </p>
+          {images.map((image) => (
+            <div className={PageStyle.imageCard} key={image.id}>
+              <img
+                src={image.imageURL}
+                alt={image.Title}
+                className={PageStyle.image}
+              />
+              <div className={PageStyle.overlay}>
+                <h2>{image.title}</h2>
+                <p>{image.description}</p>
+              </div>
             </div>
-          </div>
-          <div class={PageStyle.imageCard}>
-            <img
-              src="/images/butterfly.jpg"
-              alt="Display image"
-              className={PageStyle.image}
-            />
-            <div class={PageStyle.overlay}>
-              <h2>Butterfly</h2>
-              <p>
-                Butterflies have taste receptors on their feet to help them find
-                their host plants and locate food. A female butterfly lands on
-                different plants, drumming the leaves with her feet until the
-                plant releases its juices.
-              </p>
-            </div>
-          </div>
-          <div class={PageStyle.imageCard}>
-            <img
-              src="/images/butterfly.jpg"
-              alt="Display image"
-              className={PageStyle.image}
-            />
-            <div class={PageStyle.overlay}>
-              <h2>Butterfly</h2>
-              <p>
-                Butterflies have taste receptors on their feet to help them find
-                their host plants and locate food. A female butterfly lands on
-                different plants, drumming the leaves with her feet until the
-                plant releases its juices.
-              </p>
-            </div>
-          </div>
-          <div class={PageStyle.imageCard}>
-            <img
-              src="/images/butterfly.jpg"
-              alt="Display image"
-              className={PageStyle.image}
-            />
-            <div class={PageStyle.overlay}>
-              <h2>Butterfly</h2>
-              <p>
-                Butterflies have taste receptors on their feet to help them find
-                their host plants and locate food. A female butterfly lands on
-                different plants, drumming the leaves with her feet until the
-                plant releases its juices.
-              </p>
-            </div>
-          </div>
-          <div class={PageStyle.imageCard}>
-            <img
-              src="/images/butterfly.jpg"
-              alt="Display image"
-              className={PageStyle.image}
-            />
-            <div class={PageStyle.overlay}>
-              <h2>Butterfly</h2>
-              <p>
-                Butterflies have taste receptors on their feet to help them find
-                their host plants and locate food. A female butterfly lands on
-                different plants, drumming the leaves with her feet until the
-                plant releases its juices.
-              </p>
-            </div>
-          </div>
-          <div class={PageStyle.imageCard}>
-            <img
-              src="/images/butterfly.jpg"
-              alt="Display image"
-              className={PageStyle.image}
-            />
-            <div class={PageStyle.overlay}>
-              <h2>Butterfly</h2>
-              <p>
-                Butterflies have taste receptors on their feet to help them find
-                their host plants and locate food. A female butterfly lands on
-                different plants, drumming the leaves with her feet until the
-                plant releases its juices.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
         <div className={PageStyle.pagnation}>Pagnation</div>
       </div>
@@ -180,4 +113,4 @@ const ReactPage = () => {
   );
 };
 
-export default ReactPage;
+export default HomePage;

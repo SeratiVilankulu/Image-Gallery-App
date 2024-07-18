@@ -17,7 +17,7 @@ const UploadPage = () => {
   // Function to handle logout
   const handleLogout = async () => {
     try {
-      const response = await fetch("/api/account/logout", {
+      const response = await fetch("http://localhost:5085/api/account/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
