@@ -9,6 +9,7 @@ import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm";
 import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess";
 import ForgotPassword from "./Pages/ResetPassword/ForgotPassword";
+import UploadPage from "./Pages/Upload/UploadPage";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
       </Route>
       <Route path="/email-success">
         <EmailSuccess />
+      </Route>
+      <Route path="/upload-images">
+        <UploadPage />
       </Route>
     </div>
   );
