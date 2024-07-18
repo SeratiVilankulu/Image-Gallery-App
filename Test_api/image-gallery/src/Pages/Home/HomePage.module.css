@@ -41,10 +41,11 @@
 }
 
 .logout {
-  margin-top: 330px;
+  margin-top: 450px; /*was 330px*/
 }
 
-button {
+/* Side navigation buttons */
+.container .btn {
   display: flex;
   align-items: center;
   width: 365px;
@@ -61,7 +62,7 @@ button {
   background-color: rgb(33, 135, 171);
 }
 
-button:hover {
+.container .btn:hover {
   background: rgb(233, 245, 249);
   color: rgb(22, 90, 114);
   cursor: pointer;
@@ -74,7 +75,7 @@ button:hover {
   margin-right: 10px;
 }
 
-.btn {
+button .btn {
   background: white;
   color: rgb(22, 90, 114);
   font-size: 16px;
@@ -82,8 +83,47 @@ button:hover {
   max-height: 7vh;
 }
 
-.btn:hover {
-  background: none;
+.container .logout {
+  display: flex;
+  align-items: center;
+  width: 365px;
+  height: 90px;
+  gap: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(33, 135, 171);
+}
+
+.container .logout:hover {
+  background: rgb(233, 245, 249);
+  color: rgb(22, 90, 114);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.topBtn {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  height: 60px;
+  gap: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  background: rgb(255, 255, 255);
+  color: rgb(15, 60, 76);
+  margin-left: 50px;
+  margin-right: 80px;
 }
 
 .topNavIcons {
@@ -155,7 +195,7 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(
     auto-fill,
-    minmax(350px, 1fr)
+    minmax(410px, 1fr)
   ); /* Responsive columns */
   gap: 20px; /* Space between the grid items */
   padding: 10px; /* Padding around the grid */
@@ -169,6 +209,18 @@ button:hover {
   border-radius: 4px; /* Rounded corners for the card */
   overflow: hidden; /* Ensures content stays within the rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  width: 600px; /* Fixed width */
+  height: 350px;
+}
+
+.imageCard:hover {
+  box-shadow: 0 5px 10px 0 rgba(58, 58, 58, 0.5);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the entire card without distorting */
 }
 
 .imageCard img {
@@ -208,11 +260,45 @@ button:hover {
 }
 
 /* Pagnation styles */
-.pagnation {
+.pagination {
   display: flex;
   justify-content: center;
-  margin: 30px;
-  background: yellow;
+  margin: 30px 0;
+}
+
+.pageNumber {
+  border: none;
+  background: white;
+  color: rgb(15, 60, 76);
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0 5px;
+  padding: 9px 20px;
+  cursor: pointer;
+  border-radius: 300px;
+}
+
+.pageNumber:hover {
+  background: rgb(15, 60, 76);
+  color: #fff;
+}
+
+.pageArrow {
+  border: none;
+  background: white;
+  color: rgb(15, 60, 76);
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 5px;
+  padding: 9px 15px;
+  cursor: pointer;
+}
+
+.pageArrow:disabled {
+  cursor: not-allowed;
+  background: white;
 }
 
 /* Media queries for responsiveness */
