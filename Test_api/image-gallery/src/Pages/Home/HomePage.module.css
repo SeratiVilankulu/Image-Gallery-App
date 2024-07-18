@@ -41,7 +41,7 @@
 }
 
 .logout {
-  margin-top: 330px;
+  margin-top: 450px; /*was 330px*/
 }
 
 /* Side navigation buttons */
@@ -260,11 +260,45 @@ button .btn {
 }
 
 /* Pagnation styles */
-.pagnation {
+.pagination {
   display: flex;
   justify-content: center;
-  margin: 30px;
-  background: yellow;
+  margin: 30px 0;
+}
+
+.pageNumber {
+  border: none;
+  background: white;
+  color: rgb(15, 60, 76);
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0 5px;
+  padding: 9px 20px;
+  cursor: pointer;
+  border-radius: 300px;
+}
+
+.pageNumber:hover {
+  background: rgb(15, 60, 76);
+  color: #fff;
+}
+
+.pageArrow {
+  border: none;
+  background: white;
+  color: rgb(15, 60, 76);
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 5px;
+  padding: 9px 15px;
+  cursor: pointer;
+}
+
+.pageArrow:disabled {
+  cursor: not-allowed;
+  background: white;
 }
 
 /* Media queries for responsiveness */
