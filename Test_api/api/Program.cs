@@ -1,3 +1,4 @@
+using System.Net;
 using api.Data;
 using api.Interfaces;
 using api.Models;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+
+ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
 var builder = WebApplication.CreateBuilder(args);
 

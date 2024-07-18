@@ -74,12 +74,13 @@ namespace api.Controllers
           var recipient = registerDto.Email.ToLower();
           var subject = "Email Verification";
           var header = $"Dear {appUser.UserName}";
+          var thanks = $"Thank you for joining our picture sharing community!";
           var message = $"Please confirm your account by clicking this link: <a href='{emailConfirmationLink}'>Confirm Email</a>";
           var ending = $"Kind Regards";
           var sign = $"Image Gallery App";
 
           // Send the email
-          await _emailservice.SendEmailAsync(recipient, subject, header, message, ending, sign);
+          await _emailservice.SendEmailAsync(recipient, subject, header, thanks, message, ending, sign);
 
           return Ok("Email was succefully sent, please check emails for confirmation link");
         }
@@ -163,13 +164,14 @@ namespace api.Controllers
           var recipient = forgotPasswordDto.Email.ToLower();
           var subject = "Password Reset";
           var header = $"Dear User";
+          var thanks = $"We are sorry to hear that you forgot your password!";
           var message = $"Please by click this link to reset password: <a href='{emailResetLink}'>Reset Password Link</a>";
           var ending = $"Kind Regards";
           var sign = $"Image Gallery App";
           try
           {
             // Send the email
-            await _emailservice.SendEmailAsync(recipient, subject, header, message, ending, sign);
+            await _emailservice.SendEmailAsync(recipient, subject, header, thanks, message, ending, sign);
           }
           catch (Exception)
           {
