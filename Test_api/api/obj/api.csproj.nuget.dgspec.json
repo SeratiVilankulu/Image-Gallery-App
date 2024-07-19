@@ -1,25 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\Test_api\\api\\api.csproj": {}
+    "C:\\Users\\Serati Vilankulu\\Documents\\Singular Systems Learnership\\Practise_Repo\\Test_api\\api\\api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\Test_api\\api\\api.csproj": {
+    "C:\\Users\\Serati Vilankulu\\Documents\\Singular Systems Learnership\\Practise_Repo\\Test_api\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\Test_api\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\Serati Vilankulu\\Documents\\Singular Systems Learnership\\Practise_Repo\\Test_api\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\Test_api\\api\\api.csproj",
-        "packagesPath": "C:\\Users\\SVilankulu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\Test_api\\api\\obj\\",
+        "projectPath": "C:\\Users\\Serati Vilankulu\\Documents\\Singular Systems Learnership\\Practise_Repo\\Test_api\\api\\api.csproj",
+        "packagesPath": "C:\\Users\\Serati Vilankulu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Serati Vilankulu\\Documents\\Singular Systems Learnership\\Practise_Repo\\Test_api\\api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\SVilankulu\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Serati Vilankulu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
