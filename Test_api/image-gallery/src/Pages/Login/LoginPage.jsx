@@ -80,6 +80,13 @@ const LoginPage = () => {
           setErrorMsg({
             api: "Invalid username or password. Please try again.",
           });
+        } else if (error.response.status === 400) {
+          // Assuming the backend sends a specific message for unverified email
+          setErrorMsg({
+            api:
+              error.response.data ||
+              "Email has not been verified. Please check email and verify account.",
+          });
         } else {
           // Handle other server errors
           setErrorMsg({ api: "Login failed. Please try again." });

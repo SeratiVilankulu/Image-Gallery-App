@@ -93,7 +93,6 @@ namespace api.Controllers
       return BadRequest("Error Occured. Unable to send email");
     }
 
-    //Post: Account/Login
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto loginDto)
     {
@@ -106,17 +105,24 @@ namespace api.Controllers
 
       var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-      if (!result.Succeeded) return Unauthorized("Username not found and/or password inccorrect");
-
-      return Ok(
-        new NewUserDto
+      if (result.Succeeded)
+      {
+        return Ok(new NewUserDto
         {
           UserName = user.UserName,
           Email = user.Email,
           VerificationToken = _tokenService.CreateToken(user)
-        }
-      );
+        });
+      }
+
+      if (result.IsNotAllowed)
+      {
+        return BadRequest("Email has not been verified, please check email and verify account.");
+      }
+
+      return Unauthorized("Username not found and/or password incorrect");
     }
+
 
     //Registration Verification (Once user clicks on link)
     [HttpGet("emailconfirmation")]
