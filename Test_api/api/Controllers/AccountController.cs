@@ -103,7 +103,7 @@ namespace api.Controllers
 
       if (user == null) return Unauthorized("Invalid credentials!");
 
-      var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+      var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: true);
 
       if (result.Succeeded)
       {
@@ -114,13 +114,27 @@ namespace api.Controllers
           VerificationToken = _tokenService.CreateToken(user)
         });
       }
+      else if (result.IsLockedOut)
+      {
+        return BadRequest("Account has been blocked. Please try after sometime");
+      }
 
-      if (result.IsNotAllowed)
+      if (result.IsNotAllowed) // Checks if users email has been verified, if not this message is displayed
       {
         return BadRequest("Email has not been verified, please check email and verify account.");
       }
+      else
+      {
+        var accessFailedCount = await _userManager.GetAccessFailedCountAsync(user);
+        var maxFailedAccessAttempts = _userManager.Options.Lockout.MaxFailedAccessAttempts;
+        var attemptsLeft = maxFailedAccessAttempts - accessFailedCount;
 
-      return Unauthorized("Username not found and/or password incorrect");
+        return Unauthorized(new
+        {
+          message = "Invalid username or password.",
+          attemptsLeft = attemptsLeft
+        });
+      }
     }
 
 
