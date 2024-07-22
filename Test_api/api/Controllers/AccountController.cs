@@ -101,11 +101,13 @@ namespace api.Controllers
 
       var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
-      if (user == null) return Unauthorized("Invalid credentials!");
+      if (user == null)
+        return Unauthorized("Username not found");
+
 
       var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: true);
 
-      if (result.Succeeded)
+      if (result.Succeeded) // Checks if the sign-in was successful and shows user details
       {
         return Ok(new NewUserDto
         {
@@ -114,9 +116,9 @@ namespace api.Controllers
           VerificationToken = _tokenService.CreateToken(user)
         });
       }
-      else if (result.IsLockedOut)
+      else if (result.IsLockedOut) // If users account has been locked out
       {
-        return BadRequest("Account has been blocked. Please try after sometime");
+        return BadRequest("Account has been blocked. Please try after 5 minutes.");
       }
 
       if (result.IsNotAllowed) // Checks if users email has been verified, if not this message is displayed
@@ -131,8 +133,8 @@ namespace api.Controllers
 
         return Unauthorized(new
         {
-          message = "Invalid username or password.",
-          attemptsLeft = attemptsLeft
+          message = $"Invalid username or password. You have {attemptsLeft} attempts left.",
+          
         });
       }
     }

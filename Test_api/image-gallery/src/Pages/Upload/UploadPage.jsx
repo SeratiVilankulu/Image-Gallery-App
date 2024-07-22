@@ -5,7 +5,7 @@ import PageStyle from "../Home/HomePage.module.css";
 import { GoHome } from "react-icons/go";
 import { MdLogout } from "react-icons/md";
 import { VscDeviceCamera } from "react-icons/vsc";
-import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowDown, IoIosImages } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 
@@ -93,12 +93,16 @@ const UploadPage = () => {
       <div className={PageStyle.menu}>
         <div className={PageStyle.logo}>Logo</div>
         <div className={PageStyle.sideNav}>
-          <button className={PageStyle.btn}>
+          <button className={PageStyle.btn} onClick={() => navigate("/home")}>
             <GoHome className={PageStyle.navIcons} />
             Home
           </button>
           <button className={PageStyle.btn}>
             <VscDeviceCamera className={PageStyle.navIcons} /> Image Upload
+          </button>
+          <button className={PageStyle.btn} onClick={() => navigate("/")}>
+            <IoIosImages className={PageStyle.navIcons} />
+            My Library
           </button>
           <button className={PageStyle.logout} onClick={handleLogout}>
             <MdLogout className={PageStyle.navIcons} />
@@ -123,6 +127,10 @@ const UploadPage = () => {
           <form onSubmit={handleSubmit}>
             <div className={UploadPageStyle.inputBox}>
               <p className={UploadPageStyle.name}>Image Title</p>
+              <input type="text" className={UploadPageStyle.title} />
+            </div>
+            <div className={UploadPageStyle.inputBox}>
+              <p className={UploadPageStyle.name}>Image Category</p>
               <input type="text" className={UploadPageStyle.title} />
             </div>
             <div className={UploadPageStyle.inputBox}>

@@ -67,10 +67,15 @@ const LoginPage = () => {
       if (error.response) {
         if (error.response.status === 401) {
           // 401 Unauthorized means invalid credentials
-          setErrorMsg({
-            api: error.response.data.message,
-            attemptsLeft: `Attempts left: ${error.response.data.attemptsLeft}`,
-          });
+          if (error.response.data.message) {
+            setErrorMsg({
+              api: error.response.data.message,
+            });
+          } else {
+            setErrorMsg({
+              api: error.response.data,
+            });
+          }
         } else if (error.response.status === 400) {
           // Assuming the backend sends a specific message for unverified email
           setErrorMsg({
@@ -151,9 +156,7 @@ const LoginPage = () => {
           </div>
 
           <p className="error-message-login">{errorMsg.api}</p>
-          {errorMsg.attemptsLeft && (
-            <p className="error-message-login">{errorMsg.attemptsLeft}</p>
-          )}
+
           <p className="success-message-login">{successMsg}</p>
 
           <input type="submit" className="login" value="Login"></input>

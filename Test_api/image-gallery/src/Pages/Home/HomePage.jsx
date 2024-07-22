@@ -6,6 +6,7 @@ import { VscDeviceCamera } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
 import {
+  IoIosImages,
   IoIosArrowForward,
   IoIosArrowDown,
   IoIosArrowBack,
@@ -20,6 +21,8 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
   const imagesPerPage = 4; // Number of images to display per page
   const navigate = useNavigate();
+
+  const handleUpload = {};
 
   useEffect(() => {
     // Fetch the uploaded images from the backend when the component mounts
@@ -89,12 +92,19 @@ const HomePage = () => {
       <div className={PageStyle.menu}>
         <div className={PageStyle.logo}>Logo</div>
         <div className={PageStyle.sideNav}>
-          <button className={PageStyle.btn}>
+          <button className={PageStyle.btn} onClick={() => navigate("/home")}>
             <GoHome className={PageStyle.navIcons} />
             Home
           </button>
-          <button className={PageStyle.btn}>
+          <button
+            className={PageStyle.btn}
+            onClick={() => navigate("/upload-images")}
+          >
             <VscDeviceCamera className={PageStyle.navIcons} /> Image Upload
+          </button>
+          <button className={PageStyle.btn} onClick={() => navigate("/")}>
+            <IoIosImages className={PageStyle.navIcons} />
+            My Library
           </button>
           <button className={PageStyle.logout} onClick={handleLogout}>
             <MdLogout className={PageStyle.navIcons} />
