@@ -1,90 +1,150 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UploadPageStyle from "./UploadPage.module.css";
 import PageStyle from "../Home/HomePage.module.css";
 import { GoHome } from "react-icons/go";
 import { MdLogout } from "react-icons/md";
 import { VscDeviceCamera } from "react-icons/vsc";
+import { BsCloudUpload } from "react-icons/bs";
 import { IoIosArrowForward, IoIosArrowDown, IoIosImages } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 
 const UploadPage = () => {
+  // State to manage form inputs
+  const [formInput, setFormInput] = useState({
+    Title: "",
+    Category: "",
+    Description: "",
+    ImageURL: "",
+  });
+
+  const [errorMsg, setErrorMsg] = useState({}); // State to store error messages for form validation
+  const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
+  const [submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
   const navigate = useNavigate();
   // State to manage the selected file
   const [file, setFile] = useState(null);
+  const [categories, setCategories] = useState([]); // State to manage the categories
 
-  // Function to handle logout
-  const handleLogout = async () => {
-    try {
-      const response = await fetch("http://localhost:5085/api/account/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      if (response.ok) {
-        // Clear local storage or any other client-side storage
-        localStorage.removeItem("token");
-
-        // Redirect to login page
-        navigate("/");
-      } else {
-        console.error("Failed to logout");
+  // Fetch categories from the backend
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        await axios.get("http://localhost:5085/api/category/{id}"); //(check categories)
+        setCategories(response.data);
+      } catch (error) {
+        setErrorMsg({ api: "cannot fetch categories" });
       }
-    } catch (error) {
-      console.error("An error occurred while logging out", error);
+    };
+    fetchCategories();
+  }, []);
+
+  // Function to handle changes in form input fields
+  const handleImageInput = (name, value) => {
+    setFormInput({
+      ...formInput,
+      [name]: value,
+    });
+  };
+
+  // Function to handle form submission and validate input
+  const validateFormSubmit = async (event) => {
+    event.preventDefault();
+    setErrorMsg({});
+    setSuccessMsg("");
+
+    let inputError = {};
+
+    // Validate image title
+    if (!formInput.Title) {
+      inputError.Title = "Image title cannot be empty";
     }
+
+    // Validate image category
+    if (!formInput.Category) {
+      inputError.Category = "Category cannot be empty";
+    }
+
+    // Validate image description
+    if (!formInput.Description) {
+      inputError.Description = "Description cannot be empty";
+    }
+
+    // Validate file selection
+    if (!file) {
+      inputError.file = "Please select a file to upload.";
+    }
+
+    // If there are validation errors, set the error messages and return early
+    if (Object.keys(inputError).length > 0) {
+      setErrorMsg(inputError);
+      return;
+    }
+
+    setSubmitting(true);
+    handleSubmit();
   };
 
   // Function to handle file drop event
   const handleDrop = (event) => {
-    event.preventDefault(); // Prevent default behavior (prevent file from being opened)
-    const files = event.dataTransfer.files; // Get the dropped files
+    event.preventDefault();
+    const files = event.dataTransfer.files;
     if (files && files.length > 0) {
-      setFile(files[0]); // Set the first dropped file to state
+      setFile(files[0]);
     }
   };
 
   // Function to handle drag over event
   const handleDragOver = (event) => {
-    event.preventDefault(); // Prevent default behavior to allow drop
+    event.preventDefault();
   };
 
   // Function to handle file input change event
   const handleFileChange = (event) => {
-    const files = event.target.files; // Get the selected files
+    const files = event.target.files;
     if (files && files.length > 0) {
-      setFile(files[0]); // Set the first selected file to state
+      setFile(files[0]);
     }
   };
 
   // Function to handle form submission
-  const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission
-    if (!file) {
-      alert("Please select a file to upload.");
-      return;
-    }
-
-    const formData = new FormData(); // Create a FormData object
-    formData.append("file", file); // Append the file to the FormData object
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("Title", formInput.Title);
+    formData.append("Category", formInput.Category);
+    formData.append("Description", formInput.Description);
 
     try {
-      const response = await axios.post("/api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      // Make an API call to post image
+      const response = await axios.post(
+        "http://localhost:5085/api/image/{categoryID}",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // Handle successful response
       if (response.status === 200) {
-        alert("File uploaded successfully.");
-        setFile(null); // Reset the file state
+        setSuccessMsg("File uploaded successfully.");
+        setFile(null);
+        setFormInput({
+          Title: "",
+          Category: "",
+          Description: "",
+          ImageURL: "",
+        });
       } else {
-        console.error("Failed to upload file");
+        setErrorMsg({ api: "Failed to upload file" });
       }
     } catch (error) {
-      console.error("An error occurred while uploading the file", error);
+      setErrorMsg({ api: "An error occurred while uploading the file." });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -104,7 +164,7 @@ const UploadPage = () => {
             <IoIosImages className={PageStyle.navIcons} />
             My Library
           </button>
-          <button className={PageStyle.logout} onClick={handleLogout}>
+          <button className={PageStyle.logout} onClick={() => navigate("/")}>
             <MdLogout className={PageStyle.navIcons} />
             Logout
           </button>
@@ -113,7 +173,7 @@ const UploadPage = () => {
       <div className={PageStyle.mainPage}>
         <div className={PageStyle.topNav}>
           <button className={PageStyle.topBtn}>
-            Home
+            Image Upload
             <IoIosArrowForward className={PageStyle.topNavIcons} />
           </button>
           <button className={PageStyle.topBtn}>
@@ -124,42 +184,88 @@ const UploadPage = () => {
         </div>
         <div className={UploadPageStyle.uploadWrapper}>
           <h1 className={UploadPageStyle.heading}>Image Upload</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={validateFormSubmit}>
             <div className={UploadPageStyle.inputBox}>
               <p className={UploadPageStyle.name}>Image Title</p>
-              <input type="text" className={UploadPageStyle.title} />
+              <input
+                type="text"
+                className={UploadPageStyle.title}
+                value={formInput.Title}
+                onChange={(e) => handleImageInput("Title", e.target.value)}
+              />
+              <p className={UploadPageStyle.errorMessage}>{errorMsg.Title}</p>
             </div>
             <div className={UploadPageStyle.inputBox}>
               <p className={UploadPageStyle.name}>Image Category</p>
-              <input type="text" className={UploadPageStyle.title} />
+              <select
+                className={UploadPageStyle.category}
+                value={formInput.Category}
+                onChange={(e) => handleImageInput("Category", e.target.value)}
+              >
+                <option value="">Select a category</option>
+                {categories.map((category, index) => (
+                  <option key={index} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+              <p className={UploadPageStyle.errorMessage}>
+                {errorMsg.Category}
+              </p>
             </div>
             <div className={UploadPageStyle.inputBox}>
               <p className={UploadPageStyle.name}>Image Description</p>
-              <input type="text" className={UploadPageStyle.description} />
+              <input
+                type="text"
+                className={UploadPageStyle.description}
+                value={formInput.Description}
+                onChange={(e) =>
+                  handleImageInput("Description", e.target.value)
+                }
+              />
+              <p className={UploadPageStyle.errorMessage}>
+                {errorMsg.Description}
+              </p>
             </div>
-
             <div className={UploadPageStyle.inputBox}>
               <div
                 className={UploadPageStyle.dragArea}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
               >
+                <BsCloudUpload className={UploadPageStyle.uploadIcon} />
                 <p className={UploadPageStyle.drag}>Drag and Drop files here</p>
                 <p className={UploadPageStyle.option}>or</p>
                 <input
                   type="file"
-                  className={UploadPageStyle.imageUpload}
+                  className={UploadPageStyle.fileInput}
+                  id="file"
                   accept="image/*"
                   onChange={handleFileChange}
                 />
-                <button type="submit" className={UploadPageStyle.uploadBtn}>
-                  Upload
-                </button>
+                <label
+                  htmlFor="file"
+                  className={UploadPageStyle.fileInputLabel}
+                >
+                  Upload File
+                </label>
               </div>
               {file && (
-                <p>Selected file: {file.name}</p> // Display the name of the selected file
+                <p className={UploadPageStyle.selectedFile}>
+                  Selected file: {file.name}
+                </p> // Display the name of the selected file
               )}
+              <p className={UploadPageStyle.errorMessage}>{errorMsg.file}</p>
+              <p className={UploadPageStyle.errorMessage}>{errorMsg.api}</p>
             </div>
+            <button
+              type="submit"
+              className={UploadPageStyle.submitBtn}
+              disabled={submitting}
+            >
+              {submitting ? "Submitting..." : "Save Upload"}
+            </button>
+            <p className={UploadPageStyle.successMessage}>{successMsg}</p>
           </form>
         </div>
       </div>
