@@ -103,16 +103,26 @@ const ResetPassword = () => {
         ConfirmPassword: userInput.ConfirmPassword,
       });
       setSuccess("Password changed successfully!");
-      setTimeout(() => navigate("/"), 1500); //redirect to login page once successful
+      setTimeout(() => navigate("/"), 1500); // Redirect to login page once successful
     } catch (error) {
-      if (error.response) {
-        if (error.response.status === 400) {
+      if (error.response && error.response.data) {
+        const apiError = error.response.data;
+        if (apiError === "Invalid email") {
           setError({
-            api: "New password can't be the same as the old password.",
+            api: "Invalid email address. Please check and try again.",
           });
+        } else if (
+          apiError ===
+          "The new password cannot be the same as the current password."
+        ) {
+          setError({
+            api: "The new password cannot be the same as the current password.",
+          });
+        } else {
+          setError({ api: `Failed to reset password: ${apiError}` });
         }
-      } else{
-      setError({ api: "Failed to reset password. Please try again." }); //If registraction fails
+      } else {
+        setError({ api: "Failed to reset password. Please try again." });
       }
     } finally {
       setSubmitting(false);
