@@ -57,7 +57,7 @@ const ForgotPassword = () => {
   return (
     <div className={PasswordStyle.passwordContainer}>
       <div className={PasswordStyle.passwordFormContainer}>
-        <h1>Forgot Password</h1>
+        <h1>Recovery Password</h1>
         <form onSubmit={validateFormInput}>
           <div className={PasswordStyle.resetInput}>
             <p>Email Address</p>

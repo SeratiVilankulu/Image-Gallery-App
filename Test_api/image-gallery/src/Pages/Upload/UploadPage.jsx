@@ -31,10 +31,12 @@ const UploadPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        await axios.get("http://localhost:5085/api/category/{id}"); //(check categories)
-        setCategories(response.data);
+        const response = await axios.get("http://localhost:5085/api/category");
+        const categoryTypes = response.data.map((item) => item.categoryType);
+        setCategories(categoryTypes);
       } catch (error) {
-        setErrorMsg({ api: "cannot fetch categories" });
+        console.log(error);
+        setErrorMsg("Cannot fetch categories");
       }
     };
     fetchCategories();

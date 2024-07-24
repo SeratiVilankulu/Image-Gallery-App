@@ -67,7 +67,6 @@ namespace api.Controllers
 
     [HttpPut]
     [Route("{id:int}")]
-
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCategoriesRequestDto updateDto)
     {
       if (!ModelState.IsValid)
@@ -85,7 +84,6 @@ namespace api.Controllers
 
     [HttpDelete]
     [Route("{id:int}")]
-
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
       if (!ModelState.IsValid)

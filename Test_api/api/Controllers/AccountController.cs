@@ -134,11 +134,10 @@ namespace api.Controllers
         return Unauthorized(new
         {
           message = $"Invalid username or password. You have {attemptsLeft} attempts left.",
-          
+
         });
       }
     }
-
 
     //Registration Verification (Once user clicks on link)
     [HttpGet("emailconfirmation")]
@@ -225,6 +224,14 @@ namespace api.Controllers
         return BadRequest("Invalid Email");
 
       var resetResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
+
+      var currentPassword = user.PasswordHash; // Current user password
+      // Compare the new password with the current password
+      var passwordVerificationResult = _userManager.PasswordHasher.VerifyHashedPassword(user, currentPassword, resetPasswordDto.NewPassword);
+      if (passwordVerificationResult == PasswordVerificationResult.Success)
+      {
+        return BadRequest("New password can't be the same as the old password.");
+      }
 
       if (!resetResult.Succeeded)
       {
