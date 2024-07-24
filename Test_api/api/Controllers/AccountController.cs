@@ -223,11 +223,11 @@ namespace api.Controllers
       if (user == null)
         return BadRequest("Invalid Email");
 
-      // Check if the new password is the same as the current password
+      // Check if the new password is the same as the old password
       var currentPasswordVerification = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, resetPasswordDto.NewPassword);
       if (currentPasswordVerification == PasswordVerificationResult.Success)
       {
-        return BadRequest("The new password cannot be the same as the current password.");
+        return BadRequest("The new password cannot be the same as the old password.");
       }
 
       var resetResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);

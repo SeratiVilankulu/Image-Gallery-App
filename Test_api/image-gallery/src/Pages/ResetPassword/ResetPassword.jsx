@@ -116,7 +116,7 @@ const ResetPassword = () => {
           "The new password cannot be the same as the current password."
         ) {
           setError({
-            api: "The new password cannot be the same as the current password.",
+            api: "The new password cannot be the same as the old password.",
           });
         } else {
           setError({ api: `Failed to reset password: ${apiError}` });
