@@ -20,7 +20,7 @@
 .inputBox .title {
   width: 400px;
   height: 38px;
-  padding: 10px 40px 10px 10px;
+  padding: 10px;
   border: 1px solid #aaa8a8;
   border-radius: 5px;
   font-size: 14px;
@@ -34,14 +34,14 @@
 .name {
   font-size: 12px;
   margin: 5px 5px;
-  margin-left: 50px;
+  margin-left: 53px;
   font-weight: 600;
 }
 
 .inputBox .category {
   width: 400px;
   height: 38px;
-  padding: 10px 40px 10px 10px;
+  padding: 10px;
   border: 1px solid #aaa8a8;
   border-radius: 5px;
   font-size: 14px;
@@ -53,17 +53,18 @@
 }
 
 .inputBox .description {
+  font-family: "Poppins", sans-serif;
   height: 100px;
   width: 400px;
   height: 130px;
-  padding: 10px 40px 10px 10px;
+  padding: 10px;
   border: 1px solid #aaa8a8;
   border-radius: 5px;
   font-size: 14px;
   color: rgb(15, 60, 76);
   border-radius: 4px;
   border-color: rgb(15, 60, 76);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   margin-left: 50px;
 }
 

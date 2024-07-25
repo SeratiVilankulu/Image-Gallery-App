@@ -139,11 +139,13 @@ img {
 .btnLogo {
   font-size: 25px;
   padding-left: 10px;
+  padding-top: 13px;
 }
 
 .signinBtn {
   text-decoration: none;
   color: rgb(15, 60, 76);
+  margin: 10px;
 }
 
 /*Styling for error and success message*/

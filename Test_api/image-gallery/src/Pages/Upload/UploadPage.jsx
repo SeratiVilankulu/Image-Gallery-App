@@ -33,7 +33,8 @@ const UploadPage = () => {
       try {
         const response = await axios.get("http://localhost:5085/api/category");
         const categoryTypes = response.data.map((item) => item.categoryType);
-        setCategories(categoryTypes);
+        // Store the entire category list including categoryID
+        setCategories(response.data);
       } catch (error) {
         console.log(error);
         setErrorMsg("Cannot fetch categories");
@@ -71,6 +72,11 @@ const UploadPage = () => {
     // Validate image description
     if (!formInput.Description) {
       inputError.Description = "Description cannot be empty";
+    }
+
+    //Check if Description is more than 50 characters
+    if (formInput.Description.length > 50) {
+      inputError.Description = "Description cannot be more than 50 characters";
     }
 
     // Validate file selection
@@ -112,10 +118,20 @@ const UploadPage = () => {
 
   // Function to handle form submission
   const handleSubmit = async () => {
+    const selectedCategory = categories.find(
+      (category) => category.categoryID === formInput.Category
+    );
+
+    if (!selectedCategory) {
+      setErrorMsg({ api: "Invalid category selected." });
+      setSubmitting(false);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("Title", formInput.Title);
-    formData.append("Category", formInput.Category);
+    formData.append("Category", selectedCategory.categoryID); // Use categoryID here
     formData.append("Description", formInput.Description);
 
     try {
@@ -191,6 +207,7 @@ const UploadPage = () => {
               <p className={UploadPageStyle.name}>Image Title</p>
               <input
                 type="text"
+                name="Title"
                 className={UploadPageStyle.title}
                 value={formInput.Title}
                 onChange={(e) => handleImageInput("Title", e.target.value)}
@@ -205,9 +222,9 @@ const UploadPage = () => {
                 onChange={(e) => handleImageInput("Category", e.target.value)}
               >
                 <option value="">Select a category</option>
-                {categories.map((category, index) => (
-                  <option key={index} value={category}>
-                    {category}
+                {categories.map((category) => (
+                  <option key={category.categoryID} value={category.categoryID}>
+                    {category.categoryType}
                   </option>
                 ))}
               </select>
@@ -217,8 +234,9 @@ const UploadPage = () => {
             </div>
             <div className={UploadPageStyle.inputBox}>
               <p className={UploadPageStyle.name}>Image Description</p>
-              <input
+              <textarea
                 type="text"
+                name="Description"
                 className={UploadPageStyle.description}
                 value={formInput.Description}
                 onChange={(e) =>
@@ -240,6 +258,7 @@ const UploadPage = () => {
                 <p className={UploadPageStyle.option}>or</p>
                 <input
                   type="file"
+                  name="ImageURL"
                   className={UploadPageStyle.fileInput}
                   id="file"
                   accept="image/*"
