@@ -75,6 +75,7 @@ const ForgotPassword = () => {
           <p className={PasswordStyle.errorMessage}>{formError.Email}</p>
 
           <p className={PasswordStyle.errorMessage}>{formError.api}</p>
+          
           <p className={PasswordStyle.successMessage}>{successMsg}</p>
 
           <input

@@ -1,0 +1,9 @@
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(114, 114, 114, 0.6); /* Semi-transparent black background */
+  color: white;
+  width: 100%;
+  padding: 5px 30px 20px 30px;
+  box-sizing: border-box;
+}

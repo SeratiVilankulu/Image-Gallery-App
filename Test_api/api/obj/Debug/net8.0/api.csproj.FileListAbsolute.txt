@@ -592,3 +592,4 @@ C:\Users\SVilankulu\Desktop\SV files\React\Test-api\Practise_Repo-1\Test_api\api
 C:\Users\SVilankulu\Desktop\SV files\React\Test-api\Practise_Repo-1\Test_api\api\obj\Debug\net8.0\api.pdb
 C:\Users\SVilankulu\Desktop\SV files\React\Test-api\Practise_Repo-1\Test_api\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\SVilankulu\Desktop\SV files\React\Test-api\Practise_Repo-1\Test_api\api\obj\Debug\net8.0\ref\api.dll
+C:\Users\SVilankulu\Desktop\SV files\React\Test-api\Practise_Repo-1\Test_api\api\bin\Debug\net8.0\CloudinaryDotNet.dll

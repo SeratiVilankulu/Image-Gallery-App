@@ -15,14 +15,14 @@ import {
 import { CgProfile } from "react-icons/cg";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+//import ImageModal from "./Modals/ImageModal";
 
 const HomePage = () => {
   const [images, setImages] = useState([]); // State to store fetched images
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
+  const [selectedImage, setSelectedImage] = useState(null); // State to track the selected image
   const imagesPerPage = 4; // Number of images to display per page
   const navigate = useNavigate();
-
-  const handleUpload = {};
 
   useEffect(() => {
     // Fetch the uploaded images from the backend when the component mounts
@@ -38,25 +38,14 @@ const HomePage = () => {
     fetchImages();
   }, []);
 
-  // Function to handle user logout
-  const handleLogout = async () => {
-    try {
-      const response = await fetch("http://localhost:5085/api/account/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Include auth token in request header
-        },
-      });
-      if (response.ok) {
-        localStorage.removeItem("token"); // Clear token from local storage
-        navigate("/"); // Redirect to login page
-      } else {
-        console.error("Failed to logout");
-      }
-    } catch (error) {
-      console.error("An error occurred while logging out", error);
-    }
+  //Function to view image
+  const imageClick = (image) => {
+    setSelectedImage(image);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setSelectedImage(null);
   };
 
   // Calculate the indexes for the images to display on the current page
@@ -90,7 +79,9 @@ const HomePage = () => {
   return (
     <div className={PageStyle.container}>
       <div className={PageStyle.menu}>
-        <div className={PageStyle.logo}>Logo</div>
+        <div className={PageStyle.logo}>
+          <img src="/images/Image Gallery.png" alt="Logo" />{" "}
+        </div>
         <div className={PageStyle.sideNav}>
           <button className={PageStyle.btn} onClick={() => navigate("/home")}>
             <GoHome className={PageStyle.navIcons} />
@@ -106,7 +97,7 @@ const HomePage = () => {
             <IoIosImages className={PageStyle.navIcons} />
             My Library
           </button>
-          <button className={PageStyle.logout} onClick={handleLogout}>
+          <button className={PageStyle.logout}>
             <MdLogout className={PageStyle.navIcons} />
             Logout
           </button>
@@ -120,7 +111,7 @@ const HomePage = () => {
           </button>
           <button className={PageStyle.topBtn}>
             <CgProfile />
-            seratimotla@gmail.com
+            example@gmail.com
             <IoIosArrowDown className={PageStyle.topNavIcons} />
           </button>
         </div>
@@ -137,10 +128,13 @@ const HomePage = () => {
         <div className={PageStyle.imageContainer}>
           {currentImages.map((image) => (
             <div className={PageStyle.imageCard} key={image.id}>
-              <img src={image.imageURL} className={PageStyle.image} />
+              <img
+                src={image.imageURL}
+                className={PageStyle.image}
+                onClick={() => imageClick(image)}
+              />
               <div className={PageStyle.overlay}>
                 <h2>{image.title}</h2>
-                <p>{image.description}</p>
               </div>
             </div>
           ))}

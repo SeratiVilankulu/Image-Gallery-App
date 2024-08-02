@@ -16,7 +16,7 @@ namespace api.Controllers
     private readonly IImagesRepository _imagesRepo;
     private readonly ICategoriesRepository _categoriesRepo;
 
-    public ImagesController( IImagesRepository imagesRepo, ICategoriesRepository categoriesRepo)
+    public ImagesController(IImagesRepository imagesRepo, ICategoriesRepository categoriesRepo)
     {
       _imagesRepo = imagesRepo;
       _categoriesRepo = categoriesRepo;
@@ -25,7 +25,7 @@ namespace api.Controllers
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-      if(!ModelState.IsValid)
+      if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
       var images = await _imagesRepo.GetAllAsync();
@@ -33,18 +33,18 @@ namespace api.Controllers
       var imageDto = images.Select(s => s.ToImagesDto()).ToList();
 
       return Ok(imageDto);
-      
+
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-      if(!ModelState.IsValid)
+      if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
       var images = await _imagesRepo.GetByIdAsync(id);
 
-      if(images == null)
+      if (images == null)
       {
         return NotFound();
       }
@@ -55,29 +55,29 @@ namespace api.Controllers
     [HttpPost("{categoryID:int}")]
     public async Task<IActionResult> Create([FromRoute] int categoryID, CreateImagesDto imagesDto)
     {
-      if(!ModelState.IsValid)
+      if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      if(!await _categoriesRepo.CategoryExists(categoryID))
+      if (!await _categoriesRepo.CategoryExists(categoryID))
       {
         return BadRequest("Category does not exist");
       }
 
       var imagesModel = imagesDto.ToImagesFromCreate(categoryID);
       await _imagesRepo.CreateAsync(imagesModel);
-      return CreatedAtAction(nameof(GetById), new {id = imagesModel.ImageID}, imagesModel.ToImagesDto());
+      return CreatedAtAction(nameof(GetById), new { id = imagesModel.ImageID }, imagesModel.ToImagesDto());
     }
 
     [HttpPut]
     [Route("{id:int}")]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateImagesRequestDto updateDto)
     {
-      if(!ModelState.IsValid)
+      if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
       var images = await _imagesRepo.UpdateAsync(id, updateDto);
 
-      if(images == null)
+      if (images == null)
       {
         return NotFound("Image not found");
       }
@@ -89,12 +89,12 @@ namespace api.Controllers
     [Route("{id:int}")]
     public async Task<IActionResult> Delete([FromRoute] int id)
     {
-      if(!ModelState.IsValid)
+      if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
       var imagesModel = await _imagesRepo.DeleteAsync(id);
 
-      if(imagesModel == null)
+      if (imagesModel == null)
       {
         return NotFound("Image does not exist");
       }

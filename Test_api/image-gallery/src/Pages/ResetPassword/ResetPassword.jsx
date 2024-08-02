@@ -164,7 +164,6 @@ const ResetPassword = () => {
             />
           </div>
           <p className={PasswordStyle.errorMessage}>{error.ConfirmPassword}</p>
-
           <p className={PasswordStyle.errorMessage}>{error.api}</p>
           <p className={PasswordStyle.successMessage}>{success}</p>
 
