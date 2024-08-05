@@ -14,6 +14,8 @@ import {
 } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import SideNav from "../Navigations/SideNav";
+import TopNav from "../Navigations/TopNav";
 
 const UploadPage = () => {
   // State to manage form values
@@ -225,40 +227,9 @@ const UploadPage = () => {
 
   return (
     <div className={PageStyle.container}>
-      <div className={PageStyle.menu}>
-        <div className={PageStyle.logo}>
-          <img src="/images/Image Gallery.png" alt="Logo" />{" "}
-        </div>
-        <div className={PageStyle.sideNav}>
-          <button className={PageStyle.btn} onClick={() => navigate("/home")}>
-            <GoHome className={PageStyle.navIcons} />
-            Home
-          </button>
-          <button className={PageStyle.btn}>
-            <VscDeviceCamera className={PageStyle.navIcons} /> Image Upload
-          </button>
-          <button className={PageStyle.btn} onClick={() => navigate("/")}>
-            <IoIosImages className={PageStyle.navIcons} />
-            My Library
-          </button>
-          <button className={PageStyle.logout} onClick={() => navigate("/")}>
-            <MdLogout className={PageStyle.navIcons} />
-            Logout
-          </button>
-        </div>
-      </div>
+      <SideNav />
       <div className={PageStyle.mainPage}>
-        <div className={PageStyle.topNav}>
-          <button className={PageStyle.topBtn}>
-            Image Upload
-            <IoIosArrowForward className={PageStyle.topNavIcons} />
-          </button>
-          <button className={PageStyle.topBtn}>
-            <CgProfile />
-            example@gmail.com
-            <IoIosArrowDown className={PageStyle.topNavIcons} />
-          </button>
-        </div>
+        <TopNav />
         <div className={UploadPageStyle.uploadWrapper}>
           <h1 className={UploadPageStyle.heading}>Image Upload</h1>
           <form onSubmit={validateFormSubmit}>

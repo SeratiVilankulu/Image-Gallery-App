@@ -10,6 +10,7 @@ import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm";
 import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess";
 import ForgotPassword from "./Pages/ResetPassword/ForgotPassword";
 import UploadPage from "./Pages/Upload/UploadPage";
+import ImageDetails from "./Pages/ImageDetails";
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
       </Route>
       <Route path="/upload-images">
         <UploadPage />
+      </Route>
+      <Route path="/image/:id">
+        <ImageDetails />
       </Route>
     </div>
   );

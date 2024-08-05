@@ -1,26 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PageStyle from "./HomePage.module.css";
-import { GoHome } from "react-icons/go";
-import { VscDeviceCamera } from "react-icons/vsc";
-import { MdLogout } from "react-icons/md";
 import { IoFilter } from "react-icons/io5";
-import {
-  IoIosImages,
-  IoIosArrowForward,
-  IoIosArrowDown,
-  IoIosArrowBack,
-  IoIosArrowForward as IoForward,
-} from "react-icons/io";
-import { CgProfile } from "react-icons/cg";
+import { IoIosArrowBack, IoIosArrowForward as IoForward } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-//import ImageModal from "./Modals/ImageModal";
+import SideNav from "../Navigations/SideNav";
+import TopNav from "../Navigations/TopNav";
 
 const HomePage = () => {
   const [images, setImages] = useState([]); // State to store fetched images
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
-  const [selectedImage, setSelectedImage] = useState(null); // State to track the selected image
   const imagesPerPage = 4; // Number of images to display per page
   const navigate = useNavigate();
 
@@ -40,12 +30,9 @@ const HomePage = () => {
 
   //Function to view image
   const imageClick = (image) => {
-    setSelectedImage(image);
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setSelectedImage(null);
+    if (image.imageID) {
+      navigate(`/image/${image.imageID}`, { state: { image } });
+    }
   };
 
   // Calculate the indexes for the images to display on the current page
@@ -78,43 +65,9 @@ const HomePage = () => {
 
   return (
     <div className={PageStyle.container}>
-      <div className={PageStyle.menu}>
-        <div className={PageStyle.logo}>
-          <img src="/images/Image Gallery.png" alt="Logo" />{" "}
-        </div>
-        <div className={PageStyle.sideNav}>
-          <button className={PageStyle.btn} onClick={() => navigate("/home")}>
-            <GoHome className={PageStyle.navIcons} />
-            Home
-          </button>
-          <button
-            className={PageStyle.btn}
-            onClick={() => navigate("/upload-images")}
-          >
-            <VscDeviceCamera className={PageStyle.navIcons} /> Image Upload
-          </button>
-          <button className={PageStyle.btn} onClick={() => navigate("/")}>
-            <IoIosImages className={PageStyle.navIcons} />
-            My Library
-          </button>
-          <button className={PageStyle.logout}>
-            <MdLogout className={PageStyle.navIcons} />
-            Logout
-          </button>
-        </div>
-      </div>
+      <SideNav />
       <div className={PageStyle.mainPage}>
-        <div className={PageStyle.topNav}>
-          <button className={PageStyle.topBtn}>
-            Home
-            <IoIosArrowForward className={PageStyle.topNavIcons} />
-          </button>
-          <button className={PageStyle.topBtn}>
-            <CgProfile />
-            example@gmail.com
-            <IoIosArrowDown className={PageStyle.topNavIcons} />
-          </button>
-        </div>
+        <TopNav />
         <div className={PageStyle.filterSection}>
           <IoSearch className={PageStyle.searchIcon} />
           <input

@@ -13,6 +13,7 @@ import EmailConfirm from "./Pages/EmailValidationMessage/EmailConfirm.jsx";
 import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess.jsx";
 import ForgotPassword from "./Pages/ResetPassword/ForgotPassword.jsx";
 import UploadPage from "./Pages/Upload/UploadPage.jsx";
+import ImageDetails from "./Pages/ImageDetails/ImageDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/upload-images",
     element: <UploadPage />,
+  },
+  {
+    path: "/image/:id",
+    element: <ImageDetails />,
   },
 
   //add more routes

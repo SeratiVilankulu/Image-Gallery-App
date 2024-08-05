@@ -1,0 +1,62 @@
+/*Side nav styles*/
+.menu {
+  width: 420px;
+  background: rgb(33, 135, 171);
+  content: "";
+  display: flex;
+  flex-direction: column;
+}
+
+.sideNav {
+  width: 100%;
+}
+
+.logo img {
+  width: 340px;
+  height: 160px;
+}
+
+.logout {
+  margin-top: 450px; /*was 330px*/
+}
+
+/* Side navigation buttons */
+button .btn {
+  background: white;
+  color: rgb(22, 90, 114);
+  font-size: 16px;
+  margin-left: 30px;
+  max-height: 7vh;
+}
+
+.btn,
+.logout {
+  display: flex;
+  align-items: center;
+  width: 365px;
+  height: 90px;
+  gap: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  border: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(33, 135, 171);
+}
+
+.btn:hover,
+.logout:hover {
+  background: rgb(233, 245, 249);
+  color: rgb(22, 90, 114);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.navIcons {
+  font-size: 24px;
+  font-weight: 10px;
+  margin-right: 10px;
+}

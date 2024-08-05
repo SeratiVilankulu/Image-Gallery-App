@@ -1,0 +1,76 @@
+.closeButton {
+  position: absolute;
+  top: 90px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/*Images styles*/
+/* Container for the image and overlay */
+.imageCard {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 970px;
+  height: 670px;
+  margin: 100px 230px;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(114, 114, 114, 0.6); /* Semi-transparent black background */
+  color: rgb(255, 255, 255);
+  width: 100%;
+  padding: 5px 30px 20px 30px;
+  box-sizing: border-box;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the entire card without distorting */
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.tagButton {
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+h2 {
+  margin: 0;
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: 400px;
+  font-weight: 500;
+}
+
+p {
+  margin: 0;
+  color: white;
+}
+
+.delete {
+  border: none;
+  background: white;
+  position: absolute;
+  bottom: 20px;
+  left: 1600px;
+  top: 840px;
+  font-size: 20px;
+  color: red;
+}
