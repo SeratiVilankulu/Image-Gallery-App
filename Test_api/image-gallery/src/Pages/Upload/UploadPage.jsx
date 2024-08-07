@@ -2,17 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UploadPageStyle from "./UploadPage.module.css";
 import PageStyle from "../Home/HomePage.module.css";
-import { GoHome } from "react-icons/go";
-import { MdLogout } from "react-icons/md";
-import { VscDeviceCamera } from "react-icons/vsc";
 import { BsCloudUpload } from "react-icons/bs";
-import {
-  IoIosArrowForward,
-  IoIosArrowDown,
-  IoIosImages,
-  IoIosCloseCircle,
-} from "react-icons/io";
-import { CgProfile } from "react-icons/cg";
+import { IoIosCloseCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
@@ -29,11 +20,9 @@ const UploadPage = () => {
   const [errorMsg, setErrorMsg] = useState({}); // State to store error messages for form validation
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
   const [submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
-  const navigate = useNavigate();
-  // State to manage the selected file
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(null); // State to manage the selected file
   const [categories, setCategories] = useState([]); // State to manage the categories
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState([]); // State to manage the tags
 
   // Fetch categories from the backend
   useEffect(() => {
@@ -92,10 +81,10 @@ const UploadPage = () => {
     else if (!file.name.match(/\.(jpg|png|gif)$/)) {
       inputError.file =
         "Incorrect file type, please upload an image. File type: PNG or JPG.";
-    } //Check image size, if it must not be gtreater than 5MB
-    else if (file.size > 3000000) {
+    } //Check image size, if it must not be greater than 5MB
+    else if (file.size > 5000000) {
       inputError.file =
-        "Image file is too large, image size must be less than 3MB ";
+        "Image file is too large, image size must be less than 5MB ";
     }
 
     // If there are validation errors, set the error messages and return early
@@ -133,20 +122,22 @@ const UploadPage = () => {
 
   // Function to remove tags
   const removeTags = (indexToRemove) => {
-    setTags(tags.filter((_, index) => index != indexToRemove));
+    setTags(tags.filter((_, index) => index !== indexToRemove));
   };
 
-  //Function to add tags
+  // Function to add tags
   const addTags = (event) => {
-    if (event.key !== "Enter") return;
-    const value = event.target.value.trim();
-    if (!value) return;
-    if (tags.length >= 5) {
-      setErrorMsg("You can only add up to 5 tags.");
-      return;
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const value = event.target.value.trim();
+      if (!value) return;
+      if (tags.length >= 5) {
+        setErrorMsg({ tags: "You can only add up to 5 tags." });
+        return;
+      }
+      setTags([...tags, value]);
+      event.target.value = "";
     }
-    setTags([...tags, value]);
-    event.target.value = "";
   };
 
   // Function to handle form submission
@@ -173,14 +164,13 @@ const UploadPage = () => {
     formData.append("Category", selectedCategory.categoryID); // Use categoryID
     formData.append("Description", formInput.Description);
     formData.append("ImageURL", formInput.ImageURL);
+    formData.append("Tags", JSON.stringify(tags)); // Add tags to formData
 
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dchdvpqew/image/upload", // URL to upload image to cloudinary
         formData
       );
-
-      console.log(response);
 
       if (response.status === 200) {
         setSuccessMsg("File uploaded successfully.");
@@ -191,6 +181,7 @@ const UploadPage = () => {
           Description: "",
           ImageURL: "",
         });
+        setTags([]); // Clear the tags after form is submitted
 
         // Now post the image information to the database
         await handlePostToDB(
@@ -199,6 +190,7 @@ const UploadPage = () => {
             Category: selectedCategory.categoryID,
             Description: formInput.Description,
             ImageUrl: response.data.url,
+            Tags: tags,
           },
           selectedCategory.categoryID
         ); // Make selectedCategory accessible in handlePostToDB function, since it's defined outside its scope

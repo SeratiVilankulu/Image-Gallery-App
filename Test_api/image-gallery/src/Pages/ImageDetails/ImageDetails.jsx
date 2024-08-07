@@ -14,13 +14,10 @@ const ImageDetails = () => {
   const { image } = location.state || {};
 
   //Function to delete image
-  const deleteImage = async () => {
+  const deleteImage = async (id) => {
     try {
-      if (!image.imageID) return; //Check if the image exists
-      const response = await axios.delete(
-        `http://localhost:5085/api/images/${id}`
-      );
-      setImage(response.data);
+      await axios.delete(`http://localhost:5085/api/images/${id}`);
+      setTimeout(() => navigate("/home"), 1000);
     } catch (error) {
       console.error("An error occurred while fetching the image", error);
     }
@@ -55,7 +52,10 @@ const ImageDetails = () => {
             </div>
           </div>
         </div>
-        <button onClick={deleteImage} className={ImageStyles.delete}>
+        <button
+          onClick={() => deleteImage(image.imageID)}
+          className={ImageStyles.delete}
+        >
           <RiDeleteBin6Line />
         </button>
       </div>

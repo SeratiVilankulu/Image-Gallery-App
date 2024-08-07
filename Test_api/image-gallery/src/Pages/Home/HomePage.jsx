@@ -88,6 +88,7 @@ const HomePage = () => {
               />
               <div className={PageStyle.overlay}>
                 <h2>{image.title}</h2>
+                <span class="material-symbols-outlined">chat_bubble</span>
               </div>
             </div>
           ))}
