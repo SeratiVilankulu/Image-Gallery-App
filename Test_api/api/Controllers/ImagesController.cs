@@ -63,8 +63,7 @@ namespace api.Controllers
         return BadRequest("Category does not exist");
       }
 
-      var imagesModel = imagesDto.ToImagesFromCreate(categoryID);
-      await _imagesRepo.CreateAsync(imagesModel);
+      var imagesModel = await _imagesRepo.CreateAsync(imagesDto);
       return CreatedAtAction(nameof(GetById), new { id = imagesModel.ImageID }, imagesModel.ToImagesDto());
     }
 

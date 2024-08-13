@@ -14,6 +14,7 @@ import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess.jsx";
 import ForgotPassword from "./Pages/ResetPassword/ForgotPassword.jsx";
 import UploadPage from "./Pages/Upload/UploadPage.jsx";
 import ImageDetails from "./Pages/ImageDetails/ImageDetails.jsx";
+import Logout from "./Pages/Logout/Logout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/image/:id",
     element: <ImageDetails />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
 
   //add more routes

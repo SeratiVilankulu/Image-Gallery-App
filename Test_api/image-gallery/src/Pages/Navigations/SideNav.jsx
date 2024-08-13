@@ -29,7 +29,10 @@ const SideNav = () => {
           <IoIosImages className={SideNavStyle.navIcons} />
           My Library
         </button>
-        <button className={SideNavStyle.logout}>
+        <button
+          className={SideNavStyle.logout}
+          onClick={() => navigate("/logout")}
+        >
           <MdLogout className={SideNavStyle.navIcons} />
           Logout
         </button>

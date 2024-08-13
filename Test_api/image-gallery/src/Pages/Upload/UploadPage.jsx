@@ -135,8 +135,10 @@ const UploadPage = () => {
         setErrorMsg({ tags: "You can only add up to 5 tags." });
         return;
       }
-      setTags([...tags, value]);
-      event.target.value = "";
+      if (value && !tags.includes(value)) {
+        setTags([...tags, value]);
+        event.target.value = "";
+      }
     }
   };
 
@@ -190,7 +192,7 @@ const UploadPage = () => {
             Category: selectedCategory.categoryID,
             Description: formInput.Description,
             ImageUrl: response.data.url,
-            Tags: tags,
+            imageTags: tags,
           },
           selectedCategory.categoryID
         ); // Make selectedCategory accessible in handlePostToDB function, since it's defined outside its scope
@@ -212,6 +214,7 @@ const UploadPage = () => {
         `http://localhost:5085/api/images/${categoryID}`,
         imageData
       );
+      console.log("Image data being sent to DB:", imageData);
     } catch (error) {
       console.error(error);
     }

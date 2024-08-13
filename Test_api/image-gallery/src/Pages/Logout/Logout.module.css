@@ -1,10 +1,20 @@
-/*Side nav styles*/
+.mainPage {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  flex: 1;
+  background: rgb(235, 235, 235);
+  text-align: center;
+}
+
 .menu {
   width: 420px;
   background: rgb(33, 135, 171);
   content: "";
   display: flex;
   flex-direction: column;
+  opacity: 0.5;
 }
 
 .sideNav {
@@ -60,4 +70,48 @@ button .btn {
   font-size: 24px;
   font-weight: 10px;
   margin-right: 10px;
+}
+
+.logOut {
+  background: white;
+  padding: 30px;
+  border-radius: 4px;
+  min-width: 75vh;
+  min-height: 40vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+.logoutImage {
+  width: 300px;
+  height: 130px;
+  margin-bottom: 30px;
+}
+
+hr {
+  border: 0.5px solid rgb(15, 60, 76);
+  margin-bottom: 20px;
+  width: 65vh;
+}
+
+.logoutMessage {
+  color: rgb(15, 60, 76);
+}
+
+.loginBtn {
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  width: 400px;
+  height: 44px;
+  top: 409px;
+  left: 161px;
+  margin-top: 30px;
+  background: rgb(33, 135, 171);
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  gap: 10px;
 }

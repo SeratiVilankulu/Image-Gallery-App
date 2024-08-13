@@ -80,7 +80,7 @@
     auto-fill,
     minmax(510px, 1fr)
   ); /* Responsive columns */
-  gap: 50px;
+  gap: 40px;
   padding: 10px;
   margin-left: 50px;
   margin-right: 20px;
@@ -90,10 +90,10 @@
 .imageCard {
   position: relative;
   border-radius: 4px;
-  overflow: hidden; /* Ensures content stays within the rounded corners */
+  overflow: visible; /* Ensures content stays within the rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 640px; /*600px, if ever needs changing*/
-  height: 360px; /*350px, if ever needs changing*/
+  width: 670px; /*600px, if ever needs changing*/
+  height: 380px; /*350px, if ever needs changing*/
 }
 
 .imageCard:hover {
@@ -133,12 +133,25 @@
   font-weight: 500;
 }
 
+.comment {
+  color: rgb(15, 60, 76);
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 1;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
 /* Pagnation styles */
 .pagination {
   display: flex;
   justify-content: center;
   margin-top: auto; /* Pushes pagination to the bottom */
-  padding: 20px 0;
+  padding: 40px 0 20px 0;
 }
 
 .pageNumber {

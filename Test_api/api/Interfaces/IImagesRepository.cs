@@ -11,7 +11,7 @@ namespace api.Interfaces
   {
     Task<List<Images>> GetAllAsync();
     Task<Images?> GetByIdAsync(int id);
-    Task<Images> CreateAsync(Images imagesModel);
+    Task<Images> CreateAsync(CreateImagesDto imagesDto);
     Task<Images?> UpdateAsync(int id, UpdateImagesRequestDto imagesDto);
     Task<Images?> DeleteAsync(int id);
     Task<bool> ImageExists(int id);

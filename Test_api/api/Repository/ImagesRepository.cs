@@ -13,16 +13,73 @@ namespace api.Repository
   public class ImagesRepository : IImagesRepository
   {
     private readonly ApplicationDBContext _context;
-    public ImagesRepository(ApplicationDBContext context)
+    private readonly ILogger<ImagesRepository> _logger;
+    public ImagesRepository(ApplicationDBContext context, ILogger<ImagesRepository> logger)
     {
       _context = context;
+      _logger = logger;
     }
 
-    public async Task<Images> CreateAsync(Images imagesModel)
+    public async Task<Images> CreateAsync(CreateImagesDto CreateImagesDto)
     {
-      await _context.Images.AddAsync(imagesModel);
+      _logger.LogInformation("Creating image with title: {Title}, description: {Description}, and tags: {tags}",
+      CreateImagesDto.Title, CreateImagesDto.Description, CreateImagesDto.ImageTags);
+
+      var tagIds = new List<int>();
+
+      var image = new Images
+      {
+        Title = CreateImagesDto.Title,
+        Description = CreateImagesDto.Description,
+        ImageURL = CreateImagesDto.ImageURL,
+      };
+      _context.Images.Add(image);
+
       await _context.SaveChangesAsync();
-      return imagesModel;
+      _logger.LogInformation("Image saved with ID: {ImageID}", image.ImageID);
+
+      foreach (var tagName in CreateImagesDto.ImageTags)
+      {
+        // Split the tags by comma
+        var tags = tagName.Split(",")
+                          .Select(t => t.Trim())
+                          .Where(t => !string.IsNullOrEmpty(t));
+
+        foreach (var tag in tags)
+        {
+          // Check if the tag already exists in the Tags table
+          var existingTag = await _context.Tags.FirstOrDefaultAsync(t => t.TagName == tag);
+
+          int tagId;
+
+          if (existingTag != null)
+          {
+            // If the tag exists, use its ID
+            tagId = existingTag.TagID;
+          }
+          else
+          {
+            // If the tag doesn't exist, add it to the Tags table
+            var newTag = new Tags { TagName = tag };
+            _context.Tags.Add(newTag);
+            await _context.SaveChangesAsync();
+            _logger.LogInformation("New tag '{Tag}' added with ID: {TagID}", tag, newTag.TagID);
+            tagId = newTag.TagID;
+          }
+
+          // Create the connection between the image and the tag
+          var imageTag = new ImageTags
+          {
+            ImageID = image.ImageID,
+            TagID = tagId
+          };
+          _context.ImageTags.Add(imageTag);
+        }
+      }
+
+      await _context.SaveChangesAsync();
+
+      return image;
     }
 
     public async Task<Images?> DeleteAsync(int id)

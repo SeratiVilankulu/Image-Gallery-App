@@ -17,5 +17,6 @@ namespace api.Dtos.Images
     [Required]
     [MaxLength(100, ErrorMessage = "Image is required")]
     public string ImageURL { get; set; } = string.Empty;
+    public List<string> ImageTags { get; set; } = new List<string>();
   }
 }

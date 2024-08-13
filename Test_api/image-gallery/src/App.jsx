@@ -11,6 +11,7 @@ import EmailSuccess from "./Pages/EmailValidationMessage/EmailSuccess";
 import ForgotPassword from "./Pages/ResetPassword/ForgotPassword";
 import UploadPage from "./Pages/Upload/UploadPage";
 import ImageDetails from "./Pages/ImageDetails";
+import Logout from "./Pages/Logout/Logout";
 
 function App() {
   return (
@@ -47,6 +48,9 @@ function App() {
       </Route>
       <Route path="/image/:id">
         <ImageDetails />
+      </Route>
+      <Route path="/logout">
+        <Logout />
       </Route>
     </div>
   );

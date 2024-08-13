@@ -7,6 +7,7 @@ import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdOutlineChatBubbleOutline } from "react-icons/md";
 
 const ImageDetails = () => {
   const navigate = useNavigate();
@@ -52,12 +53,15 @@ const ImageDetails = () => {
             </div>
           </div>
         </div>
-        <button
+        <span>
+          <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
+        </span>
+        <span
           onClick={() => deleteImage(image.imageID)}
           className={ImageStyles.delete}
         >
           <RiDeleteBin6Line />
-        </button>
+        </span>
       </div>
     </div>
   );

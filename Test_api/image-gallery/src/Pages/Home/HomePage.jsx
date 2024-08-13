@@ -4,6 +4,7 @@ import PageStyle from "./HomePage.module.css";
 import { IoFilter } from "react-icons/io5";
 import { IoIosArrowBack, IoIosArrowForward as IoForward } from "react-icons/io";
 import { IoSearch } from "react-icons/io5";
+import { MdOutlineChatBubbleOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
@@ -88,8 +89,8 @@ const HomePage = () => {
               />
               <div className={PageStyle.overlay}>
                 <h2>{image.title}</h2>
-                <span class="material-symbols-outlined">chat_bubble</span>
               </div>
+              <MdOutlineChatBubbleOutline className={PageStyle.comment} />
             </div>
           ))}
         </div>
