@@ -11,7 +11,11 @@ const SearchAndFilter = ({ setResults }) => {
       .then((response) => response.json())
       .then((json) => {
         const results = json.filter((tag) => {
+          const searchTerm = value.toLowerCase();
           return (
+            searchTerm &&
+            tag.tagName.startsWith(searchTerm) &&
+            tag.tagName !== searchTerm &&
             value &&
             tag &&
             tag.tagName &&
@@ -29,7 +33,7 @@ const SearchAndFilter = ({ setResults }) => {
 
   // API to fetch the search results
   const onSearch = (searchTerm) => {
-    setSearchInput(searchTerm)
+    setSearchInput(searchTerm);
     console.log("Search for: ", searchTerm);
   };
 
