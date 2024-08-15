@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PageStyle from "./HomePage.module.css";
-import { IoFilter } from "react-icons/io5";
 import { IoIosArrowBack, IoIosArrowForward as IoForward } from "react-icons/io";
-import { IoSearch } from "react-icons/io5";
 import { MdOutlineChatBubbleOutline } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
+import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
+import SearchResultsList from "../SearchAndFilter/SearchResultsList";
 
 const HomePage = () => {
   const [images, setImages] = useState([]); // State to store fetched images
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
   const imagesPerPage = 4; // Number of images to display per page
+  const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,16 +70,8 @@ const HomePage = () => {
       <SideNav />
       <div className={PageStyle.mainPage}>
         <TopNav />
-        <div className={PageStyle.filterSection}>
-          <IoSearch className={PageStyle.searchIcon} />
-          <input
-            type="text"
-            placeholder="Search for..."
-            className={PageStyle.searchBar}
-          />
-          <input type="submit" value="Filters" className={PageStyle.filter} />
-          <IoFilter className={PageStyle.filterIcon} />
-        </div>
+        <SearchAndFilter setResults={setResults} />
+        <SearchResultsList results={results} />
         <div className={PageStyle.imageContainer}>
           {currentImages.map((image) => (
             <div className={PageStyle.imageCard} key={image.id}>
@@ -104,6 +97,7 @@ const HomePage = () => {
           </button>
           {pageNumbers.map((number) => (
             <button
+              type="submit"
               key={number}
               onClick={() => paginate(number)}
               className={PageStyle.pageNumber}

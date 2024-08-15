@@ -5,9 +5,10 @@ import ImageStyles from "./ImageDetails.module.css";
 import PageStyle from "../Home/HomePage.module.css";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
+import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { MdOutlineChatBubbleOutline } from "react-icons/md";
+import { MdOutlineChatBubbleOutline, MdEdit } from "react-icons/md";
 
 const ImageDetails = () => {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ const ImageDetails = () => {
       <SideNav />
       <div className={PageStyle.mainPage}>
         <TopNav />
+        <SearchAndFilter />
         <button
           className={ImageStyles.closeButton}
           onClick={() => navigate(-1)}
@@ -47,10 +49,12 @@ const ImageDetails = () => {
               alt={image.title}
               className={ImageStyles.image}
             />
+
             <div className={ImageStyles.overlay}>
               <h2>{image.title}</h2>
               <p>{image.description}</p>
             </div>
+            <MdEdit className={ImageStyles.edit} />
           </div>
         </div>
         <span>

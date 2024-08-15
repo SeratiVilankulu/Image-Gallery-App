@@ -17,7 +17,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 970px;
   height: 670px;
-  top: 100px;
+  top: 10px;
   left: 230px;
 }
 
@@ -69,7 +69,7 @@ p {
   border: none;
   position: absolute;
   left: 1590px;
-  top: 850px;
+  top: 864px;
   font-size: 20px;
   color: red;
   cursor: pointer;
@@ -79,6 +79,16 @@ p {
   color: rgb(15, 60, 76);
   position: absolute;
   left: 660px;
-  top: 855px;
+  top: 865px;
   font-size: 20px;
+  cursor: pointer;
+}
+
+.edit {
+  color: #aeb6b7;
+  position: absolute;
+  font-size: 20px;
+  bottom: 60px;
+  left: 120px;
+  cursor: pointer;
 }
