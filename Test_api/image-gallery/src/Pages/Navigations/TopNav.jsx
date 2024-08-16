@@ -7,9 +7,12 @@ import TopNavStyle from "./TopNav.module.css";
 const TopNav = () => {
   const location = useLocation();
 
+  // Retrieve userData from localStorage
+  const userData = JSON.parse(localStorage.getItem("user"));
+
   const getPageTitle = () => {
     switch (location.pathname) {
-      case "/library":
+      case "/my-library":
         return "My Library";
       case "/home":
         return "Home";
@@ -29,7 +32,7 @@ const TopNav = () => {
       </button>
       <button className={TopNavStyle.topBtn}>
         <CgProfile />
-        example@gmail.com
+        {userData?.email}
         <IoIosArrowDown className={TopNavStyle.topNavIcons} />
       </button>
     </div>

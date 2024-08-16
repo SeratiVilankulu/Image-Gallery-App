@@ -131,7 +131,6 @@ namespace api.Repository
 
       existingImages.Title = imagesDto.Title;
       existingImages.Description = imagesDto.Description;
-      existingImages.ImageURL = imagesDto.ImageURL;
 
       await _context.SaveChangesAsync();
 

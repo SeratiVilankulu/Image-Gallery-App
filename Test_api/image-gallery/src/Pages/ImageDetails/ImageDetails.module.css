@@ -86,9 +86,28 @@ p {
 
 .edit {
   color: #aeb6b7;
-  position: absolute;
+  position: relative;
   font-size: 20px;
-  bottom: 60px;
+  bottom: 85px;
   left: 120px;
   cursor: pointer;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  top: 100px;
+  right: 120px;
+  background: rgb(204, 246, 220);
+  color: rgb(76, 175, 80);
+  padding: 15px;
+  border: 1px solid #bbbaba;
+  display: none;
+  visibility: hidden;
+  border-radius: 5px;
+}
+
+.popup.show {
+  display: block; /* Show when .show class is added */
+  visibility: visible; /* Show when .show class is added */
 }

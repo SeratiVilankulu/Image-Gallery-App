@@ -25,7 +25,10 @@ const SideNav = () => {
         >
           <VscDeviceCamera className={SideNavStyle.navIcons} /> Image Upload
         </button>
-        <button className={SideNavStyle.btn} onClick={() => navigate("/")}>
+        <button
+          className={SideNavStyle.btn}
+          onClick={() => navigate("/my-library")}
+        >
           <IoIosImages className={SideNavStyle.navIcons} />
           My Library
         </button>

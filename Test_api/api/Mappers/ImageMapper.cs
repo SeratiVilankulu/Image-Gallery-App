@@ -42,7 +42,6 @@ namespace api.Mappers
       {
         Title = imagesDto.Title,
         Description = imagesDto.Description,
-        ImageURL = imagesDto.ImageURL,
       };
     }
   }

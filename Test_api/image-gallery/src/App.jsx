@@ -11,6 +11,7 @@ import ForgotPassword from "./Pages/ResetPassword/ForgotPassword";
 import UploadPage from "./Pages/Upload/UploadPage";
 import ImageDetails from "./Pages/ImageDetails";
 import Logout from "./Pages/Logout/Logout";
+import MyLibrary from "./Pages/MyLibrary/MyLibrary";
 
 function App() {
   return (
@@ -50,6 +51,9 @@ function App() {
       </Route>
       <Route path="/logout">
         <Logout />
+      </Route>
+      <Route path="/my-library">
+        <MyLibrary />
       </Route>
     </div>
   );

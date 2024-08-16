@@ -15,6 +15,7 @@ const UploadPage = () => {
     Category: "",
     Description: "",
     ImageURL: "",
+    AppUserID: "",
   });
 
   const [errorMsg, setErrorMsg] = useState({}); // State to store error messages for form validation
@@ -36,6 +37,15 @@ const UploadPage = () => {
       }
     };
     fetchCategories();
+  }, []);
+
+  // Fetch the user's email from local storage and set it in formInput
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    setFormInput((prevState) => ({
+      ...prevState,
+      AppUserID: email,
+    }));
   }, []);
 
   // Function to handle changes in form input fields
@@ -167,6 +177,7 @@ const UploadPage = () => {
     formData.append("Description", formInput.Description);
     formData.append("ImageURL", formInput.ImageURL);
     formData.append("Tags", JSON.stringify(tags)); // Add tags to formData
+    formData.append("AppUserID", formInput.AppUserID);
 
     try {
       const response = await axios.post(
@@ -182,6 +193,7 @@ const UploadPage = () => {
           Category: "",
           Description: "",
           ImageURL: "",
+          AppUserID: "",
         });
         setTags([]); // Clear the tags after form is submitted
 
@@ -193,6 +205,7 @@ const UploadPage = () => {
             Description: formInput.Description,
             ImageUrl: response.data.url,
             imageTags: tags,
+            AppUserID: formInput.AppUserID,
           },
           selectedCategory.categoryID
         ); // Make selectedCategory accessible in handlePostToDB function, since it's defined outside its scope

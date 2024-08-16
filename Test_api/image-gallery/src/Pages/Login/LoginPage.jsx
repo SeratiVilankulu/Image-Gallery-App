@@ -51,13 +51,18 @@ const LoginPage = () => {
     setSubmitting(true);
 
     try {
-      // Make an API call to register the user
-      await axios.post("http://localhost:5085/api/account/login", {
-        UserName: userInput.UserName,
-        Password: userInput.Password,
-      });
+      // Make an API call to login the user
+      var userData = await axios.post(
+        "http://localhost:5085/api/account/login",
+        {
+          UserName: userInput.UserName,
+          Password: userInput.Password,
+        }
+      );
 
       // Assuming a successful login
+      localStorage.setItem("user", JSON.stringify(userData.data));
+      console.log(userData);
       setSuccessMsg("Credentials Valid!");
       setTimeout(() => navigate("/home"), 1500); //redirect to home page once successful
     } catch (error) {
