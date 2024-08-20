@@ -111,6 +111,7 @@ namespace api.Controllers
       {
         return Ok(new NewUserDto
         {
+          AppUserId = user.Id,
           UserName = user.UserName,
           Email = user.Email,
           VerificationToken = _tokenService.CreateToken(user)

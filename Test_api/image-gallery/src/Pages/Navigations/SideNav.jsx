@@ -9,6 +9,31 @@ import SideNavStyle from "./SideNav.module.css";
 const SideNav = () => {
   const navigate = useNavigate();
 
+  // Function to handle logout
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5085/api/account/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("verrificationToken")}`,
+        },
+      });
+      if (response.ok) {
+        // Clear local storage or any other client-side storage
+        localStorage.removeItem("verrificationToken");
+        localStorage.removeItem("appUserId");
+
+        // Redirect to login page or a logout confirmation page
+        navigate("/logout");
+      } else {
+        console.error("Failed to logout");
+      }
+    } catch (error) {
+      console.error("An error occurred while logging out", error);
+    }
+  };
+
   return (
     <div className={SideNavStyle.menu}>
       <div className={SideNavStyle.logo}>
@@ -32,10 +57,7 @@ const SideNav = () => {
           <IoIosImages className={SideNavStyle.navIcons} />
           My Library
         </button>
-        <button
-          className={SideNavStyle.logout}
-          onClick={() => navigate("/logout")}
-        >
+        <button className={SideNavStyle.logout} onClick={handleLogout}>
           <MdLogout className={SideNavStyle.navIcons} />
           Logout
         </button>

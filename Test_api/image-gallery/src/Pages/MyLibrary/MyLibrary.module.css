@@ -20,3 +20,14 @@
   font-size: 20px;
   cursor: pointer;
 }
+
+.noImage {
+  font-family: "Poppins", sans-serif;
+  font-size: 50px;
+  color: rgb(185, 185, 185);
+}
+
+.imageIcon {
+  font-size: 30px;
+  color: rgb(185, 185, 185);
+}

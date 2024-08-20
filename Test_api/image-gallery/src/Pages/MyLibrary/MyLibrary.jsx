@@ -6,26 +6,46 @@ import { useNavigate } from "react-router-dom";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
 import { IoIosArrowBack, IoIosArrowForward as IoForward } from "react-icons/io";
-import { MdOutlineChatBubbleOutline } from "react-icons/md";
+import { MdOutlineChatBubbleOutline, MdOutlineHideImage } from "react-icons/md";
 
 const MyLibrary = () => {
   const [images, setImages] = useState([]); // State to store fetched images
+  const [userInfo, setUserInfo] = useState(null);
+  const [userID, setUserID] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // State to track the current page
   const imagesPerPage = 4; // Number of images to display per page
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch the uploaded images from the backend when the component mounts
-    const fetchImages = async () => {
-      try {
-        const response = await axios.get("http://localhost:5085/api/images");
-        setImages(response.data); // Update state with fetched images
-      } catch (error) {
-        console.error("An error occurred while fetching images", error);
-      }
-    };
+    const currentUser = localStorage.getItem("user");
+    if (currentUser) {
+      const user = JSON.parse(currentUser);
+      console.log("Retrieved User:", user);
+      setUserInfo(user);
+      setUserID(user.appUserId); // Set the username in the input field
 
-    fetchImages();
+      // Fetch images by userId
+      const fetchImages = async (userId) => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5085/api/images/user/${userId}`
+          );
+          setImages(response.data); // Store the fetched images in state
+          if (!images) {
+            return (
+              <div className={MyLibraryStyles.noImage}>
+                User has not posted images yet
+                <MdOutlineHideImage className={MyLibraryStyles.imageIcon} />
+              </div>
+            );
+          }
+        } catch (error) {
+          console.error("An error occurred while fetching images", error);
+        }
+      };
+
+      fetchImages(user.appUserId); // Pass userId to fetchImages
+    }
   }, []);
 
   //Function to view image

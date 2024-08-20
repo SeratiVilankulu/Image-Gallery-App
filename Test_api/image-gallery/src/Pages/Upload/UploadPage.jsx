@@ -15,8 +15,9 @@ const UploadPage = () => {
     Category: "",
     Description: "",
     ImageURL: "",
-    AppUserID: "",
   });
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const [errorMsg, setErrorMsg] = useState({}); // State to store error messages for form validation
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
@@ -37,15 +38,6 @@ const UploadPage = () => {
       }
     };
     fetchCategories();
-  }, []);
-
-  // Fetch the user's email from local storage and set it in formInput
-  useEffect(() => {
-    const email = localStorage.getItem("email");
-    setFormInput((prevState) => ({
-      ...prevState,
-      AppUserID: email,
-    }));
   }, []);
 
   // Function to handle changes in form input fields
@@ -173,11 +165,12 @@ const UploadPage = () => {
     formData.append("file", file);
     formData.append("upload_preset", "sbivzvzz");
     formData.append("Title", formInput.Title);
-    formData.append("Category", selectedCategory.categoryID); // Use categoryID
+    formData.append("Category", selectedCategory.categoryID); // Use selected categoryID
     formData.append("Description", formInput.Description);
     formData.append("ImageURL", formInput.ImageURL);
     formData.append("Tags", JSON.stringify(tags)); // Add tags to formData
-    formData.append("AppUserID", formInput.AppUserID);
+
+    console.log(formInput);
 
     try {
       const response = await axios.post(
@@ -193,7 +186,6 @@ const UploadPage = () => {
           Category: "",
           Description: "",
           ImageURL: "",
-          AppUserID: "",
         });
         setTags([]); // Clear the tags after form is submitted
 
@@ -205,7 +197,6 @@ const UploadPage = () => {
             Description: formInput.Description,
             ImageUrl: response.data.url,
             imageTags: tags,
-            AppUserID: formInput.AppUserID,
           },
           selectedCategory.categoryID
         ); // Make selectedCategory accessible in handlePostToDB function, since it's defined outside its scope
@@ -225,7 +216,12 @@ const UploadPage = () => {
     try {
       await axios.post(
         `http://localhost:5085/api/images/${categoryID}`,
-        imageData
+        imageData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.verificationToken}`,
+          },
+        }
       );
       console.log("Image data being sent to DB:", imageData);
     } catch (error) {
