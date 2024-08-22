@@ -4,7 +4,6 @@ import UploadPageStyle from "./UploadPage.module.css";
 import PageStyle from "../Home/HomePage.module.css";
 import { BsCloudUpload } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
 

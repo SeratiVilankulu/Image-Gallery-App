@@ -88,7 +88,7 @@ button .btn {
   margin-bottom: 30px;
 }
 
-hr {
+.logOut hr {
   border: 0.5px solid rgb(15, 60, 76);
   margin-bottom: 20px;
   width: 65vh;

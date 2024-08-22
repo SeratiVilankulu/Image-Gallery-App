@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
 import { IoIosArrowBack, IoIosArrowForward as IoForward } from "react-icons/io";
-import { MdOutlineChatBubbleOutline, MdOutlineHideImage } from "react-icons/md";
+import { MdOutlineChatBubbleOutline } from "react-icons/md";
+import { IoMdImages } from "react-icons/io";
 
 const MyLibrary = () => {
   const [images, setImages] = useState([]); // State to store fetched images
@@ -20,7 +21,6 @@ const MyLibrary = () => {
     const currentUser = localStorage.getItem("user");
     if (currentUser) {
       const user = JSON.parse(currentUser);
-      console.log("Retrieved User:", user);
       setUserInfo(user);
       setUserID(user.appUserId); // Set the username in the input field
 
@@ -31,14 +31,6 @@ const MyLibrary = () => {
             `http://localhost:5085/api/images/user/${userId}`
           );
           setImages(response.data); // Store the fetched images in state
-          if (!images) {
-            return (
-              <div className={MyLibraryStyles.noImage}>
-                User has not posted images yet
-                <MdOutlineHideImage className={MyLibraryStyles.imageIcon} />
-              </div>
-            );
-          }
         } catch (error) {
           console.error("An error occurred while fetching images", error);
         }
@@ -91,21 +83,32 @@ const MyLibrary = () => {
       <div className={PageStyle.mainPage}>
         <TopNav />
         <div className={MyLibraryStyles.title}>My Library</div>
-        <div className={PageStyle.imageContainer}>
-          {currentImages.map((image) => (
-            <div className={PageStyle.imageCard} key={image.id}>
-              <img
-                src={image.imageURL}
-                className={PageStyle.image}
-                onClick={() => imageClick(image)}
-              />
-              <div className={PageStyle.overlay}>
-                <h2>{image.title}</h2>
-              </div>
-              <MdOutlineChatBubbleOutline className={PageStyle.comment} />
+
+        {/* return this if the user has not posted any images yet */}
+        {images.length === 0 ? (
+          <div className={MyLibraryStyles.message}>
+            <div className={MyLibraryStyles.noImage}>
+              User has not posted images yet
             </div>
-          ))}
-        </div>
+            <IoMdImages className={MyLibraryStyles.imageIcon} />
+          </div>
+        ) : (
+          <div className={PageStyle.imageContainer}>
+            {currentImages.map((image) => (
+              <div className={PageStyle.imageCard} key={image.id}>
+                <img
+                  src={image.imageURL}
+                  className={PageStyle.image}
+                  onClick={() => imageClick(image)}
+                />
+                <div className={PageStyle.overlay}>
+                  <h2>{image.title}</h2>
+                </div>
+                <MdOutlineChatBubbleOutline className={PageStyle.comment} />
+              </div>
+            ))}
+          </div>
+        )}
         <div className={PageStyle.pagination}>
           <button
             onClick={prevPage}

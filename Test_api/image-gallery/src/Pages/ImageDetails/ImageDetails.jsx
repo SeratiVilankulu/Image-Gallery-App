@@ -6,6 +6,8 @@ import PageStyle from "../Home/HomePage.module.css";
 import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
 import Modal from "../Modal/Modal";
+import Comments from "../Comments/Comments";
+import Comment from "../Comments/Comment";
 import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -18,6 +20,8 @@ const ImageDetails = () => {
 
   const [editIcon, setShowEditIcon] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const LoggedInUser = localStorage.getItem("user");
+  const user = JSON.parse(LoggedInUser);
 
   useEffect(() => {
     if (image) {
@@ -35,6 +39,7 @@ const ImageDetails = () => {
   };
 
   const [openModal, setOpenModal] = useState(false);
+  const [openComments, setOpenComments] = useState(false);
 
   // Function to trigger the popup
   const handlePopup = () => {
@@ -85,8 +90,14 @@ const ImageDetails = () => {
           </div>
         </div>
         <span>
-          <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
+          <MdOutlineChatBubbleOutline
+            className={ImageStyles.comment}
+            onClick={() => setOpenComments(true)}
+          />
         </span>
+        <Comments imageId={image.imageID} />
+        {openComments && <Comment imagesID={image.imageID} />}
+
         <span
           onClick={() => deleteImage(image.imageID)}
           className={ImageStyles.delete}

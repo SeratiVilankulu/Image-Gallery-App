@@ -11,6 +11,7 @@ namespace api.Interfaces
   {
     Task<List<Comments>> GetAllAsync(CommentQueryObject queryObject);
     Task<Comments?> GetByIdAsync(int id);
+    Task<List<Comments>> GetByImageIdAsync(int imageId);
     Task<Comments> CreateAsync(Comments commentsModel);
     Task<Comments?> UpdateAsync(int id, Comments commentsModel);
     Task<Comments?> DeleteAsync(int id);

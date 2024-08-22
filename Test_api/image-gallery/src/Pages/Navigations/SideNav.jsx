@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { VscDeviceCamera } from "react-icons/vsc";
@@ -7,30 +8,44 @@ import { MdLogout } from "react-icons/md";
 import SideNavStyle from "./SideNav.module.css";
 
 const SideNav = () => {
+  const [userDetails, setUserDetails] = useState(null);
+  const [userToken, setUserToken] = useState("");
   const navigate = useNavigate();
 
   // Function to handle logout
   const handleLogout = async () => {
-    try {
-      const response = await fetch("http://localhost:5085/api/account/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("verrificationToken")}`,
-        },
-      });
-      if (response.ok) {
-        // Clear local storage or any other client-side storage
-        localStorage.removeItem("verrificationToken");
-        localStorage.removeItem("appUserId");
+    const user = localStorage.getItem("user"); // Check key name here
+    if (user) {
+      const LoggedInUser = JSON.parse(user);
+      console.log("Current user:", LoggedInUser);
+      setUserDetails(LoggedInUser);
+      setUserToken(LoggedInUser.verificationToken);
+      console.log("User Token:", LoggedInUser.verificationToken);
 
-        // Redirect to login page or a logout confirmation page
-        navigate("/logout");
-      } else {
-        console.error("Failed to logout");
+      try {
+        const response = await axios.post(
+          "http://localhost:5085/api/account/logout",
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem(userToken)}`,
+            },
+          }
+        );
+        if (response.ok) {
+          // Clear local storage or any other client-side storage
+          localStorage.removeItem("verificationToken");
+          localStorage.removeItem("appUserId");
+
+          // Redirect to a logout confirmation page
+          setTimeout(() => navigate("/logout"), 3000);
+        } else {
+          console.error("Failed to logout");
+        }
+      } catch (error) {
+        console.error("An error occurred while logging out", error);
       }
-    } catch (error) {
-      console.error("An error occurred while logging out", error);
     }
   };
 

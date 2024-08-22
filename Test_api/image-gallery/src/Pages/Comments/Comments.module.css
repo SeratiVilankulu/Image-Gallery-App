@@ -1,0 +1,111 @@
+.commentsWrapper {
+  position: relative;
+  flex-direction: column;
+  top: 30px;
+  left: 240px;
+  gap: 20px;
+}
+
+.commentsTitle {
+  color: rgb(15, 60, 76);
+  margin-left: -5px;
+}
+
+.comments {
+  display: flex;
+  margin-top: 5px;
+  margin-left: -5px;
+  padding: 5px 0px 17px 0px;
+  position: relative;
+}
+
+.comments:hover {
+  background: rgb(230, 227, 227, 0.541);
+  width: 970px;
+  border-radius: 5px;
+  padding-left: 5px;
+}
+
+.userName {
+  color: rgb(15, 60, 76);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.comment {
+  color: rgb(15, 60, 76);
+  font-size: 15px;
+  font-weight: 200;
+  margin-left: 10px;
+}
+
+.noComment {
+  color: rgb(185, 185, 185);
+}
+
+.actions {
+  display: none;
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Show the actions (delete and reply) on hover */
+.comments:hover .actions {
+  display: flex;
+}
+
+.deleteComment {
+  color: red;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.updateComment {
+  color: rgb(33, 135, 171);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Form input to add comment */
+.formGroup {
+  position: relative;
+  top: 40px;
+  left: 230px;
+}
+
+.addComment {
+  border: none;
+  background: #f2f2f2;
+  width: 500px;
+  height: 39px;
+  padding: 20px;
+  gap: 5px;
+  border-radius: 100px;
+  margin: 0px;
+  font-family: "Poppins", sans-serif;
+  color: rgb(15, 60, 76);
+}
+
+.sendCommentBtn {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.sendIcon {
+  font-size: 15px;
+}
+
+.errorMessage {
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
