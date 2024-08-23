@@ -21,50 +21,67 @@
   left: 230px;
 }
 
-.overlay {
-  position: absolute;
-  bottom: 0;
-  background: rgba(114, 114, 114, 0.6); /* Semi-transparent black background */
-  color: rgb(255, 255, 255);
-  width: 100%;
-  padding: 5px 30px 20px 30px;
-  box-sizing: border-box;
-}
-
+/* Image itself */
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Ensures the image covers the entire card without distorting */
 }
 
-.tags {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+/* Overlay for the title, description, and edit icon */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgba(114, 114, 114, 0.6);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  padding: 10px 30px;
+  box-sizing: border-box;
 }
 
-.tagButton {
-  background: black;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
+/* Flex container for title and edit icon */
+.titleContainer {
+  display: flex;
+  margin-bottom: 10px;
 }
 
 h2 {
   margin: 0;
   font-size: 24px;
-  margin-bottom: 10px;
-  font-weight: 400px;
   font-weight: 500;
+  word-wrap: break-word; /* Prevents long titles from overflowing */
 }
 
+/* Edit icon styles */
+.edit {
+  color: #aeb6b7;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  flex-shrink: 0; /* Prevents icon from shrinking when title is long */
+  position: relative;
+  top: 8px;
+}
+
+/* Description text */
 p {
   margin: 0;
+  font-size: 16px;
   color: white;
 }
 
+/* Close button */
+.closeButton {
+  position: absolute;
+  top: 90px;
+  right: 5px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Delete button */
 .delete {
   border: none;
   position: absolute;
@@ -75,6 +92,7 @@ p {
   cursor: pointer;
 }
 
+/* Comment icon */
 .comment {
   color: rgb(15, 60, 76);
   position: absolute;
@@ -84,15 +102,24 @@ p {
   cursor: pointer;
 }
 
-.edit {
-  color: #aeb6b7;
-  position: relative;
-  font-size: 20px;
-  bottom: 85px;
-  left: 120px;
+/* Tags container */
+.tags {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Tag button styles */
+.tagButton {
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
   cursor: pointer;
 }
 
+/* Popup notification */
 .popup {
   display: none;
   position: absolute;
@@ -102,12 +129,57 @@ p {
   color: rgb(76, 175, 80);
   padding: 15px;
   border: 1px solid #bbbaba;
-  display: none;
-  visibility: hidden;
   border-radius: 5px;
 }
 
 .popup.show {
   display: block; /* Show when .show class is added */
-  visibility: visible; /* Show when .show class is added */
+  visibility: visible;
+}
+
+/* Save button */
+.saveButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Disabled save button when submitting */
+.saveButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Form group styles in modal */
+.formGroup {
+  margin-bottom: 15px;
+}
+
+/* Error message styling */
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .imageCard {
+    width: 100%; /* Make image responsive */
+    height: auto;
+  }
+
+  .overlay {
+    padding: 10px;
+    flex-direction: column; /* Stack title and icon on smaller screens */
+    align-items: flex-start;
+  }
+
+  .edit {
+    margin-left: 0;
+    margin-top: 5px;
+  }
 }

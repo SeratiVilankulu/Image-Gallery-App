@@ -3,7 +3,13 @@ import axios from "axios";
 import ModalStyles from "./Modal.module.css";
 import { MdClose } from "react-icons/md";
 
-const Modal = ({ closeModal, id, defaultValue, triggerPopup }) => {
+const Modal = ({
+  closeModal,
+  id,
+  defaultValue,
+  triggerPopup,
+  updateImageDetails,
+}) => {
   const [formError, setFormError] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [imageDetails, setImageDetails] = useState({
@@ -58,11 +64,14 @@ const Modal = ({ closeModal, id, defaultValue, triggerPopup }) => {
       );
 
       if (isSuccessful) {
+        updateImageDetails(imageDetails);
         // Close the modal
         closeModal();
-        // Trigger the popup
-        triggerPopup();
-      } // Trigger the popup on the ImageDetails page
+
+        setTimeout(() => {
+          triggerPopup(); // Then trigger the popup after the modal has closed
+        }, 100);
+      }
     } catch (error) {
       console.error("An error occurred while saving the image details", error);
       setFormError({

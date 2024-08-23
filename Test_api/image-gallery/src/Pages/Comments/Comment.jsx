@@ -3,13 +3,11 @@ import axios from "axios";
 import { RiSendPlaneFill } from "react-icons/ri";
 import CommentStyles from "./Comments.module.css";
 
-const Comment = ({ imagesID }) => {
+const Comment = ({ imagesID, updateComment }) => {
   const [errorMsg, setErrorMsg] = useState(false);
-  const [comment, setComment] = useState([]);
   const [newComment, setNewComment] = useState(""); // State for new comment input
 
   const user = JSON.parse(localStorage.getItem("user"));
-
   const userName = localStorage.getItem("userName");
   const createdBy = userName;
 
@@ -32,9 +30,13 @@ const Comment = ({ imagesID }) => {
           },
         }
       );
-      setComment([...comment, response.data]);
-      setNewComment(""); // Clear the input field
-      console.log(response.data);
+
+      // Check if the response status is 200
+      if (response.status === 200) {
+        updateComments(response.data); // Pass the new comment data to the parent component
+        setNewComment(""); // Clear the input field
+        console.log(response.data);
+      }
     } catch (error) {
       setErrorMsg({ api: "Posting comment failed. Please try again." });
       setTimeout(() => {
@@ -48,7 +50,7 @@ const Comment = ({ imagesID }) => {
     <div className={CommentStyles.formGroup}>
       <input
         type="text"
-        value={newComments}
+        value={newComment}
         onChange={handleInputChange}
         placeholder="Click here to add comment"
         className={CommentStyles.addComment}

@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CommentStyles from "./Comments.module.css";
+import Comment from "./Comment";
 
-const Comments = ({ imageId }) => {
-  const [comments, setComments] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
+const Comments = ({ imageId, actions }) => {
+  // State to store comments, the ID of the comment being edited
+  const [comments, setComments] = useState([]);
+  const [editMode, setEditMode] = useState(null); // Track which comment is being edited
+  const [newCommentText, setNewCommentText] = useState(""); // Store the new comment text
+  const [errorMsg, setErrorMsg] = useState(""); // Error message to display
+  const [updateCommentID, setUpdateCommentID] = useState(null); // Track which comment is being updated
 
-  // Function to fetch comments by imageId
+  // Function to fetch comments
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -14,36 +19,72 @@ const Comments = ({ imageId }) => {
           `http://localhost:5085/api/comment/image/${imageId}`
         );
         setComments(response.data);
-        console.log(response);
       } catch (error) {
         console.error("Cannot fetch comments from backend");
-        setError("Failed to load comments");
+        setErrorMsg("Failed to load comments");
       }
     };
 
     fetchComments();
   }, [imageId]);
 
-  const updateComment = async (id) => {
+  // Update a specific comment
+  const updateComment = async () => {
+    if (updateCommentID === null || newCommentText === "") return; // Do nothing if no comment is being updated or no text provided
+
     try {
-      await axios.put(`http://localhost:5085/api/comment/${id}`);
+      await axios.patch(
+        `http://localhost:5085/api/comment/${updateCommentID}`,
+        {
+          comment: newCommentText,
+        }
+      );
+
+      // Update the comment in the local state
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.commentID === updateCommentID
+            ? { ...comment, comment: newCommentText }
+            : comment
+        )
+      );
+      setEditMode(null);
+      setNewCommentText("");
+      setUpdateCommentID(null);
     } catch (error) {
-      console.error("");
-      setError({ api: "Failed to update comment, try again" });
+      console.error("Failed to update comment");
+      setErrorMsg("Failed to update comment, try again.");
     }
   };
 
   const deleteComment = async (id) => {
     try {
       await axios.delete(`http://localhost:5085/api/comment/${id}`);
-      setComments(comments.filter((comment) => comment.commentID !== id));
+      setComments(comments.filter((comment) => comment.commentID !== id)); //Identfy comment by ID and deleted comment from the local state
     } catch (error) {
-      setErrorMsg({ api: "Deleting comment failed. Please try again." });
-      setTimeout(() => {
-        setErrorMsg(false);
-      }, 3500);
+      setErrorMsg("Deleting comment failed. Please try again.");
+      setTimeout(() => setErrorMsg(""), 3500);
       console.error("Failed to delete comment");
     }
+  };
+
+  // Handle changes in the comment input field
+  const handleCommentChange = (e) => {
+    setNewCommentText(e.target.value);
+  };
+
+  // Handle click on the "Update" button to start editing a comment
+  const handleEditClick = (comment) => {
+    setEditMode(comment.commentID); // Set the current comment as editable
+    setNewCommentText(comment.comment); // Populate the input field with the updated comment
+    setUpdateCommentID(comment.commentID); // Track the comment being updated
+  };
+
+  // Handle canceling the edit
+  const handleCancelEdit = () => {
+    setEditMode(null); // Exit edit mode
+    setNewCommentText(""); // Clear the input field
+    setUpdateCommentID(null); // Reset the comment being updated
   };
 
   return (
@@ -56,16 +97,46 @@ const Comments = ({ imageId }) => {
               <span className={CommentStyles.userName}>
                 {comment.appUsers.userName} :
               </span>
-              <p className={CommentStyles.comment}>{comment.comment}</p>
-              <div className={CommentStyles.actions}>
-                <span
-                  className={CommentStyles.deleteComment}
-                  onClick={() => deleteComment(comment.commentID)}
-                >
-                  delete
-                </span>
-                <span className={CommentStyles.updateComment}>Update</span>
-              </div>
+              {editMode === comment.commentID ? (
+                <div>
+                  <input
+                    type="text"
+                    value={newCommentText}
+                    onChange={handleCommentChange}
+                    className={CommentStyles.updateInput}
+                  />
+                  <button
+                    className={CommentStyles.updateButton}
+                    onClick={updateComment}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className={CommentStyles.cancelButton}
+                    onClick={handleCancelEdit}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <p className={CommentStyles.comment}>{comment.comment}</p>
+              )}
+              {actions && (
+                <div className={CommentStyles.actions}>
+                  <span
+                    className={CommentStyles.deleteComment}
+                    onClick={() => deleteComment(comment.commentID)}
+                  >
+                    delete
+                  </span>
+                  <span
+                    className={CommentStyles.updateComment}
+                    onClick={() => handleEditClick(comment)}
+                  >
+                    Update
+                  </span>
+                </div>
+              )}
             </div>
           ))
         ) : (
@@ -74,7 +145,8 @@ const Comments = ({ imageId }) => {
           </p>
         )}
       </div>
-      <p className={CommentStyles.errorMessage}>{errorMsg.api}</p>
+      <Comment updateComment={updateComment} imagesID={imageId} />
+      {errorMsg && <p className={CommentStyles.errorMessage}>{errorMsg}</p>}
     </div>
   );
 };

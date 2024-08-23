@@ -7,7 +7,6 @@ import SideNav from "../Navigations/SideNav";
 import TopNav from "../Navigations/TopNav";
 import Modal from "../Modal/Modal";
 import Comments from "../Comments/Comments";
-import Comment from "../Comments/Comment";
 import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -17,17 +16,19 @@ const ImageDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { image } = location.state || {};
+  const { comment } = location.state || {};
 
   const [editIcon, setShowEditIcon] = useState(false);
+  const [actions, setShowActions] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const LoggedInUser = localStorage.getItem("user");
-  const user = JSON.parse(LoggedInUser);
+  const [updatedImage, setUpdatedImage] = useState(image);
 
   useEffect(() => {
     if (image) {
-      setShowEditIcon(location.state?.fromMyLibrary || false);
+      setShowEditIcon(location.state?.fromMyLibrary || false); //Show edit icon in MyLibrary
+      setShowActions(location.state?.fromMyLibrary || false); //Show comment actions icon in MyLibrary
     }
-  }, [image, location.state?.fromMyLibrary]);
+  }, [image, location.state?.fromMyLibrary]); 
 
   const deleteImage = async (id) => {
     try {
@@ -39,7 +40,6 @@ const ImageDetails = () => {
   };
 
   const [openModal, setOpenModal] = useState(false);
-  const [openComments, setOpenComments] = useState(false);
 
   // Function to trigger the popup
   const handlePopup = () => {
@@ -47,6 +47,14 @@ const ImageDetails = () => {
     setTimeout(() => {
       setShowPopup(false); // Hide popup after 3 seconds
     }, 3000);
+  };
+
+  // Function to update image details dynamically
+  const updateImageDetails = (newDetails) => {
+    setUpdatedImage((prevImage) => ({
+      ...prevImage,
+      ...newDetails,
+    }));
   };
 
   if (!image) {
@@ -71,32 +79,30 @@ const ImageDetails = () => {
           </div>
         )}
         <div className={ImageStyles.imageContainer}>
-          <div className={ImageStyles.imageCard} key={image.id}>
+          <div className={ImageStyles.imageCard} key={updatedImage.id}>
             <img
-              src={image.imageURL}
-              alt={image.title}
+              src={updatedImage.imageURL}
+              alt={updatedImage.title}
               className={ImageStyles.image}
             />
             <div className={ImageStyles.overlay}>
-              <h2>{image.title}</h2>
-              <p>{image.description}</p>
+              <div className={ImageStyles.titleContainer}>
+                <h2>{updatedImage.title}</h2>
+                {editIcon && (
+                  <MdEdit
+                    className={ImageStyles.edit}
+                    onClick={() => setOpenModal(true)}
+                  />
+                )}
+              </div>
+              <p>{updatedImage.description}</p>
             </div>
-            {editIcon && (
-              <MdEdit
-                className={ImageStyles.edit}
-                onClick={() => setOpenModal(true)}
-              />
-            )}
           </div>
         </div>
         <span>
-          <MdOutlineChatBubbleOutline
-            className={ImageStyles.comment}
-            onClick={() => setOpenComments(true)}
-          />
+          <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
         </span>
-        <Comments imageId={image.imageID} />
-        {openComments && <Comment imagesID={image.imageID} />}
+        <Comments imageId={image.imageID} actions={actions} />
 
         <span
           onClick={() => deleteImage(image.imageID)}
@@ -107,9 +113,10 @@ const ImageDetails = () => {
         {openModal && (
           <Modal
             closeModal={() => setOpenModal(false)}
-            defaultValue={image}
+            defaultValue={updatedImage}
             id={image.imageID}
             triggerPopup={handlePopup} // Pass the callback to Modal
+            updateImageDetails={updateImageDetails}
           />
         )}
       </div>
