@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Images;
-using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
-using api.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -18,13 +15,11 @@ namespace api.Controllers
   {
     private readonly IImagesRepository _imagesRepo;
     private readonly ICategoriesRepository _categoriesRepo;
-    private readonly UserManager<AppUser> _userManager;
 
-    public ImagesController(IImagesRepository imagesRepo, ICategoriesRepository categoriesRepo, UserManager<AppUser> userManager)
+    public ImagesController(IImagesRepository imagesRepo, ICategoriesRepository categoriesRepo)
     {
       _imagesRepo = imagesRepo;
       _categoriesRepo = categoriesRepo;
-      _userManager = userManager;
     }
 
     [HttpGet]
@@ -57,34 +52,18 @@ namespace api.Controllers
       return Ok(images.ToImagesDto());
     }
 
-    [HttpGet("user/{userId}")]
-    public async Task<IActionResult> GetByUserId(string userId)
-    {
-      var images = await _imagesRepo.GetByUserIdAsync(userId);
-      if (images == null || !images.Any())
-      {
-        return NotFound("No images found for the given user.");
-      }
-      return Ok(images);
-    }
-    
     [HttpPost("{categoryID:int}")]
     public async Task<IActionResult> Create([FromRoute] int categoryID, CreateImagesDto imagesDto)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      var userName = User.GetUsername();
-      var user = await _userManager.FindByNameAsync(userName);
-
       if (!await _categoriesRepo.CategoryExists(categoryID))
       {
         return BadRequest("Category does not exist");
       }
 
-      // Pass both imagesDto and categoryID to CreateAsync
-      var imagesModel = await _imagesRepo.CreateAsync(imagesDto, categoryID, user.Id);
-
+      var imagesModel = await _imagesRepo.CreateAsync(imagesDto);
       return CreatedAtAction(nameof(GetById), new { id = imagesModel.ImageID }, imagesModel.ToImagesDto());
     }
 

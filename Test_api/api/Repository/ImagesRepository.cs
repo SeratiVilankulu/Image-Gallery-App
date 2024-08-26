@@ -20,25 +20,25 @@ namespace api.Repository
       _logger = logger;
     }
 
-    public async Task<Images> CreateAsync(CreateImagesDto imagesDto, int categoryID, string userId)
+    public async Task<Images> CreateAsync(CreateImagesDto CreateImagesDto)
     {
+      _logger.LogInformation("Creating image with title: {Title}, description: {Description}, and tags: {tags}",
+      CreateImagesDto.Title, CreateImagesDto.Description, CreateImagesDto.ImageTags);
+
       var tagIds = new List<int>();
 
       var image = new Images
       {
-        Title = imagesDto.Title,
-        Description = imagesDto.Description,
-        ImageURL = imagesDto.ImageURL,
-        CategoryId = categoryID,
-        AppUserId = userId
+        Title = CreateImagesDto.Title,
+        Description = CreateImagesDto.Description,
+        ImageURL = CreateImagesDto.ImageURL,
       };
-
       _context.Images.Add(image);
-      await _context.SaveChangesAsync();
 
+      await _context.SaveChangesAsync();
       _logger.LogInformation("Image saved with ID: {ImageID}", image.ImageID);
 
-      foreach (var tagName in imagesDto.ImageTags)
+      foreach (var tagName in CreateImagesDto.ImageTags)
       {
         // Split the tags by comma
         var tags = tagName.Split(",")
@@ -114,13 +114,6 @@ namespace api.Repository
         .FirstOrDefaultAsync(i => i.ImageID == id);
     }
 
-    public async Task<List<Images>> GetByUserIdAsync(string userId)
-    {
-      return await _context.Images
-        .Where(i => i.AppUserId == userId)
-        .Include(c => c.Comments)
-        .ToListAsync();
-    }
 
     public Task<bool> ImageExists(int id)
     {
@@ -138,6 +131,7 @@ namespace api.Repository
 
       existingImages.Title = imagesDto.Title;
       existingImages.Description = imagesDto.Description;
+      existingImages.ImageURL = imagesDto.ImageURL;
 
       await _context.SaveChangesAsync();
 
