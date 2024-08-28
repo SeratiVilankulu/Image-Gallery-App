@@ -6,11 +6,9 @@
 }
 
 .mainPage {
-  display: flex;
-  flex-direction: column;
-  height: 61vw;
-  flex: 1;
   background: rgb(255, 255, 255);
+  content: "";
+  flex: 8;
 }
 
 /*Images styles*/

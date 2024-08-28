@@ -10,23 +10,62 @@
 .topBtn {
   display: flex;
   align-items: center;
-  width: 300px;
+  min-width: 100px;
   height: 60px;
   gap: 10px;
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 15px;
   border: none;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0px 50px;
   border-radius: 4px;
   background: rgb(255, 255, 255);
   color: rgb(15, 60, 76);
-  margin-left: 50px;
-  margin-right: 80px;
 }
 
 .topNavIcons {
   font-size: 22px;
   background: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.profile {
+  position: absolute;
+  justify-content: end;
+  background: white;
+  width: 200px;
+  height: 100px;
+  top: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  right: 10px;
+}
+
+.profile p {
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(15, 60, 76);
+  padding: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.profile p:hover {
+  background: rgba(220, 221, 221);
+}
+
+.profile button {
+  border: none;
+  background: white;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(15, 60, 76);
+  padding: 15px;
+  width: 200px;
+  cursor: pointer;
+}
+
+.profile button:hover {
+  background: rgba(220, 221, 221, 0.37);
 }

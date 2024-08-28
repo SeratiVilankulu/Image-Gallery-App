@@ -43,7 +43,9 @@ const SearchAndFilter = ({
           className={FilterStyles.searchBar}
           value={searchInput}
           onChange={(e) => handleChange(e.target.value)}
-          onClick={() => {setShowResults(true)}}
+          onClick={() => {
+            setShowResults(true);
+          }}
         />
         <IoSearch className={FilterStyles.searchIcon} />
         <div className={FilterStyles.filterBtn}>
