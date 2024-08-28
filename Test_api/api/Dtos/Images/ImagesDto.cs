@@ -16,6 +16,7 @@ namespace api.Dtos.Images
     public string ImageURL { get; set; } = string.Empty;
     public string SecretEditLink { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; }
+    public string AppUserId { get; set; }
     public List<CommentsDto> Comments { get; set; }
     public List<CategoriesDto> Categories { get; set; }
     public List<TagsDto> Tags { get; set; }
