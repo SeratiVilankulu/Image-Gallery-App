@@ -11,7 +11,6 @@ import SearchAndFilter from "../SearchAndFilter/SearchAndFilter";
 import { MdClose } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineChatBubbleOutline, MdEdit } from "react-icons/md";
-
 const ImageDetails = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,15 +19,17 @@ const ImageDetails = () => {
 
   const [editIcon, setShowEditIcon] = useState(false);
   const [actions, setShowActions] = useState(false);
+  const [deleteIcon, setShowDeleteIcon] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [updatedImage, setUpdatedImage] = useState(image);
 
   useEffect(() => {
     if (image) {
       setShowEditIcon(location.state?.fromMyLibrary || false); //Show edit icon in MyLibrary
+      setShowDeleteIcon(location.state?.fromMyLibrary || false); //Show delete icon in MyLibrary
       setShowActions(location.state?.fromMyLibrary || false); //Show comment actions icon in MyLibrary
     }
-  }, [image, location.state?.fromMyLibrary]); 
+  }, [image, location.state?.fromMyLibrary]);
 
   const deleteImage = async (id) => {
     try {
@@ -60,7 +61,6 @@ const ImageDetails = () => {
   if (!image) {
     return <div>Image not found :(</div>;
   }
-
   return (
     <div className={PageStyle.container}>
       <SideNav />
@@ -103,13 +103,12 @@ const ImageDetails = () => {
           <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
         </span>
         <Comments imageId={image.imageID} actions={actions} />
-
-        <span
-          onClick={() => deleteImage(image.imageID)}
-          className={ImageStyles.delete}
-        >
-          <RiDeleteBin6Line />
-        </span>
+        {deleteIcon && (
+          <RiDeleteBin6Line
+            onClick={() => deleteImage(image.imageID)}
+            className={ImageStyles.delete}
+          />
+        )}
         {openModal && (
           <Modal
             closeModal={() => setOpenModal(false)}
@@ -123,5 +122,4 @@ const ImageDetails = () => {
     </div>
   );
 };
-
 export default ImageDetails;

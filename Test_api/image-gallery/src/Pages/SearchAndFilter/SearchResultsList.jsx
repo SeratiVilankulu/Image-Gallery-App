@@ -2,12 +2,12 @@ import React from "react";
 import SearchResult from "./SearchResult";
 import SearchStyles from "./SearchResultsList.module.css";
 
-const SearchResultsList = ({ results }) => {
+const SearchResultsList = ({ results, onTagClick }) => {
   return (
     <div className={SearchStyles.resultsList}>
-      {results.map((result, tagID) => {
-        return <SearchResult result={result} key={tagID} />;
-      })}
+      {results.map((result, tagID) => (
+        <SearchResult result={result} key={tagID} onTagClick={onTagClick} />
+      ))}
     </div>
   );
 };

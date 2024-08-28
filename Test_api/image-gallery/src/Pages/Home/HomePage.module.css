@@ -131,6 +131,15 @@
   background: white;
 }
 
+.noImage {
+  position: absolute;
+  top: 30vh;
+  left: 40vh;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  color: rgb(185, 185, 185);
+}
+
 /* Media queries for responsiveness */
 @media (min-width: 768px) {
   .container {

@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { IoFilter, IoSearch } from "react-icons/io5";
 import FilterStyles from "./SearchAndFilter.module.css";
 
-const SearchAndFilter = ({ setResults }) => {
-  const [searchInput, setSearchInput] = useState("");
-
+const SearchAndFilter = ({
+  searchInput,
+  setSearchInput,
+  setResults,
+  onTagClick,
+  setShowResults,
+}) => {
   const fetchData = (value) => {
-    fetch("http://localhost:5085/api/tags/")
+    fetch("http://localhost:5085/api/tags")
       .then((response) => response.json())
       .then((json) => {
         const results = json.filter((tag) => {
-          const searchTerm = value.toLowerCase();
           return (
-            searchTerm &&
-            tag.tagName.startsWith(searchTerm) &&
-            tag.tagName !== searchTerm &&
             value &&
             tag &&
             tag.tagName &&
@@ -31,10 +30,8 @@ const SearchAndFilter = ({ setResults }) => {
     fetchData(value);
   };
 
-  // API to fetch the search results
-  const onSearch = (searchTerm) => {
-    setSearchInput(searchTerm);
-    console.log("Search for: ", searchTerm);
+  const handleFilterClick = () => {
+    onTagClick(searchInput);
   };
 
   return (
@@ -46,13 +43,11 @@ const SearchAndFilter = ({ setResults }) => {
           className={FilterStyles.searchBar}
           value={searchInput}
           onChange={(e) => handleChange(e.target.value)}
+          onClick={() => {setShowResults(true)}}
         />
         <IoSearch className={FilterStyles.searchIcon} />
         <div className={FilterStyles.filterBtn}>
-          <button
-            className={FilterStyles.filter}
-            onClick={() => onSearch(searchInput)}
-          >
+          <button className={FilterStyles.filter} onClick={handleFilterClick}>
             Filters
           </button>
           <IoFilter className={FilterStyles.filterIcon} />
