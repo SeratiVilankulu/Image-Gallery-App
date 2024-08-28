@@ -34,7 +34,7 @@ namespace api.Controllers
     {
       var comments = await _commentsRepo.GetAllAsync(queryObject);
 
-      var commentsDto = comments.Select(s => s.ToCommentsDto());
+      var commentsDto = comments.Select(s => s.ToCommentsDto()).ToList();
 
       return Ok(commentsDto);
     }
@@ -50,6 +50,19 @@ namespace api.Controllers
       }
 
       return Ok(comment.ToCommentsDto());
+    }
+
+    [HttpGet("image/{imageId}")]
+    public async Task<ActionResult<Comments>> GetByImageId(int imageId)
+    {
+      var comments = await _commentsRepo.GetByImageIdAsync(imageId);
+
+      if (comments == null || comments.Count == 0)
+      {
+        return NotFound($"No comments found for ImageID {imageId}");
+      }
+
+      return Ok(comments);
     }
 
     [HttpPost]
