@@ -5,10 +5,15 @@
   content: "";
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .sideNav {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-bottom: 25px;
 }
 
 .logo img {
@@ -18,7 +23,7 @@
 }
 
 .logout {
-  margin-top: 450px; /*was 330px*/
+  margin-top: auto;
 }
 
 /* Side navigation buttons */

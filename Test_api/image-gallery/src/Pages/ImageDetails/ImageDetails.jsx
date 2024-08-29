@@ -99,16 +99,16 @@ const ImageDetails = () => {
             </div>
           </div>
         </div>
-        <span>
+        <div className={ImageStyles.icons}>
           <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
-        </span>
+          {deleteIcon && (
+            <RiDeleteBin6Line
+              onClick={() => deleteImage(image.imageID)}
+              className={ImageStyles.delete}
+            />
+          )}
+        </div>
         <Comments imageId={image.imageID} actions={actions} />
-        {deleteIcon && (
-          <RiDeleteBin6Line
-            onClick={() => deleteImage(image.imageID)}
-            className={ImageStyles.delete}
-          />
-        )}
         {openModal && (
           <Modal
             closeModal={() => setOpenModal(false)}

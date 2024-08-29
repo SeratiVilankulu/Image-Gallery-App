@@ -72,52 +72,57 @@ p {
 
 /* Close button */
 .closeButton {
-  position: absolute;
-  top: 90px;
-  right: 5px;
+  position: relative;
+  top: 0px;
+  left: 75vw;
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
 }
 
-/* Delete button */
-.delete {
-  border: none;
-  position: absolute;
-  left: 1590px;
-  top: 864px;
-  font-size: 20px;
-  color: red;
-  cursor: pointer;
+/* Container for icons */
+.icons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 107vh;
+  gap: 0px;
+  margin: 0 210px;
 }
 
-/* Comment icon */
+/* Individual icon styling */
+.delete {
+  border: none;
+  font-size: 24px;
+  color: red;
+  cursor: pointer;
+  margin: 10px 10px;
+}
+
 .comment {
   color: rgb(15, 60, 76);
-  position: absolute;
-  left: 660px;
-  top: 865px;
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+  margin: 10px 10px;
 }
 
 /* Tags container */
-.tags {
+/* .tags {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
 /* Tag button styles */
-.tagButton {
+/* .tagButton {
   background: black;
   color: white;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
-}
+} */
 
 /* Popup notification */
 .popup {
@@ -137,7 +142,6 @@ p {
   visibility: visible;
 }
 
-/* Save button */
 .saveButton {
   background-color: #4caf50;
   color: white;
@@ -147,18 +151,15 @@ p {
   cursor: pointer;
 }
 
-/* Disabled save button when submitting */
 .saveButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-/* Form group styles in modal */
 .formGroup {
   margin-bottom: 15px;
 }
 
-/* Error message styling */
 .errorMessage {
   color: red;
   font-size: 14px;

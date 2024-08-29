@@ -9,6 +9,8 @@
   background: rgb(255, 255, 255);
   content: "";
   flex: 8;
+  max-height: 100vh;
+  overflow-y: scroll;
 }
 
 /*Images styles*/

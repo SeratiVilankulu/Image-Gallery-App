@@ -47,13 +47,13 @@ const SearchAndFilter = ({
             setShowResults(true);
           }}
         />
-        <IoSearch className={FilterStyles.searchIcon} />
-        <div className={FilterStyles.filterBtn}>
-          <button className={FilterStyles.filter} onClick={handleFilterClick}>
-            Filters
-          </button>
-          <IoFilter className={FilterStyles.filterIcon} />
-        </div>
+      </div>
+      <IoSearch className={FilterStyles.searchIcon} />
+      <div className={FilterStyles.filterBtn}>
+        <button className={FilterStyles.filter} onClick={handleFilterClick}>
+          Filters
+        </button>
+        <IoFilter className={FilterStyles.filterIcon} />
       </div>
     </div>
   );

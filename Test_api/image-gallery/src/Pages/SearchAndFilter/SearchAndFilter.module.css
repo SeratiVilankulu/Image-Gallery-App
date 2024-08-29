@@ -1,4 +1,8 @@
 /*Filter styles*/
+.searchAndFilter {
+  position: relative;
+}
+
 .filterSection {
   border: none;
   background: #f2f2f2;
@@ -16,8 +20,8 @@
 
 .searchBar {
   position: absolute;
-  top: 110px;
-  left: 517px;
+  top: 0px;
+  left: 100px;
   width: 350px;
   height: 39px;
   background-color: transparent;
@@ -44,15 +48,15 @@ input:focus {
 .searchIcon {
   color: #aeb6b7;
   position: absolute;
-  top: 121px;
-  left: 495px;
+  top: 11px;
+  left: 75px;
   font-size: 17px;
 }
 
 .filterBtn {
   position: absolute;
-  top: 110px;
-  left: 900px;
+  top: 0px;
+  left: 490px;
 }
 
 .filter {
