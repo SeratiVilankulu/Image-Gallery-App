@@ -67,5 +67,6 @@
 }
 
 .profile button:hover {
+  cursor: pointer;
   background: rgba(220, 221, 221, 0.37);
 }

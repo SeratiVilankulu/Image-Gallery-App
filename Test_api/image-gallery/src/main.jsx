@@ -16,6 +16,7 @@ import UploadPage from "./Pages/Upload/UploadPage.jsx";
 import ImageDetails from "./Pages/ImageDetails/ImageDetails.jsx";
 import Logout from "./Pages/Logout/Logout.jsx";
 import MyLibrary from "./Pages/MyLibrary/MyLibrary.jsx";
+import ChangePassword from "./Pages/ResetPassword/ChangePassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/change-password",
+    element: <ChangePassword />,
   },
   {
     path: "/home",

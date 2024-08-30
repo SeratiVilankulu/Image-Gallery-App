@@ -12,6 +12,7 @@ import UploadPage from "./Pages/Upload/UploadPage";
 import ImageDetails from "./Pages/ImageDetails";
 import Logout from "./Pages/Logout/Logout";
 import MyLibrary from "./Pages/MyLibrary/MyLibrary";
+import ChangePassword from "./Pages/ResetPassword/ChangePassword";
 
 function App() {
   return (
@@ -33,6 +34,9 @@ function App() {
       </Route>
       <Route path="/forgot-password">
         <ForgotPassword />
+      </Route>
+      <Route path="/change-password">
+        <ChangePassword />
       </Route>
       <Route path="/home">
         <HomePage />

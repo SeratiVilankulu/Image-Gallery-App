@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
@@ -217,12 +218,25 @@ namespace api.Controllers
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
       if (!ModelState.IsValid)
-        return BadRequest("Invalid email");
+        return BadRequest("Invalid request.");
 
       // Extract user from the database
       var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
       if (user == null)
         return BadRequest("Invalid Email");
+
+      // Validate the token (check if the token is expired or invalid)
+      var isTokenValid = await _userManager.VerifyUserTokenAsync(
+          user,
+          _userManager.Options.Tokens.PasswordResetTokenProvider,
+          "ResetPassword",
+          resetPasswordDto.Token
+      );
+
+      if (!isTokenValid)
+      {
+        return BadRequest("The reset token is invalid or has expired. Please request a new password reset.");
+      }
 
       // Check if the new password is the same as the old password
       var currentPasswordVerification = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, resetPasswordDto.NewPassword);
@@ -231,19 +245,57 @@ namespace api.Controllers
         return BadRequest("The new password cannot be the same as the old password.");
       }
 
+      // Proceed to reset the password if the token is valid
       var resetResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
 
       if (!resetResult.Succeeded)
       {
         var errors = resetResult.Errors.Select(e => e.Description);
-        return BadRequest("Password reset process has failed :(");
+        return BadRequest(new { message = "Password reset process has failed", errors });
       }
 
+      // Update the user's password change date (optional)
       user.PasswordChangeDate = DateTime.UtcNow;
       await _userManager.UpdateAsync(user);
 
       return Ok("Password has been reset successfully.");
     }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest("Invalid input.");
+
+      // Get the logged-in user's email from the claims
+      var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+      if (string.IsNullOrEmpty(email))
+        return BadRequest("Invalid user.");
+
+      // Fetch the user from the database
+      var user = await _userManager.FindByEmailAsync(email);
+      if (user == null)
+        return BadRequest("User not found.");
+
+      // Check if the new password is the same as the current one
+      var currentPasswordVerification = _userManager.PasswordHasher.VerifyHashedPassword(user, user.PasswordHash, changePasswordDto.NewPassword);
+      if (currentPasswordVerification == PasswordVerificationResult.Success)
+      {
+        return BadRequest("The new password cannot be the same as the old password.");
+      }
+
+      // Change password
+      var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword);
+      if (!result.Succeeded)
+      {
+        var errors = result.Errors.Select(e => e.Description);
+        return BadRequest($"Failed to change password: {string.Join(", ", errors)}");
+      }
+
+      return Ok("Password changed successfully.");
+    }
+
 
     // Logout
     [HttpPost("logout")]

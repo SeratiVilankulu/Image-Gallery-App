@@ -50,8 +50,8 @@ const TopNav = () => {
       {showProfile && (
         <div className={TopNavStyle.profile}>
           <p>{userData?.email}</p>
-          <button onClick={() => navigate("/reset-password")}>
-            Rest password
+          <button onClick={() => navigate("/change-password")}>
+            Change password
           </button>
         </div>
       )}
