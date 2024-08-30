@@ -1,6 +1,7 @@
 /*Filter styles*/
 .searchAndFilter {
   position: relative;
+  width: 100vh;
 }
 
 .filterSection {

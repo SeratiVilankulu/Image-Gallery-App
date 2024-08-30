@@ -162,7 +162,7 @@ const ChangePassword = () => {
           <p className={PasswordStyle.errorMessage}>{error.CurrentPassword}</p>
 
           <div className={PasswordStyle.resetInput}>
-            <p>Password</p>
+            <p>New Password</p>
             <input
               type="password"
               placeholder="Enter new password"
@@ -177,7 +177,7 @@ const ChangePassword = () => {
           <p className={PasswordStyle.errorMessage}>{error.NewPassword}</p>
 
           <div className={PasswordStyle.resetInput}>
-            <p>Confirm Password</p>
+            <p>Confirm New Password</p>
             <input
               type="password"
               placeholder="Enter new password confirmation"
