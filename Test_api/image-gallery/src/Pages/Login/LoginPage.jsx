@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
@@ -15,6 +15,9 @@ const LoginPage = () => {
   const [errorMsg, setErrorMsg] = useState({}); // State to display error message if credentials are not vaild
   const [successMsg, setSuccessMsg] = useState(""); // State to display a success message after successful registration
   const [Submitting, setSubmitting] = useState(false); // State to manage the form submission status (to prevent multiple submissions)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
   const navigate = useNavigate(); // Used to navigate to another page
 
   // Function to handle changes in form input fields
@@ -49,6 +52,10 @@ const LoginPage = () => {
 
     //Form is being submmited
     setSubmitting(true);
+
+    if (rememberMe) {
+      localStorage.setItem("user", "verificationToken");
+    }
 
     try {
       // Make an API call to login the user
@@ -99,6 +106,20 @@ const LoginPage = () => {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  useEffect(() => {
+    const user = localStorage.getItem("user"); // Checks for the correct token, if user details has been store by remember me
+    if (user) {
+      setIsLoggedIn(true);
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
+    }
+  }, [navigate]);
+
+  const handleCheckboxChange = () => {
+    setRememberMe(!rememberMe);
   };
 
   return (
@@ -155,7 +176,12 @@ const LoginPage = () => {
 
           <div className="remember-forgot">
             <label htmlFor="">
-              <input type="checkbox" /> Remember me
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={handleCheckboxChange}
+              />{" "}
+              Remember me
             </label>
             <Link to="/forgot-password">Forgot password?</Link>
           </div>
