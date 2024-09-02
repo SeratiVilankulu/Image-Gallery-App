@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[4.7.0, )"
             },
+            "Microsoft.AspNetCore.Authentication.Google": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.6, )"
@@ -105,6 +109,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "TwoStepsAuthenticator": {
+              "target": "Package",
+              "version": "[1.4.1, )"
             }
           },
           "imports": [
