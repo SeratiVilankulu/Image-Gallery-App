@@ -43,14 +43,20 @@ const SearchAndFilter = ({
           className={FilterStyles.searchBar}
           value={searchInput}
           onChange={(e) => handleChange(e.target.value)}
-          onClick={() => {
+          onFocus={() => {
             setShowResults(true);
           }}
         />
       </div>
       <IoSearch className={FilterStyles.searchIcon} />
       <div className={FilterStyles.filterBtn}>
-        <button className={FilterStyles.filter} onClick={handleFilterClick}>
+        <button
+          className={FilterStyles.filter}
+          onClick={() => {
+            handleFilterClick();
+            setShowResults(false);
+          }}
+        >
           Filters
         </button>
         <IoFilter className={FilterStyles.filterIcon} />

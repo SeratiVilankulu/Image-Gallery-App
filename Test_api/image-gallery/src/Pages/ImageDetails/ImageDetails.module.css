@@ -100,11 +100,22 @@ p {
   margin: 10px 10px;
 }
 
+.commentContainer {
+  display: flex;
+  align-items: center;
+}
+
 .comment {
   color: rgb(15, 60, 76);
   font-size: 24px;
   cursor: pointer;
   margin: 10px 10px;
+}
+
+.commentCount {
+  color: rgb(15, 60, 76);
+  font-size: 15px;
+  font-weight: 600;
 }
 
 /* Tags container */

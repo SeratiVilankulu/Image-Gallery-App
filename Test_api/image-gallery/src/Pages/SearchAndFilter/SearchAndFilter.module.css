@@ -21,7 +21,7 @@
 
 .searchBar {
   position: absolute;
-  top: 0px;
+  top: 40px;
   left: 100px;
   width: 350px;
   height: 39px;
@@ -49,14 +49,14 @@ input:focus {
 .searchIcon {
   color: #aeb6b7;
   position: absolute;
-  top: 11px;
+  top: 51px;
   left: 75px;
   font-size: 17px;
 }
 
 .filterBtn {
   position: absolute;
-  top: 0px;
+  top: 40px;
   left: 490px;
 }
 

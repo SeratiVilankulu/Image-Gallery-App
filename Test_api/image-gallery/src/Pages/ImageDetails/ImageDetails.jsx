@@ -22,6 +22,7 @@ const ImageDetails = () => {
   const [deleteIcon, setShowDeleteIcon] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [updatedImage, setUpdatedImage] = useState(image);
+  const [commentsCount, setCommentsCount] = useState(0); // State for comment count
 
   useEffect(() => {
     if (image) {
@@ -100,7 +101,12 @@ const ImageDetails = () => {
           </div>
         </div>
         <div className={ImageStyles.icons}>
-          <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
+          <div className={ImageStyles.commentContainer}>
+            <MdOutlineChatBubbleOutline className={ImageStyles.comment} />
+            {commentsCount >= 0 && (
+              <span className={ImageStyles.commentCount}>{commentsCount}</span>
+            )}
+          </div>
           {deleteIcon && (
             <RiDeleteBin6Line
               onClick={() => deleteImage(image.imageID)}
@@ -108,7 +114,11 @@ const ImageDetails = () => {
             />
           )}
         </div>
-        <Comments imageId={image.imageID} actions={actions} />
+        <Comments
+          imageId={image.imageID}
+          actions={actions}
+          setCommentsCount={setCommentsCount}
+        />
         {openModal && (
           <Modal
             closeModal={() => setOpenModal(false)}

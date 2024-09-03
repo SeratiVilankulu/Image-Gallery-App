@@ -114,7 +114,7 @@ const LoginPage = () => {
       setIsLoggedIn(true);
       setTimeout(() => {
         navigate("/home");
-      }, 2000);
+      }, 1500);
     }
   }, [navigate]);
 

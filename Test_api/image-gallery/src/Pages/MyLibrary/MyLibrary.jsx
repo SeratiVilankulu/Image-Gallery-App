@@ -54,11 +54,19 @@ const MyLibrary = () => {
   const indexOfFirstImage = indexOfLastImage - imagesPerPage;
   const currentImages = images.slice(indexOfFirstImage, indexOfLastImage); // Slice the images array to get images for the current page
 
-  // Generate page numbers dynamically based on the total number of images and images per page
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(images.length / imagesPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const totalPages = Math.ceil(currentImages.length / imagesPerPage);
+
+  const getVisiblePages = (currentPage) => {
+    const startPage = Math.max(1, currentPage - 1); // Display 3 pages at a time
+    const endPage = Math.min(startPage + 2, totalPages);
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
+  };
+
+  const visiblePages = getVisiblePages(currentPage);
 
   // Function to handle page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -117,19 +125,20 @@ const MyLibrary = () => {
           >
             <IoIosArrowBack />
           </button>
-          {pageNumbers.map((number) => (
+          {visiblePages.map((number) => (
             <button
-              type="submit"
               key={number}
               onClick={() => paginate(number)}
-              className={PageStyle.pageNumber}
+              className={`${PageStyle.pageNumber} ${
+                currentPage === number ? PageStyle.activePage : ""
+              }`}
             >
               {number}
             </button>
           ))}
           <button
             onClick={nextPage}
-            disabled={currentPage === pageNumbers.length}
+            disabled={currentPage === totalPages}
             className={PageStyle.pageArrow}
           >
             <IoForward />

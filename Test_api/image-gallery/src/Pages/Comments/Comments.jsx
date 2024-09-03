@@ -3,7 +3,7 @@ import axios from "axios";
 import CommentStyles from "./Comments.module.css";
 import Comment from "./Comment";
 
-const Comments = ({ imageId, actions }) => {
+const Comments = ({ imageId, actions, setCommentsCount }) => {
   // State to store comments, the ID of the comment being edited
   const [comments, setComments] = useState([]);
   const [editMode, setEditMode] = useState(null); // Track which comment is being edited
@@ -19,17 +19,20 @@ const Comments = ({ imageId, actions }) => {
           `http://localhost:5085/api/comment/image/${imageId}`
         );
         setComments(response.data);
-        if (response.data.length === 0) {
-          setErrorMsg(""); // Ensure no error message if there are no comments
-        }
+        setCommentsCount(response.data.length);
       } catch (error) {
-        console.error("Cannot fetch comments from backend");
-        setErrorMsg("Failed to load comments");
+        // Check if image has no comments
+        if (error.response && error.response.status === 404) {
+          setComments([]); // Set comments as an empty array
+          setErrorMsg(""); // Clear any error messages
+        } else {
+          console.error("Error fetching comments:", error.message);
+          setErrorMsg("Failed to load comments");
+        }
       }
     };
-
     fetchComments();
-  }, [imageId]);
+  }, [imageId, setCommentsCount]);
 
   // Update a specific comment
   const updateComment = async () => {
