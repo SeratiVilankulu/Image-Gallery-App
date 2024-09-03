@@ -21,14 +21,16 @@ const EmailSuccess = ({ redirectUrl }) => {
           <MdVerified className={PageStyle.icon} />
         </h1>
       </div>
-      <div className={PageStyle.sentence}></div>
-      <p>
-        Please wait a moment to be directed to the login page. <br />
-        If you are not directed immediately, please click this link:{" "}
-        <Link to="/" className={PageStyle.link}>
-          Go back to Login Page
-        </Link>
-      </p>
+      <div className={PageStyle.sentence}>
+        {" "}
+        <p className={PageStyle.sentence}>
+          Please wait a moment to be directed to the login page. <br />
+          If you are not directed immediately, please click this link:{" "}
+          <Link to="/" className={PageStyle.link}>
+            Go back to Login Page
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };

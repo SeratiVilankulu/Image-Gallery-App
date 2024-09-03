@@ -9,7 +9,7 @@
   color: rgb(15, 60, 76);
 }
 
-p {
+.sentence {
   font-size: 15px;
   font-weight: 500;
   color: rgb(15, 60, 76);
@@ -24,9 +24,11 @@ p {
 
 .link {
   color: rgb(15, 60, 76);
+  text-decoration: none;
 }
 
 .link:hover {
   cursor: pointer;
   color: rgb(15, 60, 76);
+  text-decoration: underline;
 }
