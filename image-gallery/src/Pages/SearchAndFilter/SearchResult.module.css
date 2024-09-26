@@ -1,0 +1,7 @@
+.searchReult {
+  padding: 10px;
+  border-radius: 3px;
+}
+.searchReult:hover {
+  background: #f2f2f2;
+}

@@ -1,0 +1,165 @@
+.registerContainer {
+  font-family: "Poppins", sans-serif;
+  color: rgb(15, 60, 76);
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 0px;
+  background-color: white;
+  width: 1715px;
+  height: 925px;
+  top: 6967px;
+  left: 3584px;
+}
+
+.formContainer {
+  width: 40%;
+  height: 93%;
+  padding-top: 120px;
+  padding-bottom: 50px;
+  padding-left: 120px;
+  padding-right: 10px;
+}
+
+.formContainer p {
+  font-size: 12px;
+}
+
+.registerImage {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 35px;
+  padding-left: 5px;
+  padding-right: 25px;
+  padding-bottom: 10px;
+}
+
+img {
+  width: 1050px;
+  height: 800px;
+  top: 54px;
+  left: 540px;
+  border-radius: 4px;
+}
+
+.register h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: rgb(15, 60, 76);
+}
+
+.welcome {
+  font-size: 12px;
+  margin-bottom: 20px;
+  color: rgb(15, 60, 76);
+  font-weight: 600;
+}
+
+.registerForm p {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgb(15, 60, 76);
+  padding-left: 3px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.registerForm input::placeholder {
+  color: grey;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  font-style: none;
+  font-style: normal;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.registerForm {
+  margin-bottom: 10px;
+  width: 400px;
+  height: 52px;
+  top: 274px;
+  left: 73px;
+}
+
+.registerForm input {
+  width: 400px;
+  padding: 10px;
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.registerBtn {
+  background-color: rgb(27, 139, 181);
+  color: white;
+  border: none;
+  width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 0;
+}
+
+.separator {
+  font-family: "Poppins", sans-serif;
+  padding: 0 200px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.option {
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: center;
+  border: none;
+  width: 400px;
+  height: 44px;
+  margin-left: 0;
+  align-items: center;
+  border-radius: 4px;
+  margin-top: 20px;
+  background: white;
+  color: rgb(15, 60, 76);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+  top: 708px;
+  left: 73px;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.btnLogo {
+  font-size: 25px;
+  padding-left: 10px;
+  padding-top: 13px;
+}
+
+.signinBtn {
+  text-decoration: none;
+  color: rgb(15, 60, 76);
+  margin: 10px;
+}
+
+/*Styling for error and success message*/
+.errorMessage {
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  margin-top: 6px;
+}
+
+.successMessage {
+  font-size: 12px;
+  font-weight: 500;
+  color: green;
+  margin-top: 6px;
+}

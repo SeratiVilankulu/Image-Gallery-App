@@ -1,0 +1,42 @@
+.title {
+  width: Hug (324px) px;
+  height: Hug (68px) px;
+  top: 105px;
+  left: 303px;
+  padding: 10px 0px 0px 0px;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 90px;
+  font-weight: 600;
+  color: rgb(15, 60, 76);
+}
+
+.comment {
+  color: rgb(15, 60, 76);
+  position: absolute;
+  left: 660px;
+  top: 865px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.message {
+  display: flex;
+  justify-content: center;
+}
+
+.noImage {
+  position: absolute;
+  top: 400px;
+  font-family: "Poppins", sans-serif;
+  font-size: 30px;
+  color: rgb(185, 185, 185);
+}
+
+.imageIcon {
+  position: absolute;
+  top: 460px;
+  font-size: 70px;
+  color: rgb(185, 185, 185);
+}

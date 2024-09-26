@@ -1,0 +1,34 @@
+/*EmailConfirm styles*/
+.confirmContainer {
+  text-align: center;
+  min-width: 100vw;
+}
+
+.heading {
+  font-size: 25px;
+  color: rgb(15, 60, 76);
+}
+
+.sentence {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgb(15, 60, 76);
+}
+
+/*EmailSuccess styles*/
+.icon {
+  padding-top: 20px;
+  font-size: 50px;
+  color: Green;
+}
+
+.link {
+  color: rgb(15, 60, 76);
+  text-decoration: none;
+}
+
+.link:hover {
+  cursor: pointer;
+  color: rgb(15, 60, 76);
+  text-decoration: underline;
+}

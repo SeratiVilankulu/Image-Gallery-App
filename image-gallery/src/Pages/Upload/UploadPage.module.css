@@ -1,0 +1,224 @@
+.uploadWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 940px;
+  height: 920px;
+  margin: 50px 50px 10px 150px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.122);
+}
+
+.heading {
+  font-weight: 600;
+  text-align: center;
+  color: rgb(15, 60, 76);
+  padding-top: 30px;
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.inputBox .title {
+  font-family: "Poppins", sans-serif;
+  width: 400px;
+  height: 38px;
+  padding: 10px;
+  border: 1px solid #aaa8a8;
+  border-radius: 5px;
+  font-size: 14px;
+  color: rgb(15, 60, 76);
+  border-radius: 4px;
+  border-color: rgb(15, 60, 76);
+  margin-bottom: 15px;
+  margin-left: 50px;
+}
+
+.name {
+  font-size: 12px;
+  margin: 5px 5px;
+  margin-left: 53px;
+  font-weight: 600;
+  color: rgb(15, 60, 76);
+}
+
+.inputBox .category {
+  font-family: "Poppins", sans-serif;
+  width: 400px;
+  height: 38px;
+  padding: 5px 10px;
+  border: 1px solid #aaa8a8;
+  border-radius: 5px;
+  font-size: 14px;
+  color: rgb(15, 60, 76);
+  border-radius: 4px;
+  border-color: rgb(15, 60, 76);
+  margin-bottom: 15px;
+  margin-left: 50px;
+}
+
+.inputBox .tagsInput {
+  font-family: "Poppins", sans-serif;
+  width: min(80vw, 400px);
+  padding: 5px 10px 5px 5px;
+  border: 1px solid #aaa8a8;
+  border-radius: 5px;
+  font-size: 14px;
+  color: rgb(15, 60, 76);
+  border-radius: 4px;
+  border-color: rgb(15, 60, 76);
+  margin-bottom: 15px;
+  margin-left: 50px;
+}
+
+.inputBox .description {
+  font-family: "Poppins", sans-serif;
+  height: 100px;
+  width: 400px;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #aaa8a8;
+  border-radius: 5px;
+  font-size: 14px;
+  color: rgb(15, 60, 76);
+  border-radius: 4px;
+  border-color: rgb(15, 60, 76);
+  margin-bottom: 10px;
+  margin-left: 50px;
+}
+
+/*Tags input styles*/
+.inputBox li {
+  background: rgb(37, 150, 190);
+  display: inline-block;
+  color: white;
+  padding: 8px;
+  gap: 0.5em;
+  margin-left: 4px;
+  margin-top: 2px;
+  border-radius: 25px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+
+.inputBox svg {
+  margin-left: 5px;
+}
+
+.tags {
+  flex-grow: 1;
+  padding: 0.5em;
+  border: none;
+  outline: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: rgb(15, 60, 76);
+}
+
+.inputBox .dragArea {
+  margin-top: 10px;
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  max-width: 500px;
+  height: 250px;
+  border: 2px dashed #004d66;
+  border-radius: 4px;
+  background-color: #e6f7ff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.dragArea {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.uploadIcon {
+  font-size: 130px;
+  font-weight: 200;
+  color: rgb(37, 150, 190);
+}
+
+.dragArea p {
+  color: rgb(37, 150, 190);
+  text-align: center;
+  font-weight: 200;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.dragArea .option {
+  color: rgb(15, 60, 76);
+  text-align: center;
+  font-weight: 200;
+}
+
+.imageUpload {
+  display: none;
+}
+
+/*Upload button*/
+.fileInput {
+  display: none; /* Hide the default file input */
+}
+
+.fileInputLabel {
+  display: inline-block;
+  width: Fixed (105px) px;
+  height: Hug (34px) px;
+  top: 715px;
+  left: 866px;
+  padding: 8px 20px 8px 20px;
+  gap: 10px;
+  background: rgb(37, 150, 190);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fileInputLabel:hover {
+  background-color: rgb(32, 129, 165);
+}
+
+.selectedFile {
+  margin-left: 160px;
+  color: rgb(15, 60, 76);
+  font-size: 13px;
+}
+
+.submitBtn {
+  border: none;
+  font-family: "Poppins", sans-serif;
+  margin-top: 10px;
+  margin-left: 170px;
+  width: 155px;
+  height: 34px;
+  top: 715px;
+  left: 866px;
+  padding: 8px 20px 8px 20px;
+  gap: 10px;
+  background: rgb(37, 150, 190);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.errorMessage {
+  font-size: 12px;
+  font-weight: 500;
+  color: red;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 160px;
+  width: 220px;
+}
+
+.successMessage {
+  font-size: 12px;
+  font-weight: 500;
+  color: green;
+  margin-left: 160px;
+}
