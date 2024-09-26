@@ -7940,11 +7940,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\api\\api.csproj",
+      "projectUniqueName": "C:\\Users\\SVilankulu\\Desktop\\Image-Gallery-App\\api\\api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\api\\api.csproj",
+      "projectPath": "C:\\Users\\SVilankulu\\Desktop\\Image-Gallery-App\\api\\api.csproj",
       "packagesPath": "C:\\Users\\SVilankulu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\SVilankulu\\Desktop\\SV files\\React\\Test-api\\Practise_Repo-1\\api\\obj\\",
+      "outputPath": "C:\\Users\\SVilankulu\\Desktop\\Image-Gallery-App\\api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
