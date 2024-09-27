@@ -70,3 +70,19 @@ GitHub Repository:
    ```bash
    dotnet ef migrations add <MigrationName>
    dotnet ef database update
+3. Start the backend:
+   dotnet watch run
+
+### Frontend Setup
+1. Navigate to the frontend directory.
+2. Install dependencies:
+   npm install
+3. Start the React development server:
+   npm run dev
+
+### How the App Runs
+1. Open the terminal and navigate to the frontend or backend directories.
+2. Run the backend API (Swagger):
+   dotnet watch run
+3. Run the frontend:
+   npm run dev
